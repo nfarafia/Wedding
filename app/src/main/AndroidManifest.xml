@@ -10,10 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/activity_main_title"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,11 +20,16 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
+                <data
                     android:host="vergiliy.com"
-                    android:pathPrefix="/wedding" />
+                    android:pathPrefix="/wedding"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/activity_main_title"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".countdown.CountdownActivity"
             android:label="@string/activity_countdown_title"
