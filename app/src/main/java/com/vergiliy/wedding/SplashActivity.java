@@ -8,12 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY = 2000;
+    final int SPLASH_DISPLAY = 2000;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Context context = this;
 
         new Handler().postDelayed(new Runnable() {
             @Override
