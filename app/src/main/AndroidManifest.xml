@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -11,14 +12,49 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/activity_main_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="@string/filter_view_http_wedding">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                    android:host="vergiliy.com"
+                    android:pathPrefix="/wedding" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".countdown.CountdownActivity"
+            android:label="@string/activity_countdown_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tasks.TasksActivity"
+            android:label="@string/activity_tasks_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".coasts.CoastsActivity"
+            android:label="@string/activity_coasts_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".guests.GuestsActivity"
+            android:label="@string/activity_guests_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".vendors.VendorsActivity"
+            android:label="@string/activity_vendors_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".info.AboutActivity"
+            android:label="@string/activity_about_title"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".info.FeedbackActivity"
+            android:label="@string/activity_feedback_title"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
