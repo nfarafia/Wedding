@@ -15,8 +15,10 @@ public class CoastsActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_coasts, frameLayout);
 
+        // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +54,8 @@ public class CoastsActivity extends MainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Check current activity in the navigation drawer
-        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_coasts).setChecked(true);
+        // Check current activity in the NavigationDrawer
+        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_coasts)
+                .setChecked(true);
     }
 }
