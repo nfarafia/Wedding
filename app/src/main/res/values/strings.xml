@@ -1,8 +1,9 @@
 <resources>
-
     <string name="app_name">Wedding</string>
     <string name="app_description">Wedding App description</string>
+
     <string name="filter_view_http_wedding">Wedding</string>
+    <string name="splash_button_start">Start</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -22,5 +23,4 @@
     <string name="menu_info_rate">Rate this app</string>
 
     <string name="menu_setting_setting">Setting</string>
-
 </resources>
