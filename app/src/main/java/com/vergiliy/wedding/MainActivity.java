@@ -1,6 +1,7 @@
 package com.vergiliy.wedding;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -63,38 +64,41 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Intent intent;
 
         // Switch activity from NavigationDrawer
         switch(id) {
             case R.id.menu_general_countdown:
-                intent = new Intent(this, CountdownActivity.class);
+                startActivity(new Intent(this, CountdownActivity.class));
                 break;
             case R.id.menu_general_tasks:
-                intent = new Intent(this, TasksActivity.class);
+                startActivity(new Intent(this, TasksActivity.class));
                 break;
             case R.id.menu_general_coasts:
-                intent = new Intent(this, CoastsActivity.class);
+                startActivity(new Intent(this, CoastsActivity.class));
                 break;
             case R.id.menu_general_guests:
-                intent = new Intent(this, GuestsActivity.class);
+                startActivity(new Intent(this, GuestsActivity.class));
                 break;
             case R.id.menu_general_vendors:
-                intent = new Intent(this, VendorsActivity.class);
+                startActivity(new Intent(this, VendorsActivity.class));
                 break;
             case R.id.menu_info_about:
-                intent = new Intent(this, AboutActivity.class);
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.menu_info_feedback:
-                intent = new Intent(this, FeedbackActivity.class);
+                startActivity(new Intent(this, FeedbackActivity.class));
                 break;
-            default:
-                intent = null;
+            case R.id.menu_info_rate:
+                final String appPackageName = getPackageName();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id="
+                                    + appPackageName)));
+                }
                 break;
-        }
-
-        if (intent != null) {
-            startActivity(intent);
         }
 
         // Close NavigationDrawer
