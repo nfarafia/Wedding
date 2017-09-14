@@ -20,6 +20,7 @@ public class CoastsActivity extends MainActivity {
 
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

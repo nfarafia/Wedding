@@ -1,0 +1,58 @@
+package com.vergiliy.wedding.tasks;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.vergiliy.wedding.R;
+
+public class MainFragment extends Fragment {
+
+    static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+
+    private final String data[] = new String[] { "one", "two", "three", "four", "five", "six",
+            "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+            "fifteen", "sixteen"};
+
+    private int pageNumber;
+
+    public static MainFragment newInstance(int page) {
+        MainFragment pageFragment = new MainFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
+        pageFragment.setArguments(arguments);
+        return pageFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        TextView pageName = (TextView) view.findViewById(R.id.page_name);
+        String text = getString(R.string.test_tasks_page, pageNumber);
+        pageName.setText(text);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.page_list);
+        recyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.Adapter adapter = new RecyclerAdapter(data);
+        recyclerView.setAdapter(adapter);
+
+        return view;
+    }
+}
