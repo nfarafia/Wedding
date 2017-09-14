@@ -90,6 +90,7 @@ public class SplashActivity extends AppCompatActivity {
                         .alpha(1)
                         .setStartDelay((DELAY_ITEM * i) + DELAY_BETWEEN)
                         .setDuration(DURATION_BUTTON);
+
             // Animation another elements
             } else {
                 viewAnimator = ViewCompat.animate(view)
