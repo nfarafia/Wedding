@@ -11,10 +11,10 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.vergiliy.wedding.MainActivity;
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class TasksActivity extends MainActivity {
+public class TasksActivity extends BaseActivity {
 
     static final int PAGE_COUNT = 20;
 

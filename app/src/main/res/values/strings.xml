@@ -2,7 +2,7 @@
     <string name="app_name">Wedding</string>
     <string name="app_description">Wedding App description</string>
 
-    <string name="filter_view_http_wedding">Wedding</string>
+    <string name="filter_view_http_wedding" translatable="false">Wedding</string>
     <string name="splash_button_start">Start</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

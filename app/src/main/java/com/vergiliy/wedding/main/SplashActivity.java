@@ -1,4 +1,4 @@
-package com.vergiliy.wedding;
+package com.vergiliy.wedding.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.vergiliy.wedding.BaseActivity;
+import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.main.MainActivity;
 
 // Splash screen; open before load MainActivity
 public class SplashActivity extends AppCompatActivity {
@@ -30,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, BaseActivity.class);
             startActivity(intent);
             finish();
         }
@@ -46,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         animate(); // Start animation
 
-        // Show splash screen duration several seconds then start MainActivity
+        // Show splash screen duration several seconds then start BaseActivity
         handler.postDelayed(runnable, DURATION_SPLASH);
     }
 
@@ -57,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
     }
 
-    // Jump to MainActivity (call when the button clicked)
+    // Jump to BaseActivity (call when the button clicked)
     public void start(View view){
         Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);

@@ -17,12 +17,13 @@ import android.widget.FrameLayout;
 import com.vergiliy.wedding.coasts.CoastsActivity;
 import com.vergiliy.wedding.countdown.CountdownActivity;
 import com.vergiliy.wedding.guests.GuestsActivity;
+import com.vergiliy.wedding.tasks.TasksActivity;
 import com.vergiliy.wedding.info.AboutActivity;
 import com.vergiliy.wedding.info.FeedbackActivity;
-import com.vergiliy.wedding.tasks.TasksActivity;
+
 import com.vergiliy.wedding.vendors.VendorsActivity;
 
-public class MainActivity extends AppCompatActivity
+public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     protected NavigationView navigationView;
@@ -98,6 +99,9 @@ public class MainActivity extends AppCompatActivity
                             Uri.parse("https://play.google.com/store/apps/details?id="
                                     + appPackageName)));
                 }
+                break;
+            default:
+                startActivity(new Intent(this, BaseActivity.class));
                 break;
         }
 

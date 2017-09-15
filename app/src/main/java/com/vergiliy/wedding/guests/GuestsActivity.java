@@ -3,10 +3,10 @@ package com.vergiliy.wedding.guests;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.vergiliy.wedding.MainActivity;
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class GuestsActivity extends MainActivity {
+public class GuestsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

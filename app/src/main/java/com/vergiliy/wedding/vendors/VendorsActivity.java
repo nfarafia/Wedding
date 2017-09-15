@@ -3,10 +3,10 @@ package com.vergiliy.wedding.vendors;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.vergiliy.wedding.MainActivity;
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class VendorsActivity extends MainActivity {
+public class VendorsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

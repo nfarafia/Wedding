@@ -3,10 +3,10 @@ package com.vergiliy.wedding.countdown;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.vergiliy.wedding.MainActivity;
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class CountdownActivity extends MainActivity {
+public class CountdownActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

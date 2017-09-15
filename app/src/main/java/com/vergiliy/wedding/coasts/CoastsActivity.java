@@ -7,10 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.vergiliy.wedding.MainActivity;
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class CoastsActivity extends MainActivity {
+public class CoastsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
