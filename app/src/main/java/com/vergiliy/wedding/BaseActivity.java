@@ -14,14 +14,15 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.vergiliy.wedding.main.MainActivity;
 import com.vergiliy.wedding.coasts.CoastsActivity;
 import com.vergiliy.wedding.countdown.CountdownActivity;
 import com.vergiliy.wedding.guests.GuestsActivity;
+import com.vergiliy.wedding.setting.SettingActivity;
 import com.vergiliy.wedding.tasks.TasksActivity;
+import com.vergiliy.wedding.vendors.VendorsActivity;
 import com.vergiliy.wedding.info.AboutActivity;
 import com.vergiliy.wedding.info.FeedbackActivity;
-
-import com.vergiliy.wedding.vendors.VendorsActivity;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,6 +84,9 @@ public class BaseActivity extends AppCompatActivity
             case R.id.menu_general_vendors:
                 startActivity(new Intent(this, VendorsActivity.class));
                 break;
+            case R.id.menu_addition_setting:
+                startActivity(new Intent(this, SettingActivity.class));
+                break;
             case R.id.menu_info_about:
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
@@ -101,7 +105,7 @@ public class BaseActivity extends AppCompatActivity
                 }
                 break;
             default:
-                startActivity(new Intent(this, BaseActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
 

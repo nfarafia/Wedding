@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/group_general"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/menu_general_countdown"
             android:icon="@drawable/ic_menu_general_countdown"
@@ -24,21 +26,30 @@
             android:title="@string/activity_vendors_title" />
     </group>
 
-    <item android:title="@string/menu_info">
-        <menu>
-            <item
-                android:id="@+id/menu_info_about"
-                android:icon="@drawable/ic_menu_info_about"
-                android:title="@string/activity_about_title" />
-            <item
-                android:id="@+id/menu_info_feedback"
-                android:icon="@drawable/ic_menu_info_feedback"
-                android:title="@string/activity_feedback_title" />
-            <item
-                android:id="@+id/menu_info_rate"
-                android:icon="@drawable/ic_menu_info_rate"
-                android:title="@string/menu_info_rate" />
-        </menu>
-    </item>
+    <group android:id="@+id/group_addition">
+        <item
+            android:id="@+id/menu_addition_setting"
+            android:icon="@drawable/ic_menu_addition_settings"
+            android:title="@string/activity_setting_title" />
+    </group>
+
+    <group android:id="@+id/group_info">
+        <item android:title="@string/menu_info_title">
+            <menu>
+                <item
+                    android:id="@+id/menu_info_about"
+                    android:icon="@drawable/ic_menu_info_about"
+                    android:title="@string/activity_about_title" />
+                <item
+                    android:id="@+id/menu_info_feedback"
+                    android:icon="@drawable/ic_menu_info_feedback"
+                    android:title="@string/activity_feedback_title" />
+                <item
+                    android:id="@+id/menu_info_rate"
+                    android:icon="@drawable/ic_menu_info_rate"
+                    android:title="@string/menu_info_rate" />
+            </menu>
+        </item>
+    </group>
 
 </menu>
