@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
 
-public class MainFragment extends Fragment {
+public class TasksFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -35,8 +35,8 @@ public class MainFragment extends Fragment {
 
     private int pageNumber;
 
-    public static MainFragment newInstance(int page) {
-        MainFragment pageFragment = new MainFragment();
+    public static TasksFragment newInstance(int page) {
+        TasksFragment pageFragment = new TasksFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);
@@ -64,7 +64,7 @@ public class MainFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new RecyclerAdapter(data);
+        RecyclerView.Adapter adapter = new TasksRecyclerAdapter(data);
         recyclerView.setAdapter(adapter);
 
         return view;

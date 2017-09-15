@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
 
-class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+class TasksRecyclerAdapter extends RecyclerView.Adapter<TasksRecyclerAdapter.ViewHolder> {
     private String[] adapterData;
 
     // Provide a reference to the views for each data item
@@ -23,13 +23,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    RecyclerAdapter(String[] data) {
+    TasksRecyclerAdapter(String[] data) {
         adapterData = data;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TasksRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         TextView textview = (TextView) LayoutInflater
                 .from(parent.getContext())

@@ -53,7 +53,7 @@ public class TasksActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return MainFragment.newInstance(position);
+            return TasksFragment.newInstance(position);
         }
 
         @Override
