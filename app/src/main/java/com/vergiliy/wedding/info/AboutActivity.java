@@ -1,16 +1,17 @@
 package com.vergiliy.wedding.info;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.activity_about_title);
         setContentView(R.layout.activity_about);
         // Change activities with animation
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);

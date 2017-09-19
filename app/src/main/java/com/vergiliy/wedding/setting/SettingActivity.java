@@ -1,37 +1,39 @@
 package com.vergiliy.wedding.setting;
 
-import android.preference.PreferenceActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import java.util.List;
-
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 
-public class SettingActivity extends PreferenceActivity {
+public class SettingActivity extends BaseActivity {
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Change activities with animation
-        overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(R.string.activity_setting_title);
+        setContentView(R.layout.activity_setting);
 
-        LinearLayout root = (LinearLayout)findViewById(android.R.id.list)
-                .getParent().getParent().getParent();
-        Toolbar bar = (Toolbar) LayoutInflater.from(this)
-                .inflate(R.layout.settings_toolbar, root, false);
-        root.addView(bar, 0); // insert at top
+        Bundle extras = getIntent().getExtras();
+        if (extras == null || extras.getBoolean("animation", true)) {
+            // Change activities with animation
+            overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
+        }
 
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        // Show back button in ActionBar
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Получаем элемент ListView
+        ListView listView = (ListView) findViewById(R.id.settingsList);
+
+        // Open selected Fragment from SettingFragmentsActivity
+        listView.setOnItemClickListener(new onItemClickListener());
     }
 
     @Override
@@ -54,14 +56,19 @@ public class SettingActivity extends PreferenceActivity {
         overridePendingTransition(R.anim.back_slide_in, R.anim.back_slide_out);
     }
 
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.settings_header, target);
-    }
+    private class onItemClickListener implements AdapterView.OnItemClickListener {
 
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return SettingsFragment.class.getName().equals(fragmentName)
-                || SettingsOtherFragment.class.getName().equals(fragmentName);
+        @Override
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            switch (position) {
+                case 0:
+                case 1:
+                    Intent intent = new Intent(getApplicationContext(),
+                            SettingFragmentsActivity.class);
+                    intent.putExtra("position", position); // Transfer id
+                    startActivity(intent);
+                    break;
+            }
+        }
     }
 }

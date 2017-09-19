@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -14,11 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.vergiliy.wedding.BaseActivity;
+
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.main.MainActivity;
 
 // Splash screen; open before load MainActivity
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     public static final int DURATION_SPLASH = 5000;
     public static final int DURATION_LOGO = 1000;
@@ -34,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(context, BaseActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -47,10 +46,21 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Replace current language
+        if (languageClass.isChangeLanguage(language)) {
+            languageClass.setLocale(); // Set chosen locale
+        }
+
         setContentView(R.layout.activity_splash);
         animate(); // Start animation
 
-        // Show splash screen duration several seconds then start BaseActivity
+        // Show splash screen duration several seconds then start NavigationActivity
         handler.postDelayed(runnable, DURATION_SPLASH);
     }
 
@@ -61,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
     }
 
-    // Jump to BaseActivity (call when the button clicked)
+    // Jump to NavigationActivity (call when the button clicked)
     public void start(View view){
         Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);

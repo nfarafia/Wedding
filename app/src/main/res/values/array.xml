@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="settings_list_entries">
+        <item>General</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="settings_lang_entries">
+        <item>Default</item>
+        <item>English</item>
+        <item>Russian</item>
+    </string-array>
+    <string-array name="settings_lang_values">
+        <item>default</item>
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
+
+</resources>

@@ -3,14 +3,15 @@ package com.vergiliy.wedding.vendors;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.vergiliy.wedding.BaseActivity;
+import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 
-public class VendorsActivity extends BaseActivity {
+public class VendorsActivity extends NavigationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.activity_vendors_title);
         getLayoutInflater().inflate(R.layout.contant_vendors, frameLayout);
     }
 

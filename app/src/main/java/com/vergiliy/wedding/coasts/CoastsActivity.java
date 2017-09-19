@@ -7,14 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.vergiliy.wedding.BaseActivity;
+import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 
-public class CoastsActivity extends BaseActivity {
+public class CoastsActivity extends NavigationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.activity_coasts_title);
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_coasts, frameLayout);
 

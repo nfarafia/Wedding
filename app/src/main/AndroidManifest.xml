@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vergiliy.wedding">
+
+    <!-- <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> -->
 
     <application
         android:allowBackup="true"
@@ -16,60 +19,49 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:label="@string/filter_view_http_wedding">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="vergiliy.com"
                     android:pathPrefix="/wedding"
                     android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".BaseActivity" />
         <activity
-            android:name=".BaseActivity"
+            android:name=".NavigationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/activity_main_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".countdown.CountdownActivity"
-            android:label="@string/activity_countdown_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".tasks.TasksActivity"
-            android:label="@string/activity_tasks_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".coasts.CoastsActivity"
-            android:label="@string/activity_coasts_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".guests.GuestsActivity"
-            android:label="@string/activity_guests_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".vendors.VendorsActivity"
-            android:label="@string/activity_vendors_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".setting.SettingActivity"
+            android:parentActivityName=".NavigationActivity" />
+        <activity
             android:name=".info.AboutActivity"
-            android:label="@string/activity_about_title"
-            android:parentActivityName=".BaseActivity" />
+            android:parentActivityName=".NavigationActivity" />
         <activity
             android:name=".info.FeedbackActivity"
-            android:label="@string/activity_feedback_title"
-            android:parentActivityName=".BaseActivity" />
-        <activity android:name=".setting.SettingActivity"
-            android:label="@string/activity_setting_title"
-            android:parentActivityName=".BaseActivity">
-        </activity>
+            android:parentActivityName=".NavigationActivity" />
+        <activity android:name=".setting.SettingFragmentsActivity" />
     </application>
-
 </manifest>

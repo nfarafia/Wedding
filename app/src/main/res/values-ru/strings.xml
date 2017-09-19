@@ -1,4 +1,36 @@
 <resources>
     <string name="app_name">Свадьба</string>
     <string name="app_description">Описание приложения</string>
+
+    <string name="splash_button_start">Продолжить</string>
+
+    <string name="navigation_drawer_open">Открыть панель навигации</string>
+    <string name="navigation_drawer_close">Закрыть панель навигации</string>
+
+    <string name="action_settings">Настройки</string>
+
+    <string name="activity_main_title">Главная</string>
+    <string name="activity_countdown_title">Счетчик</string>
+    <string name="activity_tasks_title">Задачи</string>
+    <string name="activity_coasts_title">Цены</string>
+    <string name="activity_guests_title">Гости</string>
+    <string name="activity_vendors_title">Подрядчики</string>
+
+    <string name="activity_setting_title">Настройки</string>
+
+    <string name="menu_info_title">Информация</string>
+    <string name="activity_about_title">О нас</string>
+    <string name="activity_feedback_title">Обратная связь</string>
+    <string name="menu_info_rate">Оценить приложение</string>
+
+    <string name="menu_setting_setting">Настройки</string>
+
+    <string name="test_tasks_page">Страаница %1$d</string>
+    <string name="test_tasks_page_title">Заголовок %1$d</string>
+    <string name="test_tasks_item_click">Позиция %1$d</string>
+
+    <string name="settings_lang_dialog_title">Выберите язык</string>
+    <string name="settings_lang_title">Язык</string>
+    <string name="settings_lang_summary">Чзык приложения</string>
+
 </resources>

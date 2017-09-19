@@ -11,10 +11,10 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.vergiliy.wedding.BaseActivity;
+import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 
-public class TasksActivity extends BaseActivity {
+public class TasksActivity extends NavigationActivity {
 
     static final int PAGE_COUNT = 20;
 
@@ -23,6 +23,7 @@ public class TasksActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.activity_tasks_title);
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_tasks, frameLayout);
 
