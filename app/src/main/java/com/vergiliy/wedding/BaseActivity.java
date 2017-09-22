@@ -4,13 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.vergiliy.wedding.main.MainActivity;
-import com.vergiliy.wedding.setting.SettingActivity;
-
-import static android.R.attr.data;
-import static android.R.id.message;
 
 public class BaseActivity extends AppCompatActivity {
 

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.vergiliy.wedding.BaseActivity;
 
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.ShortcutIcon;
 
 // Splash screen; open before load MainActivity
 public class SplashActivity extends BaseActivity {
@@ -46,6 +47,10 @@ public class SplashActivity extends BaseActivity {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         super.onCreate(savedInstanceState);
+
+        // Create shortcut icon
+        ShortcutIcon icon = new ShortcutIcon(this);
+        icon.createShortcutIcon();
     }
 
     @Override

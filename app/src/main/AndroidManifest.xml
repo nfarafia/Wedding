@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vergiliy.wedding">
 
-    <!-- <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <application
         android:allowBackup="true"

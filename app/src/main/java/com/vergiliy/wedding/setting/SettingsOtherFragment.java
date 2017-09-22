@@ -38,24 +38,6 @@ public class SettingsOtherFragment extends PreferenceFragment
                         .replace(R.id.settings_content, new SettingsOtherFragment())
                         .commit();
             }
-            // ShortcutIcon();
         }
     }
-
-    /*
-    private void ShortcutIcon(){
-        Intent shortcutIntent = new Intent(activity, SplashActivity.class);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        Intent addIntent = new Intent();
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Test");
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(activity, R.mipmap.ic_launcher));
-        addIntent.putExtra("duplicate", false);
-        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        activity.sendBroadcast(addIntent);
-    }
-    */
 }
