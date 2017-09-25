@@ -8,15 +8,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class TasksActivity extends NavigationActivity {
 
-    static final int PAGE_COUNT = 20;
+    static final int PAGE_COUNT = 13;
+
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+    static final String wedding_date_string = "2018-05-12 14:00";
+    // static Date wedding_date = new Date(1526122800000L); // Saturday, May 12, 2018 2:00:00 PM GMT+03:00
+    Date wedding_date;
+    Calendar calendar;
 
     ViewPager viewPager;
 
@@ -26,6 +38,17 @@ public class TasksActivity extends NavigationActivity {
         setTitle(R.string.activity_tasks_title);
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_tasks, frameLayout);
+
+        // Get Date from string
+        try {
+            wedding_date = format.parse(wedding_date_string);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        calendar = Calendar.getInstance();
+        calendar.setTime(wedding_date);
+        // Отнимаем год от текущей даты свадьбы (перехлестом на месяц)
+        calendar.add(Calendar.MONTH, -PAGE_COUNT + 1);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -64,7 +87,8 @@ public class TasksActivity extends NavigationActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return getResources().getString(R.string.test_tasks_page_title, position);
+            calendar.add(Calendar.MONTH, 1); // Прибавляем по месяцу
+            return DateFormat.format("LLLL yyyy", calendar);
         }
     }
 

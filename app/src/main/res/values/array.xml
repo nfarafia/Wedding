@@ -6,12 +6,12 @@
         <item>Other</item>
     </string-array>
 
-    <string-array name="settings_lang_entries">
+    <string-array name="settings_language_entries">
         <item>Default</item>
         <item>English</item>
         <item>Russian</item>
     </string-array>
-    <string-array name="settings_lang_values">
+    <string-array name="settings_language_values">
         <item>default</item>
         <item>en</item>
         <item>ru</item>

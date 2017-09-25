@@ -5,7 +5,7 @@
         <item>Прочее</item>
     </string-array>
 
-    <string-array name="settings_lang_entries">
+    <string-array name="settings_language_entries">
         <item>По умолчанию</item>
         <item>Английский</item>
         <item>Русский</item>

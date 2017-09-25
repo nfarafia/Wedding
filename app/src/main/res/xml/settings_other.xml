@@ -3,11 +3,11 @@
 
     <ListPreference
         android:key="language"
-        android:title="@string/settings_lang_title"
-        android:summary="@string/settings_lang_summary"
-        android:entries="@array/settings_lang_entries"
-        android:entryValues="@array/settings_lang_values"
-        android:defaultValue="@string/settings_lang_default"
-        android:dialogTitle="@string/settings_lang_dialog_title" />
+        android:title="@string/settings_language_title"
+        android:summary="@string/settings_language_summary"
+        android:entries="@array/settings_language_entries"
+        android:entryValues="@array/settings_language_values"
+        android:defaultValue="@string/settings_language_default"
+        android:dialogTitle="@string/settings_language_dialog_title" />
 
 </PreferenceScreen>

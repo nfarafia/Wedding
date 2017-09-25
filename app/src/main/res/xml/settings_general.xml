@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen/>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_names">
+        <EditTextPreference
+            android:key="bride"
+            android:title="@string/settings_bride_title"
+            android:summary="@string/settings_bride_summary" />
+        <EditTextPreference
+            android:key="groom"
+            android:title="@string/settings_groom_title"
+            android:summary="@string/settings_groom_summary" />
+        <EditTextPreference
+            android:key="couple"
+            android:title="@string/settings_couple_title"
+            android:summary="@string/settings_couple_summary" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Date and time">
+        <com.vergiliy.wedding.setting.DatePreference
+            android:key="date"
+            android:title="@string/settings_date_title"
+            android:summary="@string/settings_date_summary"
+            android:defaultValue="@string/settings_date_default" />
+        <com.vergiliy.wedding.setting.TimePreference
+            android:key="time"
+            android:title="@string/settings_time_title"
+            android:summary="@string/settings_time_summary"
+            android:defaultValue="@string/settings_time_default" />
+    </PreferenceCategory>
+</PreferenceScreen>
