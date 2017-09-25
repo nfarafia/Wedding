@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 
 import com.vergiliy.wedding.R;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -18,6 +19,7 @@ import java.util.Locale;
 public class DatePreference extends DialogPreference {
     private Integer date, month, year;
     private DatePicker picker = null;
+    public static final SimpleDateFormat DATA_FORMAT = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
 
     // Initialization DialogPreference
     public DatePreference(Context context, AttributeSet attrs) {
@@ -124,16 +126,14 @@ public class DatePreference extends DialogPreference {
     String getDateForSummary(String string) {
         Date date = null;
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
-
         // Get Date from string
         try {
-            date = format.parse(string);
+            date = DATA_FORMAT.parse(string);
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
 
-        format = (SimpleDateFormat) DateFormat.getDateFormat(getContext());
+        Format format = DateFormat.getDateFormat(getContext());
 
         return format.format(date);
     }

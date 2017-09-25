@@ -1,6 +1,8 @@
 package com.vergiliy.wedding.tasks;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,19 +16,15 @@ import android.view.View;
 
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.setting.DatePreference;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class TasksActivity extends NavigationActivity {
 
     static final int PAGE_COUNT = 13;
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-    static final String wedding_date_string = "2018-05-12 14:00";
-    // static Date wedding_date = new Date(1526122800000L); // Saturday, May 12, 2018 2:00:00 PM GMT+03:00
     Date wedding_date;
     Calendar calendar;
 
@@ -38,10 +36,22 @@ public class TasksActivity extends NavigationActivity {
         setTitle(R.string.activity_tasks_title);
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_tasks, frameLayout);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check current activity in the NavigationDrawer
+        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_tasks)
+                .setChecked(true);
+
+        // Get wedding date from preferences
+        SharedPreferences SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String text = SharedPreferences.getString("date", null);
 
         // Get Date from string
         try {
-            wedding_date = format.parse(wedding_date_string);
+            wedding_date = DatePreference.DATA_FORMAT.parse(text);
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
@@ -59,14 +69,6 @@ public class TasksActivity extends NavigationActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Check current activity in the NavigationDrawer
-        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_tasks)
-                .setChecked(true);
     }
 
     private class ViewPagerAdapter extends FragmentStatePagerAdapter{
