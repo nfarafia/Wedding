@@ -28,6 +28,8 @@
 
     <string name="test_tasks_page">Page %1$d</string>
     <string name="test_tasks_item_click">Position %1$d</string>
+    <string name="test_coasts_page">Page %1$d</string>
+    <string name="test_coasts_item_click">Position %1$d</string>
 
     <string name="settings_dialog_set">Set</string>
     <string name="settings_dialog_cancel">Cancel</string>

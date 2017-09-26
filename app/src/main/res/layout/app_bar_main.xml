@@ -42,7 +42,8 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/content_frame"
         app:layout_anchorGravity="bottom|right"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        android:visibility="gone" />
+        app:srcCompat="@drawable/ic_floating_button_add"
+        android:visibility="gone"
+        android:tint="@android:color/white" />
 
 </android.support.design.widget.CoordinatorLayout>
