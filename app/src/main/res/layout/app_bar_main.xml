@@ -44,6 +44,6 @@
         app:layout_anchorGravity="bottom|right"
         app:srcCompat="@drawable/ic_floating_button_add"
         android:visibility="gone"
-        android:tint="@android:color/white" />
+        android:tint="@color/white" />
 
 </android.support.design.widget.CoordinatorLayout>

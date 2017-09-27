@@ -3,9 +3,9 @@
     <color name="colorPrimary">#e63244</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#e63244</color>
-
-
-    <color name="colorWhite">#ffffff</color>
-    <color name="colorBlack">#000000</color>
     <color name="colorBorder">#d0ced0</color>
+    <color name="colorBackgroundActionMode">#970615</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

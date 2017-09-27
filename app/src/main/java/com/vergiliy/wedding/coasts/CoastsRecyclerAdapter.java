@@ -1,9 +1,14 @@
 package com.vergiliy.wedding.coasts;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,18 +24,79 @@ class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.V
     private List<Coast> list;
     private CoastsDatabase database;
 
+    private static Boolean callActionMode = false;
+
     // Provide a reference to the views for each data item
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        CoastsActivity context;
+        CardView item;
         public TextView name;
         ImageView delete;
         ImageView edit;
 
-        ViewHolder(View itemView) {
+        // Create ActionMode callback (Action Bar for Long click by item)
+        private ActionMode.Callback ActionModeCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                callActionMode = true;
+                MenuInflater menuInflater = context.getMenuInflater();
+                menuInflater.inflate(R.menu.action_mode, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    // Edit item
+                    case R.id.action_edit:
+                        item.findViewById(R.id.ic_coast_edit).callOnClick();
+                        mode.finish();
+                        return true;
+                    // Delete item
+                    case R.id.action_delete:
+                        item.findViewById(R.id.ic_coast_delete).callOnClick();
+                        mode.finish();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                callActionMode = false;
+                context.getViewPager().getAdapter().notifyDataSetChanged();
+            }
+        };
+
+        ViewHolder(final View itemView) {
             super(itemView);
 
+            context = (CoastsActivity) itemView.getContext();
+            item = (CardView) itemView.findViewById(R.id.coast_list_item);
             name = (TextView) itemView.findViewById(R.id.coast_list_name);
             delete = (ImageView) itemView.findViewById(R.id.ic_coast_delete);
             edit = (ImageView) itemView.findViewById(R.id.ic_coast_edit);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    // ActionMode already running
+                    if (callActionMode) {
+                        return false;
+                    }
+                    context.startSupportActionMode(ActionModeCallback);
+                    item.setCardBackgroundColor(Color.LTGRAY);
+
+                    return true;
+                }
+            });
         }
     }
 

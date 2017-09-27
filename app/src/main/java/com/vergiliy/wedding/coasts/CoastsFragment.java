@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,7 @@ import com.vergiliy.wedding.R;
 
 import java.util.List;
 
-interface Updatable {
-    void update();
-}
-
-public class CoastsFragment extends Fragment implements Updatable {
+public class CoastsFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -68,10 +63,5 @@ public class CoastsFragment extends Fragment implements Updatable {
         }
 
         return view;
-    }
-
-    // Update ViewPager fragment
-    public void update() {
-        Log.e("Update", "Need to update the fragment");
     }
 }

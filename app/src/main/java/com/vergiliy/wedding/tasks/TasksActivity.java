@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -91,11 +92,16 @@ public class TasksActivity extends NavigationActivity {
         String text = SharedPreferences.getString("date", null);
 
         // Get Date from string
-        try {
-            wedding_date = DatePreference.DATA_FORMAT.parse(text);
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
+        if (text != null) {
+            try {
+                wedding_date = DatePreference.DATA_FORMAT.parse(text);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            wedding_date = new Date();
         }
+
         calendar = Calendar.getInstance();
         calendar.setTime(wedding_date);
         // Отнимаем год от текущей даты свадьбы (перехлестом на месяц)
