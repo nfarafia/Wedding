@@ -9,15 +9,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.ZoomOutPageTransformer;
-import com.vergiliy.wedding.tasks.TasksFragment;
 
 public class CoastsActivity extends NavigationActivity {
 
@@ -25,65 +24,9 @@ public class CoastsActivity extends NavigationActivity {
 
     ViewPager viewPager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle(R.string.activity_coasts_title);
-        // Replace FrameLayout on our activity layout
-        getLayoutInflater().inflate(R.layout.contant_coasts, frameLayout);
+    protected CoastsDatabase database;
 
-        // Creating FloatingButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Check current activity in the NavigationDrawer
-        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_coasts)
-                .setChecked(true);
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new PageChangeListener());
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setVisibility(View.VISIBLE);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
+    // Create ViewPagerAdapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private ViewPagerAdapter(FragmentManager manager) {
@@ -106,8 +49,9 @@ public class CoastsActivity extends NavigationActivity {
         }
     }
 
-    // Класс, который обрабатывает нажатия на страницы
+    // Listener clicks on page title
     private class PageChangeListener implements OnPageChangeListener {
+
         @Override
         public void onPageSelected(int position) {
             String text = getResources().getString(R.string.test_tasks_page, position);
@@ -121,5 +65,78 @@ public class CoastsActivity extends NavigationActivity {
         @Override
         public void onPageScrollStateChanged(int state) {
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(R.string.activity_coasts_title);
+        // Replace FrameLayout on our activity layout
+        getLayoutInflater().inflate(R.layout.contant_coasts, frameLayout);
+
+        // Create new database
+        database = new CoastsDatabase(this);
+
+        // Creating FloatingButton
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(new CoastProcessing());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check current activity in the NavigationDrawer
+        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_coasts)
+                .setChecked(true);
+
+        // Create ViewPager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new PageChangeListener());
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setVisibility(View.VISIBLE);
+    }
+
+    // Create top context menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    // Top context menu listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        // Display Toasts when pressed button action_settings in top context menu
+        if (id == R.id.action_settings) {
+            Toast.makeText(this, R.string.test_menu_setting_click,
+                    Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Close Database connection when activity destroyed
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (database != null) {
+            database.close();
+        }
+    }
+
+    // Get database
+    public CoastsDatabase getDatabase() {
+        return database;
     }
 }

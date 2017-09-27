@@ -25,8 +25,8 @@ public class DatePreference extends DialogPreference {
     public DatePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setPositiveButtonText(R.string.settings_dialog_set);
-        setNegativeButtonText(R.string.settings_dialog_cancel);
+        setPositiveButtonText(R.string.dialog_button_set);
+        setNegativeButtonText(R.string.dialog_button_cancel);
     }
 
     // Create dialog TimePicker

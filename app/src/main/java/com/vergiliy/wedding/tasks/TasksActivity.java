@@ -31,6 +31,46 @@ public class TasksActivity extends NavigationActivity {
 
     ViewPager viewPager;
 
+    // Create ViewPagerAdapter
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter{
+        private ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return TasksFragment.newInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            return PAGE_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            calendar.add(Calendar.MONTH, 1); // Прибавляем по месяцу
+            return DateFormat.format("LLLL yyyy", calendar);
+        }
+    }
+
+    // Listener clicks by page title
+    private class PageChangeListener implements OnPageChangeListener {
+        @Override
+        public void onPageSelected(int position) {
+            String text = getResources().getString(R.string.test_tasks_page, position);
+            Snackbar.make(viewPager, text, Snackbar.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,45 +110,5 @@ public class TasksActivity extends NavigationActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setVisibility(View.VISIBLE);
-    }
-
-    private class ViewPagerAdapter extends FragmentStatePagerAdapter{
-
-        private ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return TasksFragment.newInstance(position);
-        }
-
-        @Override
-        public int getCount() {
-            return PAGE_COUNT;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            calendar.add(Calendar.MONTH, 1); // Прибавляем по месяцу
-            return DateFormat.format("LLLL yyyy", calendar);
-        }
-    }
-
-    // Класс, который обрабатывает нажатия на страницы
-    private class PageChangeListener implements OnPageChangeListener {
-        @Override
-        public void onPageSelected(int position) {
-            String text = getResources().getString(R.string.test_tasks_page, position);
-            Snackbar.make(viewPager, text, Snackbar.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-        }
     }
 }

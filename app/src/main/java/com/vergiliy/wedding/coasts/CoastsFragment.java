@@ -8,36 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.tasks.TasksFragment;
+
+import java.util.List;
 
 public class CoastsFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
-    private final String data[] = new String[] {
-            "one one one one one one one one one",
-            "two two two two two two two two two two two two",
-            "three three three three three three three three",
-            "four four four four four four four",
-            "five five five five five five five five",
-            "six six six six six six six six six six six six six six six six six six",
-            "seven seven seven seven seven seven seven seven seven seven",
-            "eight eight eight eight eight eight eight",
-            "nine nine nine nine nine nine nine nine nine nine",
-            "ten ten ten ten ten ten ten ten ten ten",
-            "eleven eleven eleven eleven eleven eleven eleven eleven eleven eleven eleven",
-            "twelve twelve twelve twelve twelve twelve twelve twelve twelve",
-            "thirteen thirteen thirteen thirteen thirteen thirteen",
-            "fourteen fourteen fourteen fourteen fourteen fourteen",
-            "fifteen fifteen fifteen fifteen fifteen",
-            "sixteen sixteen sixteen sixteen"};
-
     private int pageNumber;
 
-    public static TasksFragment newInstance(int page) {
-        TasksFragment pageFragment = new TasksFragment();
+    public static CoastsFragment newInstance(int page) {
+        CoastsFragment pageFragment = new CoastsFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);
@@ -53,6 +37,8 @@ public class CoastsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        CoastsActivity activity = (CoastsActivity) this.getActivity();
+
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         TextView pageName = (TextView) view.findViewById(R.id.page_name);
@@ -62,11 +48,19 @@ public class CoastsFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.page_list);
         recyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new CoastsRecyclerAdapter(data);
-        recyclerView.setAdapter(adapter);
+        // Get coats from database
+        List<Coast> all = activity.database.getAll();
+        if (all.size() > 0) {
+            recyclerView.setVisibility(View.VISIBLE);
+            RecyclerView.Adapter adapter = new CoastsRecyclerAdapter(activity, all);
+            recyclerView.setAdapter(adapter);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            Toast.makeText(activity, R.string.coast_list_none, Toast.LENGTH_LONG).show();
+        }
 
         return view;
     }

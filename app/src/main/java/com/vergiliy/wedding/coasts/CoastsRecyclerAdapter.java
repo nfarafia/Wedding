@@ -1,62 +1,95 @@
 package com.vergiliy.wedding.coasts;
 
-import android.support.design.widget.Snackbar;
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
 
+import java.util.List;
+
 class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.ViewHolder> {
-    private String[] adapterData;
+
+    private Activity context;
+    private List<Coast> list;
+    private CoastsDatabase database;
 
     // Provide a reference to the views for each data item
     static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        private TextView textview;
-        private ViewHolder(TextView v) {
-            super(v);
-            textview = v;
+        public TextView name;
+        ImageView delete;
+        ImageView edit;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            name = (TextView) itemView.findViewById(R.id.coast_list_name);
+            delete = (ImageView) itemView.findViewById(R.id.ic_coast_delete);
+            edit = (ImageView) itemView.findViewById(R.id.ic_coast_edit);
+        }
+    }
+
+    // Listener clicks on Delete button
+    private class DeleteButtonListener implements View.OnClickListener {
+
+        private Coast coast = null;
+
+        // Get coast from main class CoastsRecyclerAdapter
+        DeleteButtonListener(Coast coast) {
+            this.coast = coast;
+        }
+
+        @Override
+        public void onClick(View view) {
+            //delete row from database
+            database.delete(coast.getId());
+
+
+
+            //refresh the activity page.
+            context.finish();
+            context.startActivity(context.getIntent());
+
+
+
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    CoastsRecyclerAdapter(String[] data) {
-        adapterData = data;
+    CoastsRecyclerAdapter(Context context, List<Coast> list) {
+        this.context = (Activity) context;
+        this.list = list;
+        database = new CoastsDatabase(context);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public CoastsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        TextView textview = (TextView) LayoutInflater
-                .from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_1, parent, false);
+        View view = LayoutInflater
+                .from(parent.getContext()).inflate(R.layout.coasts_list_item, parent, false);
 
-        return new ViewHolder(textview);
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final int currentPosition = holder.getAdapterPosition();
-        holder.textview.setText(adapterData[currentPosition]);
+        final Coast coast = list.get(position);
 
-        holder.textview.setOnClickListener (new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = view.getResources()
-                        .getString(R.string.test_tasks_item_click, currentPosition);
-                Snackbar.make(view, text, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        holder.name.setText(coast.getName());
+        holder.edit.setOnClickListener(new CoastProcessing(coast));
+        holder.delete.setOnClickListener(new DeleteButtonListener(coast));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return adapterData.length;
+        return list.size();
     }
 }
