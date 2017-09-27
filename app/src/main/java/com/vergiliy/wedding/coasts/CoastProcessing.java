@@ -53,14 +53,8 @@ class CoastProcessing implements View.OnClickListener {
                     context.getDatabase().add(item);
                 }
 
-
-
-                // Refresh the activity
-                context.finish();
-                context.startActivity(context.getIntent());
-
-
-
+                // Update current fragment
+                context.getViewPager().getAdapter().notifyDataSetChanged();
             }
         }
     }

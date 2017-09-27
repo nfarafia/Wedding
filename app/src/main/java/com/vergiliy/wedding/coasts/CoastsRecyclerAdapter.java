@@ -15,7 +15,7 @@ import java.util.List;
 
 class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.ViewHolder> {
 
-    private Activity context;
+    private CoastsActivity context;
     private List<Coast> list;
     private CoastsDatabase database;
 
@@ -46,23 +46,17 @@ class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.V
 
         @Override
         public void onClick(View view) {
-            //delete row from database
+            // Delete row from database
             database.delete(coast.getId());
 
-
-
-            //refresh the activity page.
-            context.finish();
-            context.startActivity(context.getIntent());
-
-
-
+            // Update current fragment
+            context.getViewPager().getAdapter().notifyDataSetChanged();
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     CoastsRecyclerAdapter(Context context, List<Coast> list) {
-        this.context = (Activity) context;
+        this.context = (CoastsActivity) context;
         this.list = list;
         database = new CoastsDatabase(context);
     }

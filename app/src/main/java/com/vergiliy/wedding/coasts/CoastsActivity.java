@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,7 @@ public class CoastsActivity extends NavigationActivity {
 
     static final int PAGE_COUNT = 5;
 
-    ViewPager viewPager;
+    protected ViewPager viewPager;
 
     protected CoastsDatabase database;
 
@@ -46,6 +47,12 @@ public class CoastsActivity extends NavigationActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return getResources().getString(R.string.test_coasts_page, position);
+        }
+
+        // For update fragment when call notifyDataSetChanged();
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 
@@ -138,5 +145,10 @@ public class CoastsActivity extends NavigationActivity {
     // Get database
     public CoastsDatabase getDatabase() {
         return database;
+    }
+
+    // Get viewPager
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 }
