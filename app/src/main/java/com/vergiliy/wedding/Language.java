@@ -15,8 +15,8 @@ public class Language {
 
     protected Context context;
 
-    Language(Context c) {
-        context = c;
+    Language(Context context) {
+        this.context = context;
     }
 
     // Get current language
@@ -36,14 +36,14 @@ public class Language {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String preferencesLanguage = preferences.getString("language_temp", null);
 
-        // Log.d("Logs", "Language: current = " + language + ", new = " + preferencesLanguage);
+        // Log.e("Logs", "Language: current = " + language + ", new = " + preferencesLanguage);
 
         return !(preferencesLanguage == null || language.equals(preferencesLanguage));
     }
 
     // Set chosen locale
     // @SuppressWarnings("deprecation")
-    public void setLocale() {
+    public String setLocale() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String preferencesLanguage = preferences.getString("language", "default");
 
@@ -62,7 +62,7 @@ public class Language {
         // Update preferences (variable language)
         preferences.edit().putString("language_temp", preferencesLanguage).apply();
 
-        // Log.d("Logs", "Set new language = " + preferencesLanguage);
+        // Log.e("Logs", "Set new language = " + preferencesLanguage);
 
         // Set new language
         Resources resources = context.getResources();
@@ -82,5 +82,7 @@ public class Language {
         } else {
             resources.updateConfiguration(configuration, null);
         }
+
+        return preferencesLanguage;
     }
 }

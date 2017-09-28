@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+
+import static com.vergiliy.wedding.main.SplashActivity.DURATION_SPLASH;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -13,7 +17,17 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         language = languageClass.getLanguage(); // Save current language
+
+        // Get language before flip screen
+        if (savedInstanceState != null) {
+            String language_temp = savedInstanceState.getString("language", null);
+            // Restore current language
+            if (language_temp != null && !language.equals(language_temp)) {
+                language = languageClass.setLocale(); // Set chosen locale (and save return value)
+            }
+        }
     }
 
     @Override
@@ -26,5 +40,12 @@ public class BaseActivity extends AppCompatActivity {
             finish();
             startActivity(intent);
         }
+    }
+
+    // Save current language for screen flip
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("language", language);
     }
 }
