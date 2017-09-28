@@ -46,11 +46,11 @@ class CoastProcessing implements View.OnClickListener {
                         Toast.LENGTH_LONG).show();
             } else {
                 if (coast != null) {
-                    Coast item = new Coast(coast.getId(), name, quantity);
-                    context.getDatabase().update(item);
+                    Coast item = new Coast(coast.getId(), 1, name, quantity);
+                    context.getDbMain().update(item);
                 } else {
-                    Coast item = new Coast(name, quantity);
-                    context.getDatabase().add(item);
+                    Coast item = new Coast(1, name, quantity);
+                    context.getDbMain().add(item);
                 }
 
                 // Update current fragment

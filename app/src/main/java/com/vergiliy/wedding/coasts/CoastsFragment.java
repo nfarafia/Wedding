@@ -16,14 +16,14 @@ import java.util.List;
 
 public class CoastsFragment extends Fragment {
 
-    static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+    static final String PAGE_NUMBER = "page_number";
 
-    private int pageNumber;
+    private int page;
 
     public static CoastsFragment newInstance(int page) {
         CoastsFragment pageFragment = new CoastsFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
+        arguments.putInt(PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);
         return pageFragment;
     }
@@ -31,7 +31,7 @@ public class CoastsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        page = getArguments().getInt(PAGE_NUMBER);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CoastsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         TextView pageName = (TextView) view.findViewById(R.id.page_name);
-        String text = getString(R.string.test_tasks_page, pageNumber);
+        String text = getString(R.string.test_tasks_page, page);
         pageName.setText(text);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.page_list);
@@ -51,8 +51,9 @@ public class CoastsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        // Get coats from database
-        List<Coast> all = activity.database.getAll();
+        // Get coats from db_main
+        int section_id = activity.getSectionIdByPosition(page);
+        List<Coast> all = activity.getDbMain().getAllBySectionId(section_id);
         if (all.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
             RecyclerView.Adapter adapter = new CoastsRecyclerAdapter(activity, all);

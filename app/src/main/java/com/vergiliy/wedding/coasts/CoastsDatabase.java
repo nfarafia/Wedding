@@ -9,51 +9,44 @@ import com.vergiliy.wedding.helpers.SQLiteHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 class CoastsDatabase extends SQLiteHelper {
 
-    private	static final int VERSION =	1;
     private	static final String TABLE = "coasts";
     private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_IDSECTION = "id_section";
     private static final String COLUMN_PRODUCTNAME = "productname";
     private static final String COLUMN_QUANTITY = "quantity";
 
     // Create access to database
     CoastsDatabase(Context context) {
-        super(context, VERSION);
-    }
-
-    // Create table when it does not exist
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String CREATE_PRODUCTS_TABLE =
-                "CREATE	TABLE " + TABLE +
-                        "(" + COLUMN_ID + " INTEGER PRIMARY KEY," +
-                        COLUMN_PRODUCTNAME + " TEXT," +
-                        COLUMN_QUANTITY + " INTEGER" + ")";
-        db.execSQL(CREATE_PRODUCTS_TABLE);
-    }
-
-    // Update table when version change
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE);
-        onCreate(db);
+        super(context);
     }
 
     // Get all fields
-    List<Coast> getAll(){
+    private List<Coast> getAll(){
+        return getAll(null);
+    }
+
+    // Get all fields
+    private List<Coast> getAll(Integer section_id){
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE;
+        StringBuilder sql = new StringBuilder("SELECT * FROM " + TABLE);
+        if (section_id > 0) {
+            sql.append(String.format(Locale.getDefault(), " WHERE id_section = %d",  section_id));
+        }
+
         List<Coast> all = new ArrayList<>();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = db.rawQuery(sql.toString(), null);
 
         if (cursor.moveToFirst()) {
             do {
                 int id = Integer.parseInt(cursor.getString(0));
-                String name = cursor.getString(1);
-                int quantity = Integer.parseInt(cursor.getString(2));
-                all.add(new Coast(id, name, quantity));
+                int id_section = Integer.parseInt(cursor.getString(1));
+                String name = cursor.getString(2);
+                int quantity = Integer.parseInt(cursor.getString(3));
+                all.add(new Coast(id, id_section, name, quantity));
             } while (cursor.moveToNext());
         }
 
@@ -61,10 +54,16 @@ class CoastsDatabase extends SQLiteHelper {
         return all;
     }
 
+    // Get all fields by section id
+    List<Coast> getAllBySectionId(int section_id){
+        return getAll(section_id);
+    }
+
     // Add new field
-    public void add(Coast product){
+    void add(Coast product){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COLUMN_IDSECTION, product.getIdSection());
         values.put(COLUMN_PRODUCTNAME, product.getName());
         values.put(COLUMN_QUANTITY, product.getQuantity());
         db.insert(TABLE, null, values);
@@ -74,6 +73,7 @@ class CoastsDatabase extends SQLiteHelper {
     void update(Coast product){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COLUMN_IDSECTION, product.getIdSection());
         values.put(COLUMN_PRODUCTNAME, product.getName());
         values.put(COLUMN_QUANTITY, product.getQuantity());
         db.update(TABLE, values, COLUMN_ID	+ "	= ?",
@@ -82,7 +82,7 @@ class CoastsDatabase extends SQLiteHelper {
 
     /*
     // Find fiend
-    public Coast find(String name){
+    Coast find(String name){
         SQLiteDatabase db = getWritableDatabase();
         String query = "Select * FROM "	+ TABLE + " WHERE name=" + COLUMN_PRODUCTNAME;
         Coast coast = null;

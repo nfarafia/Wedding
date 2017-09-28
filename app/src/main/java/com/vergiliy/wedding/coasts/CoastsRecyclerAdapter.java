@@ -112,7 +112,7 @@ class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.V
 
         @Override
         public void onClick(View view) {
-            // Delete row from database
+            // Delete row from db_main
             database.delete(coast.getId());
 
             // Update current fragment

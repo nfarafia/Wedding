@@ -40,7 +40,8 @@
     <string name="test_coasts_item_click">Position %1$d</string>
     <string name="test_menu_setting_click">Click button Setting</string>
 
-    <string name="coast_list_none">There is no product in the database. Start adding now</string>
+    <string name="coast_title_none">There is no sections</string>
+    <string name="coast_list_none">There is no coasts. Start adding now</string>
     <string name="coast_dialog_title_add">Add new coast</string>
     <string name="coast_dialog_title_edit">Edit cast</string>
     <string name="coast_dialog_error">Something went wrong. Check your input values</string>

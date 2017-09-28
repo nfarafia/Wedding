@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +18,17 @@ import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.ZoomOutPageTransformer;
 
-public class CoastsActivity extends NavigationActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    static final int PAGE_COUNT = 5;
+public class CoastsActivity extends NavigationActivity {
 
     protected ViewPager viewPager;
 
-    protected CoastsDatabase database;
+    private CoastsDatabase db_main;
+    protected CoastsSectionsDatabase db_sections;
+
+    private List<CoastsSection> title = new ArrayList<>();
 
     // Create ViewPagerAdapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -41,12 +44,12 @@ public class CoastsActivity extends NavigationActivity {
 
         @Override
         public int getCount() {
-            return PAGE_COUNT;
+            return title.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return getResources().getString(R.string.test_coasts_page, position);
+            return title.get(position).getName();
         }
 
         // For update fragment when call notifyDataSetChanged();
@@ -81,8 +84,16 @@ public class CoastsActivity extends NavigationActivity {
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_coasts, frameLayout);
 
-        // Create new database
-        database = new CoastsDatabase(this);
+        // Create new CoastsDatabase and CoastsSectionsDatabase
+        db_main = new CoastsDatabase(this);
+        db_sections = new CoastsSectionsDatabase(this);
+
+        // Get sections from database
+        title = db_sections.getAll();
+        if (title.size() == 0 ) {
+            Toast.makeText(getApplicationContext(), R.string.coast_title_none,
+                    Toast.LENGTH_LONG).show();
+        }
 
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -137,18 +148,27 @@ public class CoastsActivity extends NavigationActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (database != null) {
-            database.close();
+        if (db_main != null) {
+            db_main.close();
+        }
+        if (db_sections != null) {
+            db_sections.close();
         }
     }
 
-    // Get database
-    public CoastsDatabase getDatabase() {
-        return database;
+    // Get db_main
+    public CoastsDatabase getDbMain() {
+        return db_main;
     }
 
     // Get viewPager
     public ViewPager getViewPager() {
         return viewPager;
+    }
+
+
+    // Get title id by position
+    public int getSectionIdByPosition(int position) {
+        return title.get(position).getId();
     }
 }
