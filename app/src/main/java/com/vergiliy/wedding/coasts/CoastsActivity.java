@@ -28,7 +28,7 @@ public class CoastsActivity extends NavigationActivity {
     private CoastsDatabase db_main;
     protected CoastsSectionsDatabase db_sections;
 
-    private List<CoastsSection> title = new ArrayList<>();
+    private List<CoastsSection> sections = new ArrayList<>();
 
     // Create ViewPagerAdapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -44,12 +44,12 @@ public class CoastsActivity extends NavigationActivity {
 
         @Override
         public int getCount() {
-            return title.size();
+            return sections.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return title.get(position).getName();
+            return sections.get(position).getName();
         }
 
         // For update fragment when call notifyDataSetChanged();
@@ -59,7 +59,7 @@ public class CoastsActivity extends NavigationActivity {
         }
     }
 
-    // Listener clicks on page title
+    // Listener clicks on page sections
     private class PageChangeListener implements OnPageChangeListener {
 
         @Override
@@ -89,8 +89,8 @@ public class CoastsActivity extends NavigationActivity {
         db_sections = new CoastsSectionsDatabase(this);
 
         // Get sections from database
-        title = db_sections.getAll();
-        if (title.size() == 0 ) {
+        sections = db_sections.getAll();
+        if (sections.size() == 0 ) {
             Toast.makeText(getApplicationContext(), R.string.coast_title_none,
                     Toast.LENGTH_LONG).show();
         }
@@ -167,8 +167,13 @@ public class CoastsActivity extends NavigationActivity {
     }
 
 
-    // Get title id by position
+    // Get sections id by position
     public int getSectionIdByPosition(int position) {
-        return title.get(position).getId();
+        return sections.get(position).getId();
+    }
+
+    // Get sections
+    public List<CoastsSection> getSections() {
+        return sections;
     }
 }

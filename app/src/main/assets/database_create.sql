@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `coasts_sections` (
 	`position`	INTEGER DEFAULT NULL
 );
 INSERT INTO `coasts_sections` VALUES (1,'Attire & Accessories',1);
-INSERT INTO `coasts_sections` VALUES (2,'Health & beauty',2);
+INSERT INTO `coasts_sections` VALUES (2,'Health & Beauty',2);
 INSERT INTO `coasts_sections` VALUES (3,'Music',3);
 INSERT INTO `coasts_sections` VALUES (4,'Flowers',4);
 INSERT INTO `coasts_sections` VALUES (5,'Jewelry',5);

@@ -19,4 +19,9 @@
     <style name="ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/colorBackgroundActionMode</item>
     </style>
+    <style name="DialogFullScreen" parent="ThemeOverlay.AppCompat.Dialog">
+        <!-- <item name="android:windowIsFloating">false</item> -->
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+    </style>
 </resources>

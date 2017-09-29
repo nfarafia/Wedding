@@ -59,7 +59,7 @@ public class CoastsFragment extends Fragment {
             RecyclerView.Adapter adapter = new CoastsRecyclerAdapter(activity, all);
             recyclerView.setAdapter(adapter);
         } else {
-            recyclerView.setVisibility(View.GONE);
+            // recyclerView.setVisibility(View.GONE);
             Toast.makeText(activity, R.string.coast_list_none, Toast.LENGTH_LONG).show();
         }
 

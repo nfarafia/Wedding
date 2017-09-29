@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp"
-    android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp">
 
-    <EditText
-        android:id="@+id/coast_add_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/coast_dialog_name_hint"
-        android:textSize="@dimen/text_edit_size"
-        android:inputType="text"
-        android:background="@drawable/edit_text_border"
-        android:maxLines="1"
-        android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="12dp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/coast_edit_quantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/coast_dialog_quantity_hint"
-        android:layout_marginTop="24dp"
-        android:textSize="@dimen/text_edit_size"
-        android:inputType="number"
-        android:background="@drawable/edit_text_border"
-        android:maxLines="1"
-        android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="12dp" />
+        <Spinner
+            android:id="@+id/coast_edit_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_border"
+            android:prompt="@string/coast_dialog_spinner_prompt" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/coast_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/edit_text_border"
+            android:hint="@string/coast_dialog_name_hint"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="12dp"
+            android:textSize="@dimen/text_edit_size" />
+
+        <EditText
+            android:id="@+id/coast_edit_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/edit_text_border"
+            android:hint="@string/coast_dialog_quantity_hint"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="12dp"
+            android:textSize="@dimen/text_edit_size" />
+
+    </LinearLayout>
+
+</ScrollView>

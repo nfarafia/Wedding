@@ -46,6 +46,7 @@
     <string name="coast_dialog_title_edit">Edit cast</string>
     <string name="coast_dialog_error">Something went wrong. Check your input values</string>
     <string name="coast_dialog_cancel">Task cancelled</string>
+    <string name="coast_dialog_spinner_prompt">Select section</string>
     <string name="coast_dialog_name_hint">Enter name</string>
     <string name="coast_dialog_quantity_hint">Enter quantity</string>
 
