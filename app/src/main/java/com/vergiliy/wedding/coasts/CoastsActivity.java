@@ -9,9 +9,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.vergiliy.wedding.NavigationActivity;
@@ -115,9 +120,40 @@ public class CoastsActivity extends NavigationActivity {
         viewPager.addOnPageChangeListener(new PageChangeListener());
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
+        // Show TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setVisibility(View.VISIBLE);
+
+        // Show button Add for add new tab
+        ImageButton tabAdd = (ImageButton) findViewById(R.id.tabs_add);
+        tabAdd.setImageResource(R.drawable.ic_tab_edit);
+        tabAdd.setVisibility(View.VISIBLE);
+        tabAdd.setOnClickListener(new CoastSectionProcessing());
+
+        // Show toast when long click button
+        tabAdd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                // Get Viw position
+                int[] location = new int[2];
+                view.getLocationOnScreen(location);
+
+                // Get screen width
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+                // Create the toast in found coordinates
+                Toast toast= Toast.makeText(getApplicationContext(), view.getContentDescription(),
+                        Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP | Gravity.END,
+                        metrics.widthPixels - location[0],
+                        location[1] + view.getHeight()/2);
+                toast.show();
+
+                return true;
+            }
+        });
     }
 
     // Create top context menu

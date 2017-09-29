@@ -25,12 +25,39 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable"
+                android:visibility="gone"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:tabIndicatorColor="@color/colorBackgroundActionMode"
+                app:tabIndicatorHeight="3dp"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                android:paddingEnd="50dp"
+                android:paddingRight="0dp"/>
+
+            <ImageButton
+                android:id="@+id/tabs_add"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="@string/coast_tab_edit_button"
+                android:contentDescription="@string/coast_tab_edit_button"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:longClickable="true"
+                android:visibility="gone"
+                android:background="@drawable/tab_edit_background" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.design.widget.AppBarLayout>
 

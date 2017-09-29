@@ -7,6 +7,8 @@
     <color name="colorBackgroundActionMode">#970615</color>
 
     <color name="white">#ffffff</color>
+    <color name="whiteTransporent">#32ffffff</color>
+
     <color name="black">#000000</color>
 
     <color name="text">#000000</color>
