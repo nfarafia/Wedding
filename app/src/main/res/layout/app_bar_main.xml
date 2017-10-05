@@ -38,18 +38,14 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:tabIndicatorColor="@color/colorBackgroundActionMode"
-                app:tabIndicatorHeight="3dp"
-                android:paddingStart="0dp"
-                android:paddingLeft="0dp"
-                android:paddingEnd="50dp"
-                android:paddingRight="0dp"/>
+                app:tabIndicatorHeight="3dp" />
 
             <ImageButton
                 android:id="@+id/tabs_add"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:text="@string/coast_tab_edit_button"
-                android:contentDescription="@string/coast_tab_edit_button"
+                android:text="@string/budget_tab_edit_button"
+                android:contentDescription="@string/budget_tab_edit_button"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:clickable="true"

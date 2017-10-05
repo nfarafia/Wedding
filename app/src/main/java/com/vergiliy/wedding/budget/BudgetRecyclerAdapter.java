@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.coasts;
+package com.vergiliy.wedding.budget;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,18 +18,18 @@ import com.vergiliy.wedding.R;
 
 import java.util.List;
 
-class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.ViewHolder> {
+class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ViewHolder> {
 
-    private CoastsActivity context;
+    private BudgetActivity context;
     private List<Coast> list;
-    private CoastsDatabase database;
+    private CoastDatabase database;
 
     private static Boolean callActionMode = false;
 
     // Provide a reference to the views for each data item
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        CoastsActivity context;
+        BudgetActivity context;
         CardView item;
         public TextView name;
         ImageView delete;
@@ -78,7 +78,7 @@ class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.V
         ViewHolder(final View itemView) {
             super(itemView);
 
-            context = (CoastsActivity) itemView.getContext();
+            context = (BudgetActivity) itemView.getContext();
             item = (CardView) itemView.findViewById(R.id.coast_list_item);
             name = (TextView) itemView.findViewById(R.id.coast_list_name);
             delete = (ImageView) itemView.findViewById(R.id.ic_coast_delete);
@@ -105,7 +105,7 @@ class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.V
 
         private Coast coast = null;
 
-        // Get coast from main class CoastsRecyclerAdapter
+        // Get coast from main class BudgetRecyclerAdapter
         DeleteButtonListener(Coast coast) {
             this.coast = coast;
         }
@@ -121,18 +121,18 @@ class CoastsRecyclerAdapter extends RecyclerView.Adapter<CoastsRecyclerAdapter.V
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    CoastsRecyclerAdapter(Context context, List<Coast> list) {
-        this.context = (CoastsActivity) context;
+    BudgetRecyclerAdapter(Context context, List<Coast> list) {
+        this.context = (BudgetActivity) context;
         this.list = list;
-        database = new CoastsDatabase(context);
+        database = new CoastDatabase(context);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public CoastsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BudgetRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater
-                .from(parent.getContext()).inflate(R.layout.coasts_list_item, parent, false);
+                .from(parent.getContext()).inflate(R.layout.coast_list_item, parent, false);
 
         return new ViewHolder(view);
     }

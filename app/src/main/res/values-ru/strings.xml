@@ -12,7 +12,7 @@
     <string name="activity_main_title">Главная</string>
     <string name="activity_countdown_title">Счетчик</string>
     <string name="activity_tasks_title">Задачи</string>
-    <string name="activity_coasts_title">Цены</string>
+    <string name="activity_budget_title">Бюджет</string>
     <string name="activity_guests_title">Гости</string>
     <string name="activity_vendors_title">Подрядчики</string>
 

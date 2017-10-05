@@ -1,13 +1,11 @@
-package com.vergiliy.wedding.coasts;
+package com.vergiliy.wedding.budget;
 
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,21 +19,19 @@ import android.widget.Toast;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.helpers.BaseHelper;
 
-import java.util.List;
-
 // Listener clicks on Edit button or FloatingButton (edit or add new coast)
 class CoastProcessing implements View.OnClickListener {
 
-    private CoastsActivity context;
+    private BudgetActivity context;
     private final ViewGroup nullGroup = null;
 
-    private Spinner sectionField;
+    private Spinner categoryField;
     private EditText nameField;
     private EditText quantityField;
 
     private Coast coast = null;
 
-    // Get coast from main class CoastsRecyclerAdapter
+    // Get coast from main class BudgetRecyclerAdapter
     CoastProcessing(Coast coast) {
         this.coast = coast;
     }
@@ -49,7 +45,7 @@ class CoastProcessing implements View.OnClickListener {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             final String name = nameField.getText().toString();
-            final int id_section = ((CoastsSection) sectionField.getSelectedItem()).getId();
+            final int id_category = ((Category) categoryField.getSelectedItem()).getId();
             final int quantity = BaseHelper.parseInteger(quantityField.getText().toString(), 0);
 
             if (TextUtils.isEmpty(name) || quantity <= 0) {
@@ -57,10 +53,10 @@ class CoastProcessing implements View.OnClickListener {
                         Toast.LENGTH_LONG).show();
             } else {
                 if (coast != null) {
-                    Coast item = new Coast(coast.getId(), id_section, name, quantity);
+                    Coast item = new Coast(coast.getId(), id_category, name, quantity);
                     context.getDbMain().update(item);
                 } else {
-                    Coast item = new Coast(id_section, name, quantity);
+                    Coast item = new Coast(id_category, name, quantity);
                     context.getDbMain().add(item);
                 }
 
@@ -84,22 +80,22 @@ class CoastProcessing implements View.OnClickListener {
         Integer title, label;
         context = getActivity(view);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View subView = inflater.inflate(R.layout.costs_diallog_add, nullGroup);
+        View subView = inflater.inflate(R.layout.cost_diallog_add, nullGroup);
 
         // Get EditText fields
-        sectionField = (Spinner) subView.findViewById(R.id.coast_edit_section);
+        categoryField = (Spinner) subView.findViewById(R.id.coast_edit_category);
         nameField = (EditText) subView.findViewById(R.id.coast_edit_name);
         quantityField = (EditText) subView.findViewById(R.id.coast_edit_quantity);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CoastsSection> adapter = new ArrayAdapter<>(context,
-                R.layout.spinner_item, context.getSections());
+        ArrayAdapter<Category> adapter = new ArrayAdapter<>(context,
+                R.layout.spinner_item, context.getCategories());
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sectionField.setAdapter(adapter);
-        // Chose the current section
-        sectionField.setSelection(context.getViewPager().getCurrentItem());
+        categoryField.setAdapter(adapter);
+        // Chose the current category
+        categoryField.setSelection(context.getViewPager().getCurrentItem());
 
         if (coast != null) {
             nameField.setText(coast.getName());
@@ -135,11 +131,11 @@ class CoastProcessing implements View.OnClickListener {
     }
 
     // Get main Activity
-    private CoastsActivity getActivity(View view) {
+    private BudgetActivity getActivity(View view) {
         Context context = view.getContext();
         while (context instanceof ContextWrapper) {
-            if (context instanceof CoastsActivity) {
-                return (CoastsActivity) context;
+            if (context instanceof BudgetActivity) {
+                return (BudgetActivity) context;
             }
             context = ((ContextWrapper) context).getBaseContext();
         }

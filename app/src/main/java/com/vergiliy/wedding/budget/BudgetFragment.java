@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.coasts;
+package com.vergiliy.wedding.budget;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,14 +14,14 @@ import com.vergiliy.wedding.R;
 
 import java.util.List;
 
-public class CoastsFragment extends Fragment {
+public class BudgetFragment extends Fragment {
 
     static final String PAGE_NUMBER = "page_number";
 
     private int page;
 
-    public static CoastsFragment newInstance(int page) {
-        CoastsFragment pageFragment = new CoastsFragment();
+    public static BudgetFragment newInstance(int page) {
+        BudgetFragment pageFragment = new BudgetFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);
@@ -37,7 +37,7 @@ public class CoastsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        CoastsActivity activity = (CoastsActivity) this.getActivity();
+        BudgetActivity activity = (BudgetActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -52,15 +52,15 @@ public class CoastsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // Get coats from db_main
-        int section_id = activity.getSectionIdByPosition(page);
-        List<Coast> all = activity.getDbMain().getAllBySectionId(section_id);
+        int id_category = activity.getCategoryIdByPosition(page);
+        List<Coast> all = activity.getDbMain().getAllByCategoryId(id_category);
         if (all.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
-            RecyclerView.Adapter adapter = new CoastsRecyclerAdapter(activity, all);
+            RecyclerView.Adapter adapter = new BudgetRecyclerAdapter(activity, all);
             recyclerView.setAdapter(adapter);
         } else {
             // recyclerView.setVisibility(View.GONE);
-            Toast.makeText(activity, R.string.coast_list_none, Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.budget_list_none, Toast.LENGTH_LONG).show();
         }
 
         return view;

@@ -45,7 +45,7 @@
             android:name=".tasks.TasksActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".coasts.CoastsActivity"
+            android:name=".budget.BudgetActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".guests.GuestsActivity"

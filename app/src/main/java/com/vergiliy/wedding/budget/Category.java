@@ -1,14 +1,14 @@
-package com.vergiliy.wedding.coasts;
+package com.vergiliy.wedding.budget;
 
-class CoastsSection {
+class Category {
     private	int	id;
     private	String name;
 
-    CoastsSection(String name) {
+    Category(String name) {
         this.name = name;
     }
 
-    CoastsSection(int id, String name) {
+    Category(int id, String name) {
         this.id = id;
         this.name = name;
     }

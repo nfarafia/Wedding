@@ -1,21 +1,19 @@
-package com.vergiliy.wedding.coasts;
-
-import static android.R.attr.id;
+package com.vergiliy.wedding.budget;
 
 class Coast {
-    private	int	id, id_section;
+    private	int	id, id_category;
     private	String name;
     private	int	quantity;
 
-    Coast(int id_section, String name, int quantity) {
-        this.id_section = id_section;
+    Coast(int id_category, String name, int quantity) {
+        this.id_category = id_category;
         this.name = name;
         this.quantity = quantity;
     }
 
-    Coast(int id, int id_section, String name, int quantity) {
+    Coast(int id, int id_category, String name, int quantity) {
         this.id = id;
-        this.id_section = id_section;
+        this.id_category = id_category;
         this.name = name;
         this.quantity = quantity;
     }
@@ -28,12 +26,12 @@ class Coast {
         this.id = id;
     }
 
-    int getIdSection() {
-        return id_section;
+    int getIdCategory() {
+        return id_category;
     }
 
-    public void setIdSection(int id) {
-        this.id = id_section;
+    public void setIdCategory(int id) {
+        this.id = id_category;
     }
 
     public String getName() {

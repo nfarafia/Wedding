@@ -13,9 +13,9 @@
             android:icon="@drawable/ic_menu_general_tasks"
             android:title="@string/activity_tasks_title" />
         <item
-            android:id="@+id/menu_general_coasts"
-            android:icon="@drawable/ic_menu_general_coasts"
-            android:title="@string/activity_coasts_title" />
+            android:id="@+id/menu_general_budget"
+            android:icon="@drawable/ic_menu_general_budget"
+            android:title="@string/activity_budget_title" />
         <item
             android:id="@+id/menu_general_guests"
             android:icon="@drawable/ic_menu_general_guests"

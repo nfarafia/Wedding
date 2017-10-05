@@ -1,5 +1,6 @@
-package com.vergiliy.wedding.coasts;
+package com.vergiliy.wedding.budget;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,11 +11,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -26,14 +26,16 @@ import com.vergiliy.wedding.ZoomOutPageTransformer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoastsActivity extends NavigationActivity {
+import static android.R.attr.padding;
+
+public class BudgetActivity extends NavigationActivity {
 
     protected ViewPager viewPager;
 
-    private CoastsDatabase db_main;
-    protected CoastsSectionsDatabase db_sections;
+    private CoastDatabase db_main;
+    protected CategoryDatabase db_category;
 
-    private List<CoastsSection> sections = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     // Create ViewPagerAdapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -44,17 +46,17 @@ public class CoastsActivity extends NavigationActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return CoastsFragment.newInstance(position);
+            return BudgetFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            return sections.size();
+            return categories.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return sections.get(position).getName();
+            return categories.get(position).getName();
         }
 
         // For update fragment when call notifyDataSetChanged();
@@ -64,12 +66,12 @@ public class CoastsActivity extends NavigationActivity {
         }
     }
 
-    // Listener clicks on page sections
+    // Listener clicks on page categories
     private class PageChangeListener implements OnPageChangeListener {
 
         @Override
         public void onPageSelected(int position) {
-            String text = getResources().getString(R.string.test_tasks_page, position);
+            String text = getResources().getString(R.string.test_coasts_page, position);
             Snackbar.make(viewPager, text, Snackbar.LENGTH_LONG).show();
         }
 
@@ -85,18 +87,18 @@ public class CoastsActivity extends NavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.activity_coasts_title);
+        setTitle(R.string.activity_budget_title);
         // Replace FrameLayout on our activity layout
-        getLayoutInflater().inflate(R.layout.contant_coasts, frameLayout);
+        getLayoutInflater().inflate(R.layout.contant_budget, frameLayout);
 
-        // Create new CoastsDatabase and CoastsSectionsDatabase
-        db_main = new CoastsDatabase(this);
-        db_sections = new CoastsSectionsDatabase(this);
+        // Create new CoastDatabase and CategoryDatabase
+        db_main = new CoastDatabase(this);
+        db_category = new CategoryDatabase(this);
 
-        // Get sections from database
-        sections = db_sections.getAll();
-        if (sections.size() == 0 ) {
-            Toast.makeText(getApplicationContext(), R.string.coast_title_none,
+        // Get categories from database
+        categories = db_category.getAll();
+        if (categories.size() == 0 ) {
+            Toast.makeText(getApplicationContext(), R.string.budget_title_none,
                     Toast.LENGTH_LONG).show();
         }
 
@@ -110,7 +112,7 @@ public class CoastsActivity extends NavigationActivity {
     protected void onResume() {
         super.onResume();
         // Check current activity in the NavigationDrawer
-        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_coasts)
+        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_budget)
                 .setChecked(true);
 
         // Create ViewPager
@@ -125,11 +127,16 @@ public class CoastsActivity extends NavigationActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setVisibility(View.VISIBLE);
 
+        // Add padding to TabLayout
+        int padding_right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
+                getResources().getDisplayMetrics());
+        tabLayout.setPadding(0,0,padding_right,0);
+
         // Show button Add for add new tab
         ImageButton tabAdd = (ImageButton) findViewById(R.id.tabs_add);
         tabAdd.setImageResource(R.drawable.ic_tab_edit);
         tabAdd.setVisibility(View.VISIBLE);
-        tabAdd.setOnClickListener(new CoastSectionProcessing());
+        tabAdd.setOnClickListener(new CategoryProcessing());
 
         // Show toast when long click button
         tabAdd.setOnLongClickListener(new View.OnLongClickListener() {
@@ -187,13 +194,13 @@ public class CoastsActivity extends NavigationActivity {
         if (db_main != null) {
             db_main.close();
         }
-        if (db_sections != null) {
-            db_sections.close();
+        if (db_category != null) {
+            db_category.close();
         }
     }
 
     // Get db_main
-    public CoastsDatabase getDbMain() {
+    public CoastDatabase getDbMain() {
         return db_main;
     }
 
@@ -203,13 +210,13 @@ public class CoastsActivity extends NavigationActivity {
     }
 
 
-    // Get sections id by position
-    public int getSectionIdByPosition(int position) {
-        return sections.get(position).getId();
+    // Get categories id by position
+    public int getCategoryIdByPosition(int position) {
+        return categories.get(position).getId();
     }
 
-    // Get sections
-    public List<CoastsSection> getSections() {
-        return sections;
+    // Get categories
+    public List<Category> getCategories() {
+        return categories;
     }
 }

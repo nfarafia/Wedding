@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.vergiliy.wedding.main.MainActivity;
-import com.vergiliy.wedding.coasts.CoastsActivity;
+import com.vergiliy.wedding.budget.BudgetActivity;
 import com.vergiliy.wedding.countdown.CountdownActivity;
 import com.vergiliy.wedding.guests.GuestsActivity;
 import com.vergiliy.wedding.setting.SettingActivity;
@@ -74,8 +74,8 @@ public class NavigationActivity extends BaseActivity
             case R.id.menu_general_tasks:
                 startActivity(new Intent(this, TasksActivity.class));
                 break;
-            case R.id.menu_general_coasts:
-                startActivity(new Intent(this, CoastsActivity.class));
+            case R.id.menu_general_budget:
+                startActivity(new Intent(this, BudgetActivity.class));
                 break;
             case R.id.menu_general_guests:
                 startActivity(new Intent(this, GuestsActivity.class));
