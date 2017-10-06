@@ -53,6 +53,7 @@ public class BudgetFragment extends Fragment {
 
         // Get coats from db_main
         int id_category = activity.getCategoryIdByPosition(page);
+
         List<Coast> all = activity.getDbMain().getAllByCategoryId(id_category);
         if (all.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);

@@ -1,45 +1,24 @@
 package com.vergiliy.wedding.budget;
 
+import android.content.Context;
+
 import com.vergiliy.wedding.helpers.BaseHelper;
+import com.vergiliy.wedding.vendors.BaseClass;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-class Coast {
+class Coast extends BaseClass {
     private	int	id, id_category;
-    private	String name;
-    private	String note;
-    private	double	amount;
+    private Map<String, String> name = new HashMap<>();
+    private	String note = null;
+    private	double amount;
     private	boolean	complete;
     private Date update;
 
-    Coast(int id_category, String name, String note, double amount, boolean complete) {
-        this.id_category = id_category;
-        this.name = name;
-        this.note = note;
-        this.amount = amount;
-        this.complete = complete;
-        this.update = BaseHelper.getCurrentDate(); // Get current date
-    }
-
-    Coast(int id, int id_category, String name, String note, double amount, boolean complete) {
-        this.id = id;
-        this.id_category = id_category;
-        this.name = name;
-        this.note = note;
-        this.amount = amount;
-        this.complete = complete;
-        this.update = BaseHelper.getCurrentDate(); // Get current date
-    }
-
-    Coast(int id, int id_category, String name, String note, double amount, boolean complete,
-          Date update) {
-        this.id = id;
-        this.id_category = id_category;
-        this.name = name;
-        this.note = note;
-        this.amount = amount;
-        this.complete = complete;
-        this.update = update;
+    Coast(Context context) {
+        super(context);
     }
 
     public int getId() {
@@ -54,23 +33,27 @@ class Coast {
         return id_category;
     }
 
-    public void setIdCategory(int id) {
-        this.id = id_category;
+    void setIdCategory(int id_category) {
+        this.id_category = id_category;
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name.get(LANGUAGE_DEFAULT);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    String getLocaleName() {
+        return getLocaleValue(name);
+    }
+
+    void setName(String locale, String name) {
+        this.name.put(locale, name);
     }
 
     String getNote() {
         return note;
     }
 
-    public void setNote(String note) {
+    void setNote(String note) {
         this.note = note;
     }
 
@@ -78,7 +61,7 @@ class Coast {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -86,7 +69,7 @@ class Coast {
         return complete;
     }
 
-    public void setComplete(boolean complete) {
+    void setComplete(boolean complete) {
         this.complete = complete;
     }
 
@@ -98,7 +81,7 @@ class Coast {
         return BaseHelper.getStringFromDate(update);
     }
 
-    public void setUpdate(Date update) {
+    void setUpdate(Date update) {
         this.update = update;
     }
 }

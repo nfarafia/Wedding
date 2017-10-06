@@ -1,16 +1,19 @@
 package com.vergiliy.wedding.budget;
 
-class Category {
+import android.content.Context;
+
+import com.vergiliy.wedding.vendors.BaseClass;
+
+import java.util.HashMap;
+import java.util.Map;
+
+class Category extends BaseClass {
+
     private	int	id;
-    private	String name;
+    private Map<String, String> name = new HashMap<>();
 
-    Category(String name) {
-        this.name = name;
-    }
-
-    Category(int id, String name) {
-        this.id = id;
-        this.name = name;
+    Category(Context context) {
+        super(context);
     }
 
     public int getId() {
@@ -22,15 +25,19 @@ class Category {
     }
 
     public String getName() {
-        return name;
+        return name.get(LANGUAGE_DEFAULT);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    String getLocaleName() {
+        return getLocaleValue(name);
+    }
+
+    void setName(String locale, String name) {
+        this.name.put(locale, name);
     }
 
     @Override
     public String toString() {
-        return name;
+        return getLocaleName();
     }
 }

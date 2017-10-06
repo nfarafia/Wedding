@@ -24,7 +24,7 @@ public class SettingsOtherFragment extends PreferenceFragment
 
             // Check is activity available
             if (activity != null){
-                activity.languageClass.setLocale();
+                activity.getLanguageClass().setLocale();
 
                 // Show back button in ActionBar
                 if (activity.getSupportActionBar() != null) {

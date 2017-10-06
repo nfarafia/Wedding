@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
+import com.vergiliy.wedding.vendors.BaseClass;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -68,11 +69,25 @@ class CoastProcessing implements View.OnClickListener {
                 Toast.makeText(context, R.string.coast_dialog_error,
                         Toast.LENGTH_LONG).show();
             } else {
+                Coast item = new Coast(context);
+
+                item.setIdCategory(id_category);
+
+                // Update name if it modified
+                if (coast == null || !coast.getLocaleName().equals(name))
+                    item.setName(BaseClass.LANGUAGE_DEFAULT, name);
+
+                if (!TextUtils.isEmpty(note))
+                    item.setNote(note);
+
+                item.setAmount(amount);
+                item.setComplete(complete);
+                item.setUpdate(BaseHelper.getCurrentDate()); // Get current date
+
                 if (coast != null) {
-                    Coast item = new Coast(coast.getId(), id_category, name, note, amount, complete);
+                    item.setId(coast.getId());
                     context.getDbMain().update(item);
                 } else {
-                    Coast item = new Coast(id_category, name, note, amount, complete);
                     context.getDbMain().add(item);
                 }
 
@@ -138,7 +153,7 @@ class CoastProcessing implements View.OnClickListener {
         categoryField.setSelection(context.getViewPager().getCurrentItem());
 
         if (coast != null) {
-            nameField.setText(coast.getName());
+            nameField.setText(coast.getLocaleName());
             noteField.setText(coast.getNote());
 
             Double amount = coast.getAmount();

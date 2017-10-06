@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vergiliy.wedding.helpers.SQLiteHelper;
+import com.vergiliy.wedding.vendors.BaseClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ class CategoryDatabase extends SQLiteHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_POSITION = "position";
+    private static final String COLUMN_UPDATE = "`update`";
 
     // Create access to database
     CategoryDatabase(Context context) {
@@ -30,9 +32,14 @@ class CategoryDatabase extends SQLiteHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                int id = Integer.parseInt(cursor.getString(0));
-                String name = cursor.getString(1);
-                all.add(new Category(id, name));
+                Category category = new Category(context);
+
+                category.setId(Integer.parseInt(cursor.getString(0)));
+                category.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(1));
+                category.setName(BaseClass.LANGUAGE_EN, cursor.getString(2));
+                category.setName(BaseClass.LANGUAGE_RU, cursor.getString(3));
+
+                all.add(category);
             } while (cursor.moveToNext());
         }
 

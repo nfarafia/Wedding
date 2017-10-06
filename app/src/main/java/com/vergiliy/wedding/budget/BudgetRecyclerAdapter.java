@@ -142,7 +142,7 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Coast coast = list.get(position);
 
-        holder.name.setText(coast.getName());
+        holder.name.setText(coast.getLocaleName());
         holder.edit.setOnClickListener(new CoastProcessing(coast));
         holder.delete.setOnClickListener(new DeleteButtonListener(coast));
     }

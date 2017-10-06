@@ -1,10 +1,5 @@
 package com.vergiliy.wedding.budget;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,15 +10,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -33,8 +24,6 @@ import com.vergiliy.wedding.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.padding;
 
 public class BudgetActivity extends NavigationActivity {
 
@@ -64,7 +53,7 @@ public class BudgetActivity extends NavigationActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return categories.get(position).getName();
+            return categories.get(position).getLocaleName();
         }
 
         // For update fragment when call notifyDataSetChanged();

@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public Language languageClass = new Language(this);
-    public String language = null;
+    private Language languageClass = new Language(this);
+    private String language = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,5 +43,13 @@ public class BaseActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("language", language);
+    }
+
+    public Language getLanguageClass() {
+        return languageClass;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 }

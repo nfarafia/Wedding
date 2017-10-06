@@ -4,18 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
+import com.vergiliy.wedding.vendors.BaseClass;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.vergiliy.wedding.helpers.BaseHelper.getDateFromString;
 
 class CoastDatabase extends SQLiteHelper {
 
@@ -51,14 +47,19 @@ class CoastDatabase extends SQLiteHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                int id = Integer.parseInt(cursor.getString(0));
-                int id_category = Integer.parseInt(cursor.getString(1));
-                String name = cursor.getString(2);
-                String note = cursor.getString(3);
-                double amount = cursor.getDouble(4);
-                boolean complete = Integer.parseInt(cursor.getString(5)) > 0;
-                Date update = BaseHelper.getDateFromString(cursor.getString(6));
-                all.add(new Coast(id, id_category, name, note, amount, complete, update));
+                Coast coast = new Coast(context);
+
+                coast.setId(Integer.parseInt(cursor.getString(0)));
+                coast.setIdCategory(Integer.parseInt(cursor.getString(1)));
+                coast.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(2));
+                coast.setName(BaseClass.LANGUAGE_EN, cursor.getString(3));
+                coast.setName(BaseClass.LANGUAGE_RU, cursor.getString(4));
+                coast.setNote(cursor.getString(5));
+                coast.setAmount(cursor.getDouble(6));
+                coast.setComplete(Integer.parseInt(cursor.getString(7)) > 0);
+                coast.setUpdate(BaseHelper.getDateFromString(cursor.getString(8)));
+
+                all.add(coast);
             } while (cursor.moveToNext());
         }
 
