@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:textSize="@dimen/text_view_size"
+            android:textSize="@dimen/TextView_textSize"
             android:textStyle="bold" />
 
         <ImageView

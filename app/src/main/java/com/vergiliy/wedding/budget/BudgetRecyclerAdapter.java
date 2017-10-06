@@ -79,10 +79,10 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
             super(itemView);
 
             context = (BudgetActivity) itemView.getContext();
-            item = (CardView) itemView.findViewById(R.id.coast_list_item);
-            name = (TextView) itemView.findViewById(R.id.coast_list_name);
-            delete = (ImageView) itemView.findViewById(R.id.ic_coast_delete);
-            edit = (ImageView) itemView.findViewById(R.id.ic_coast_edit);
+            item = itemView.findViewById(R.id.coast_list_item);
+            name = itemView.findViewById(R.id.coast_list_name);
+            delete = itemView.findViewById(R.id.ic_coast_delete);
+            edit = itemView.findViewById(R.id.ic_coast_edit);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

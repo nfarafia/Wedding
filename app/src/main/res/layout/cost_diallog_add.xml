@@ -1,105 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
 
-        <EditText
-            android:id="@+id/coast_edit_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_border"
-            android:hint="@string/coast_dialog_name_hint"
-            android:inputType="text"
-            android:padding="12dp"
-            android:textSize="@dimen/text_edit_size" />
+            android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/coast_edit_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/spinner_border"
-            android:prompt="@string/coast_dialog_spinner_prompt" />
-
-
-        <EditText
-            android:id="@+id/coast_edit_note"
-            android:layout_width="match_parent"
-            android:layout_height="105dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edit_text_border"
-            android:gravity="top"
-            android:hint="@string/coast_dialog_note_hint"
-            android:inputType="textMultiLine"
-            android:padding="12dp"
-            android:textSize="@dimen/text_edit_size" />
-
-        <EditText
-            android:id="@+id/coast_edit_amount_total"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edit_text_border"
-            android:hint="@string/coast_dialog_amount_hint"
-            android:inputType="text"
-            android:padding="12dp"
-            android:textSize="@dimen/text_edit_size" />
-
-        <RadioGroup
-            android:id="@+id/coast_edit_complete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:weightSum="4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/coast_edit_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_gravity="center_vertical"
-                android:text="@string/coast_dialog_complete_title"
-                android:textSize="@dimen/text_view_size"
-                android:textColor="@color/text"/>
+                android:background="@drawable/edit_text_border"
+                android:hint="@string/coast_dialog_name_hint"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textSize="@dimen/TextEdit_textSize" />
 
-            <RadioButton
-                android:id="@+id/coast_edit_complete_yes"
-                android:layout_width="0dp"
+            <Spinner
+                android:id="@+id/coast_edit_category"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dialog_yes"
-                android:textSize="@dimen/text_view_size" />
+                android:layout_marginTop="16dp"
+                android:background="@drawable/spinner_border"
+                android:prompt="@string/coast_dialog_spinner_prompt" />
 
-            <RadioButton
-                android:id="@+id/coast_edit_complete_no"
-                android:layout_width="0dp"
+
+            <EditText
+                android:id="@+id/coast_edit_note"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_border"
+                android:gravity="top"
+                android:hint="@string/coast_dialog_note_hint"
+                android:inputType="textMultiLine"
+                android:padding="12dp"
+                android:textSize="@dimen/TextEdit_textSize" />
+
+            <EditText
+                android:id="@+id/coast_edit_amount"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/dialog_no"
-                android:textSize="@dimen/text_view_size" />
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="@string/coast_dialog_amount_hint"
+                android:inputType="numberDecimal"
+                android:digits="0123456789.,"
+                android:padding="12dp"
+                android:textSize="@dimen/TextEdit_textSize" />
 
-        </RadioGroup>
+            <RadioGroup
+                android:id="@+id/coast_edit_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
 
-        <EditText
-            android:id="@+id/coast_edit_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edit_text_border"
-            android:hint="@string/coast_dialog_quantity_hint"
-            android:inputType="number"
-            android:padding="12dp"
-            android:textSize="@dimen/text_edit_size"
-            android:visibility="gone" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:text="@string/coast_dialog_complete_title"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/TextView_textSize" />
 
-    </LinearLayout>
+                <RadioButton
+                    android:id="@+id/coast_edit_complete_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dialog_yes"
+                    android:textSize="@dimen/TextView_textSize" />
 
-</ScrollView>
+                <RadioButton
+                    android:id="@+id/coast_edit_complete_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/dialog_no"
+                    android:textSize="@dimen/TextView_textSize" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/dialog_button_bar" />
+
+</LinearLayout>

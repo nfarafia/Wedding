@@ -2,32 +2,42 @@ package com.vergiliy.wedding.budget;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.helpers.BaseHelper;
+import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
+
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
 
 // Listener clicks on Edit button or FloatingButton (edit or add new coast)
 class CoastProcessing implements View.OnClickListener {
 
     private BudgetActivity context;
+    private AlertDialog dialog = null;
     private final ViewGroup nullGroup = null;
 
-    private Spinner categoryField;
     private EditText nameField;
-    private EditText quantityField;
+    private Spinner categoryField;
+    private EditText noteField;
+    private EditText amountField;
+    private RadioGroup completeField;
 
     private Coast coast = null;
 
@@ -40,24 +50,34 @@ class CoastProcessing implements View.OnClickListener {
     CoastProcessing() {}
 
     // Listener clicks on Edit button
-    private class PositiveButtonListener implements DialogInterface.OnClickListener {
+    private class PositiveButtonListener implements View.OnClickListener {
 
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(View view) {
             final String name = nameField.getText().toString();
             final int id_category = ((Category) categoryField.getSelectedItem()).getId();
-            final int quantity = BaseHelper.parseInteger(quantityField.getText().toString(), 0);
+            final String note = noteField.getText().toString();
+            final double amount = BaseHelper
+                    .parseDouble(amountField.getText().toString().replace(',','.'), 0);
 
-            if (TextUtils.isEmpty(name) || quantity <= 0) {
+            // Get checked item from complete field
+            int completeFieldId = completeField.getCheckedRadioButtonId();
+            final boolean complete = completeFieldId == R.id.coast_edit_complete_yes;
+
+            if (TextUtils.isEmpty(name)) {
                 Toast.makeText(context, R.string.coast_dialog_error,
                         Toast.LENGTH_LONG).show();
             } else {
                 if (coast != null) {
-                    Coast item = new Coast(coast.getId(), id_category, name, quantity);
+                    Coast item = new Coast(coast.getId(), id_category, name, note, amount, complete);
                     context.getDbMain().update(item);
                 } else {
-                    Coast item = new Coast(id_category, name, quantity);
+                    Coast item = new Coast(id_category, name, note, amount, complete);
                     context.getDbMain().add(item);
+                }
+
+                if (dialog != null) {
+                    dialog.dismiss();
                 }
 
                 // Update current fragment
@@ -67,25 +87,45 @@ class CoastProcessing implements View.OnClickListener {
     }
 
     // Listener clicks on Cancel button
-    private class NegativeButtonListener implements DialogInterface.OnClickListener {
+    private class NegativeButtonListener implements View.OnClickListener {
 
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(View view) {
             Toast.makeText(context, R.string.coast_dialog_cancel, Toast.LENGTH_LONG).show();
+            if (dialog != null) {
+                dialog.dismiss();
+            }
         }
     }
 
     @Override
     public void onClick(View view) {
-        Integer title, label;
         context = getActivity(view);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View subView = inflater.inflate(R.layout.cost_diallog_add, nullGroup);
+        View dialog_title = inflater.inflate(R.layout.dialog_title, nullGroup);
+        View dialog_body = inflater.inflate(R.layout.cost_diallog_add, nullGroup);
 
-        // Get EditText fields
-        categoryField = (Spinner) subView.findViewById(R.id.coast_edit_category);
-        nameField = (EditText) subView.findViewById(R.id.coast_edit_name);
-        quantityField = (EditText) subView.findViewById(R.id.coast_edit_quantity);
+        // Get Title field
+        TextView titleView =  dialog_title.findViewById(R.id.dialog_title);
+
+        // Get Body fields
+        nameField = dialog_body.findViewById(R.id.coast_edit_name);
+        categoryField = dialog_body.findViewById(R.id.coast_edit_category);
+        noteField = dialog_body.findViewById(R.id.coast_edit_note);
+        amountField = dialog_body.findViewById(R.id.coast_edit_amount);
+        completeField = dialog_body.findViewById(R.id.coast_edit_complete);
+
+        // Get RadioButton
+        RadioButton completeFieldYes = completeField.findViewById(R.id.coast_edit_complete_yes);
+        RadioButton completeFieldNo = completeField.findViewById(R.id.coast_edit_complete_no);
+
+        // Get service buttons
+        Button cancelButton = dialog_body.findViewById(R.id.dialog_button_cancel);
+        Button yesButton = dialog_body.findViewById(R.id.dialog_button_yes);
+
+        // Set filter to amountField (20 digits before zero and 2 digits after zero)
+        DecimalFormatSymbols decimal = DecimalFormatSymbols.getInstance(Locale.getDefault());
+        amountField.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(20,2)});
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<Category> adapter = new ArrayAdapter<>(context,
@@ -99,35 +139,44 @@ class CoastProcessing implements View.OnClickListener {
 
         if (coast != null) {
             nameField.setText(coast.getName());
-            quantityField.setText(String.valueOf(coast.getQuantity()));
-            title = R.string.coast_dialog_title_edit;
-            label = R.string.dialog_button_edit;
+            noteField.setText(coast.getNote());
+
+            Double amount = coast.getAmount();
+            String format = amount % 1 == 0 ? "%.0f" : "%.2f";
+            amountField.setText(String.format(Locale.getDefault(), format, coast.getAmount()));
+
+            Boolean complete = coast.getComplete();
+            if (complete) {
+                completeFieldYes.setChecked(true);
+            } else {
+                completeFieldNo.setChecked(true);
+            }
+
+            titleView.setText(R.string.coast_dialog_title_edit);
+            yesButton.setText(R.string.dialog_button_edit);
         } else {
-            title = R.string.coast_dialog_title_add;
-            label = R.string.dialog_button_add;
+            titleView.setText(R.string.coast_dialog_title_add);
+            yesButton.setText(R.string.dialog_button_add);
         }
 
-        // Create custom title
-        TextView titleBox = new TextView(context);
-        titleBox.setTextColor(ContextCompat.getColor(context, R.color.text));
-        titleBox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        titleBox.setPadding(30, 45, 30, 30);
-        titleBox.setText(title);
-
         // Create new alert dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogFullScreen);
-        builder.setCustomTitle(titleBox);
-        builder.setView(subView);
-        builder.create();
+        dialog = new AlertDialog.Builder(context, R.style.DialogFullScreen)
+                .setCustomTitle(dialog_title)
+                .setView(dialog_body)
+                .create();
 
-        // Listener clicks on Edit button
-        builder.setPositiveButton(label, new PositiveButtonListener());
+        // Don't close dialog, when click outside
+        dialog.setCanceledOnTouchOutside(false);
 
-        // Listener clicks on Cancel button
-        builder.setNegativeButton(R.string.dialog_button_cancel, new NegativeButtonListener());
+        // Hide keyboard after clicking outside
+        hideKeyboardWhenLostFocus(context, dialog_body);
+        hideKeyboardWhenLostFocus(context, dialog_title);
+
+        yesButton.setOnClickListener(new PositiveButtonListener());
+        cancelButton.setOnClickListener(new NegativeButtonListener());
 
         // Show dialog
-        builder.show();
+        dialog.show();
     }
 
     // Get main Activity

@@ -4,10 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
-
-import static com.vergiliy.wedding.main.SplashActivity.DURATION_SPLASH;
 
 public class BaseActivity extends AppCompatActivity {
 

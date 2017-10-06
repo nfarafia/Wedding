@@ -41,11 +41,11 @@ public class BudgetFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        TextView pageName = (TextView) view.findViewById(R.id.page_name);
+        TextView pageName = view.findViewById(R.id.page_name);
         String text = getString(R.string.test_tasks_page, page);
         pageName.setText(text);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.page_list);
+        RecyclerView recyclerView = view.findViewById(R.id.page_list);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);

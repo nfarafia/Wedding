@@ -5,6 +5,8 @@
     <string name="filter_view_http_wedding" translatable="false">Wedding</string>
     <string name="splash_button_start">Start</string>
 
+    <string name="dialog_title">Title</string>
+    <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_set">Set</string>
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_edit">Edit</string>
@@ -47,7 +49,7 @@
     <string name="budget_list_none">There is no coasts. Start adding now</string>
     <string name="coast_dialog_title_add">Add new coast</string>
     <string name="coast_dialog_title_edit">Edit cast</string>
-    <string name="coast_dialog_error">Something went wrong. Check your input values</string>
+    <string name="coast_dialog_error">Enter name</string>
     <string name="coast_dialog_cancel">Task cancelled</string>
     <string name="coast_dialog_spinner_prompt">Select category</string>
     <string name="coast_dialog_name_hint">Enter name</string>
