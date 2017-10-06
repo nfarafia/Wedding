@@ -34,7 +34,7 @@ public class SettingFragmentsActivity extends BaseActivity {
             if (fragment != null) {
                 getFragmentManager()
                         .beginTransaction()
-                        .add(R.id.settings_content, fragment)
+                        .replace(R.id.settings_content, fragment)
                         .commit();
             } else {
                 finish();
