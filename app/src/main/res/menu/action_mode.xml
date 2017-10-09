@@ -4,6 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_complete_enable"
+        android:title="@string/menu_action_complete_enable"
+        android:icon="@drawable/ic_menu_action_complete_enable"
+        app:showAsAction="ifRoom"
+        android:visible="false" />
+    <item
+        android:id="@+id/action_complete_disable"
+        android:title="@string/menu_action_complete_disable"
+        android:icon="@drawable/ic_menu_action_complete_disable"
+        app:showAsAction="ifRoom"
+        android:visible="false" />
+    <item
         android:id="@+id/action_edit"
         android:title="@string/menu_action_edit"
         android:icon="@drawable/ic_menu_action_edit"

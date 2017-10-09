@@ -21,9 +21,14 @@ public class DecimalDigitsInputFilter implements InputFilter {
     @Override
     public CharSequence filter(CharSequence source, int start, int end,
                                Spanned dest, int dstart, int dend) {
-          String string = dest.toString() + source;
+
+        // Get full string
+        String spanned = dest.toString();
+        String string = spanned.substring(0, dstart) +  source.subSequence(start, end) + spanned.substring(dend);
+
         Matcher matcher_1 = pattern_1.matcher(string);
         Matcher matcher_2 = pattern_2.matcher(string);
+
 
         if (!matcher_1.matches() && !matcher_2.matches()) {
             return "";
@@ -31,5 +36,4 @@ public class DecimalDigitsInputFilter implements InputFilter {
 
         return null;
     }
-
 }

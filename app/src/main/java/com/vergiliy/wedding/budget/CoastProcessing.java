@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.vergiliy.wedding.vendors.BaseClass;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
 
 // Listener clicks on Edit button or FloatingButton (edit or add new coast)
@@ -61,7 +63,7 @@ class CoastProcessing implements View.OnClickListener {
             final double amount = BaseHelper
                     .parseDouble(amountField.getText().toString().replace(',','.'), 0);
 
-            // Get checked item from complete field
+            // Get checked item from complete_enable field
             int completeFieldId = completeField.getCheckedRadioButtonId();
             final boolean complete = completeFieldId == R.id.coast_edit_complete_yes;
 
@@ -74,7 +76,8 @@ class CoastProcessing implements View.OnClickListener {
                 item.setIdCategory(id_category);
 
                 // Update name if it modified
-                if (coast == null || !coast.getLocaleName().equals(name))
+                if (coast == null || TextUtils.isEmpty(coast.getLocaleName()) ||
+                        !coast.getLocaleName().equals(name))
                     item.setName(BaseClass.LANGUAGE_DEFAULT, name);
 
                 if (!TextUtils.isEmpty(note))
@@ -82,7 +85,6 @@ class CoastProcessing implements View.OnClickListener {
 
                 item.setAmount(amount);
                 item.setComplete(complete);
-                item.setUpdate(BaseHelper.getCurrentDate()); // Get current date
 
                 if (coast != null) {
                     item.setId(coast.getId());
@@ -119,6 +121,11 @@ class CoastProcessing implements View.OnClickListener {
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialog_title = inflater.inflate(R.layout.dialog_title, nullGroup);
         View dialog_body = inflater.inflate(R.layout.cost_diallog_add, nullGroup);
+
+        // Close ActionMode if it was open
+        if (actionMode != null) {
+            actionMode.finish();
+        }
 
         // Get Title field
         TextView titleView =  dialog_title.findViewById(R.id.dialog_title);

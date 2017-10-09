@@ -23,12 +23,32 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/ic_coast_complete_enable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="@string/menu_action_complete_enable"
+            app:srcCompat="@drawable/ic_menu_action_complete_enable"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/ic_coast_complete_disable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="@string/menu_action_complete_disable"
+            app:srcCompat="@drawable/ic_menu_action_complete_disable"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/ic_coast_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/menu_action_edit"
             app:srcCompat="@drawable/ic_menu_action_edit"
             android:visibility="gone" />
 
@@ -38,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/menu_action_delete"
             app:srcCompat="@drawable/ic_menu_action_delete"
             android:visibility="gone" />
 

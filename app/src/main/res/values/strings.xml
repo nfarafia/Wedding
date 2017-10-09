@@ -35,6 +35,8 @@
 
     <string name="menu_setting_setting">Settings</string>
 
+    <string name="menu_action_complete_enable">Mark as paid</string>
+    <string name="menu_action_complete_disable">Mark as unpaid</string>
     <string name="menu_action_edit">Edit</string>
     <string name="menu_action_delete">Delete</string>
 

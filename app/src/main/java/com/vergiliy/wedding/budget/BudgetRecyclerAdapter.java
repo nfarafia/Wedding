@@ -2,6 +2,7 @@ package com.vergiliy.wedding.budget;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,8 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
     private List<Coast> list;
     private CoastDatabase database;
 
-    private static Boolean callActionMode = false;
+    static ActionMode actionMode = null;
+    private int position;
 
     // Provide a reference to the views for each data item
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -32,16 +34,26 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
         BudgetActivity context;
         CardView item;
         public TextView name;
-        ImageView delete;
-        ImageView edit;
+        ImageView complete_enable, complete_disable, edit, delete;
 
         // Create ActionMode callback (Action Bar for Long click by item)
         private ActionMode.Callback ActionModeCallback = new ActionMode.Callback() {
+
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                callActionMode = true;
                 MenuInflater menuInflater = context.getMenuInflater();
                 menuInflater.inflate(R.menu.action_mode, menu);
+
+                // Get current Coast
+                final Coast coast = list.get(position);
+
+                // Show button to enable/disable complete
+                if (coast.getComplete()) {
+                    menu.findItem(R.id.action_complete_disable).setVisible(true);
+                } else {
+                    menu.findItem(R.id.action_complete_enable).setVisible(true);
+                }
+
                 return true;
             }
 
@@ -53,6 +65,16 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    // Enable complete item
+                    case R.id.action_complete_enable:
+                        item.findViewById(R.id.ic_coast_complete_enable).callOnClick();
+                        mode.finish();
+                        return true;
+                    // Disable complete item
+                    case R.id.action_complete_disable:
+                        item.findViewById(R.id.ic_coast_complete_disable).callOnClick();
+                        mode.finish();
+                        return true;
                     // Edit item
                     case R.id.action_edit:
                         item.findViewById(R.id.ic_coast_edit).callOnClick();
@@ -70,7 +92,7 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-                callActionMode = false;
+                actionMode = null;
                 context.getViewPager().getAdapter().notifyDataSetChanged();
             }
         };
@@ -81,22 +103,48 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
             context = (BudgetActivity) itemView.getContext();
             item = itemView.findViewById(R.id.coast_list_item);
             name = itemView.findViewById(R.id.coast_list_name);
-            delete = itemView.findViewById(R.id.ic_coast_delete);
+            complete_enable = itemView.findViewById(R.id.ic_coast_complete_enable);
+            complete_disable = itemView.findViewById(R.id.ic_coast_complete_disable);
             edit = itemView.findViewById(R.id.ic_coast_edit);
+            delete = itemView.findViewById(R.id.ic_coast_delete);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     // ActionMode already running
-                    if (callActionMode) {
+                    if (actionMode != null) {
                         return false;
                     }
-                    context.startSupportActionMode(ActionModeCallback);
+                    position = getAdapterPosition(); // Save current position to Tag
+                    actionMode = context.startSupportActionMode(ActionModeCallback);
                     item.setCardBackgroundColor(Color.LTGRAY);
 
                     return true;
                 }
             });
+        }
+    }
+
+    // Listener clicks on Complete button
+    private class CompleteButtonListener implements View.OnClickListener {
+
+        private Coast coast = null;
+        private boolean complete;
+
+        // Get coast from main class BudgetRecyclerAdapter
+        CompleteButtonListener(Coast coast, boolean complete) {
+            this.coast = coast;
+            this.complete = complete;
+        }
+
+        @Override
+        public void onClick(View view) {
+            // Update field complete_enable from db_main
+            coast.setComplete(complete);
+            database.update(coast);
+
+            // Update current fragment
+            context.getViewPager().getAdapter().notifyDataSetChanged();
         }
     }
 
@@ -141,8 +189,14 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Coast coast = list.get(position);
-
         holder.name.setText(coast.getLocaleName());
+
+        // Creating a strikethrough text in TextView
+        if (coast.getComplete())
+            holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        holder.complete_enable.setOnClickListener(new CompleteButtonListener(coast, true));
+        holder.complete_disable.setOnClickListener(new CompleteButtonListener(coast, false));
         holder.edit.setOnClickListener(new CoastProcessing(coast));
         holder.delete.setOnClickListener(new DeleteButtonListener(coast));
     }
@@ -151,5 +205,10 @@ class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.V
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    // Get current ActionMode
+    public ActionMode getActionMode() {
+        return actionMode;
     }
 }

@@ -74,6 +74,8 @@ class CoastDatabase extends SQLiteHelper {
 
     // Add new field
     void add(Coast coast){
+        coast.setUpdate(BaseHelper.getCurrentDate()); // Get current date
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_ID_CATEGORY, coast.getIdCategory());
@@ -87,6 +89,8 @@ class CoastDatabase extends SQLiteHelper {
 
     // Update field
     void update(Coast coast){
+        coast.setUpdate(BaseHelper.getCurrentDate()); // Get current date
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_ID_CATEGORY, coast.getIdCategory());
