@@ -5,7 +5,6 @@ import android.content.ContextWrapper;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,8 @@ import java.util.Locale;
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
 
-// Listener clicks on Edit button or FloatingButton (edit or add new coast)
-class CoastProcessing implements View.OnClickListener {
+// Listener clicks on Edit button or FloatingButton (edit or add new cost)
+class CostProcessing implements View.OnClickListener {
 
     private BudgetActivity context;
     private AlertDialog dialog = null;
@@ -42,15 +41,15 @@ class CoastProcessing implements View.OnClickListener {
     private EditText amountField;
     private RadioGroup completeField;
 
-    private Coast coast = null;
+    private Cost cost = null;
 
-    // Get coast from main class BudgetRecyclerAdapter
-    CoastProcessing(Coast coast) {
-        this.coast = coast;
+    // Get cost from main class BudgetRecyclerAdapter
+    CostProcessing(Cost cost) {
+        this.cost = cost;
     }
 
     // Default constructor
-    CoastProcessing() {}
+    CostProcessing() {}
 
     // Listener clicks on Edit button
     private class PositiveButtonListener implements View.OnClickListener {
@@ -65,19 +64,19 @@ class CoastProcessing implements View.OnClickListener {
 
             // Get checked item from complete_enable field
             int completeFieldId = completeField.getCheckedRadioButtonId();
-            final boolean complete = completeFieldId == R.id.coast_edit_complete_yes;
+            final boolean complete = completeFieldId == R.id.cost_edit_complete_yes;
 
             if (TextUtils.isEmpty(name)) {
-                Toast.makeText(context, R.string.coast_dialog_error,
+                Toast.makeText(context, R.string.cost_dialog_error,
                         Toast.LENGTH_LONG).show();
             } else {
-                Coast item = new Coast(context);
+                Cost item = new Cost(context);
 
                 item.setIdCategory(id_category);
 
                 // Update name if it modified
-                if (coast == null || TextUtils.isEmpty(coast.getLocaleName()) ||
-                        !coast.getLocaleName().equals(name))
+                if (cost == null || TextUtils.isEmpty(cost.getLocaleName()) ||
+                        !cost.getLocaleName().equals(name))
                     item.setName(BaseClass.LANGUAGE_DEFAULT, name);
 
                 if (!TextUtils.isEmpty(note))
@@ -86,8 +85,8 @@ class CoastProcessing implements View.OnClickListener {
                 item.setAmount(amount);
                 item.setComplete(complete);
 
-                if (coast != null) {
-                    item.setId(coast.getId());
+                if (cost != null) {
+                    item.setId(cost.getId());
                     context.getDbMain().update(item);
                 } else {
                     context.getDbMain().add(item);
@@ -108,7 +107,7 @@ class CoastProcessing implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(context, R.string.coast_dialog_cancel, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.cost_dialog_cancel, Toast.LENGTH_LONG).show();
             if (dialog != null) {
                 dialog.dismiss();
             }
@@ -131,15 +130,15 @@ class CoastProcessing implements View.OnClickListener {
         TextView titleView =  dialog_title.findViewById(R.id.dialog_title);
 
         // Get Body fields
-        nameField = dialog_body.findViewById(R.id.coast_edit_name);
-        categoryField = dialog_body.findViewById(R.id.coast_edit_category);
-        noteField = dialog_body.findViewById(R.id.coast_edit_note);
-        amountField = dialog_body.findViewById(R.id.coast_edit_amount);
-        completeField = dialog_body.findViewById(R.id.coast_edit_complete);
+        nameField = dialog_body.findViewById(R.id.cost_edit_name);
+        categoryField = dialog_body.findViewById(R.id.cost_edit_category);
+        noteField = dialog_body.findViewById(R.id.cost_edit_note);
+        amountField = dialog_body.findViewById(R.id.cost_edit_amount);
+        completeField = dialog_body.findViewById(R.id.cost_edit_complete);
 
         // Get RadioButton
-        RadioButton completeFieldYes = completeField.findViewById(R.id.coast_edit_complete_yes);
-        RadioButton completeFieldNo = completeField.findViewById(R.id.coast_edit_complete_no);
+        RadioButton completeFieldYes = completeField.findViewById(R.id.cost_edit_complete_yes);
+        RadioButton completeFieldNo = completeField.findViewById(R.id.cost_edit_complete_no);
 
         // Get service buttons
         Button cancelButton = dialog_body.findViewById(R.id.dialog_button_cancel);
@@ -159,25 +158,25 @@ class CoastProcessing implements View.OnClickListener {
         // Chose the current category
         categoryField.setSelection(context.getViewPager().getCurrentItem());
 
-        if (coast != null) {
-            nameField.setText(coast.getLocaleName());
-            noteField.setText(coast.getNote());
+        if (cost != null) {
+            nameField.setText(cost.getLocaleName());
+            noteField.setText(cost.getNote());
 
-            Double amount = coast.getAmount();
+            Double amount = cost.getAmount();
             String format = amount % 1 == 0 ? "%.0f" : "%.2f";
-            amountField.setText(String.format(Locale.getDefault(), format, coast.getAmount()));
+            amountField.setText(String.format(Locale.getDefault(), format, cost.getAmount()));
 
-            Boolean complete = coast.getComplete();
+            Boolean complete = cost.getComplete();
             if (complete) {
                 completeFieldYes.setChecked(true);
             } else {
                 completeFieldNo.setChecked(true);
             }
 
-            titleView.setText(R.string.coast_dialog_title_edit);
+            titleView.setText(R.string.cost_dialog_title_edit);
             yesButton.setText(R.string.dialog_button_edit);
         } else {
-            titleView.setText(R.string.coast_dialog_title_add);
+            titleView.setText(R.string.cost_dialog_title_add);
             yesButton.setText(R.string.dialog_button_add);
         }
 

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-class Coast extends BaseClass {
+class Cost extends BaseClass {
     private	int	id, id_category;
     private Map<String, String> name = new HashMap<>();
     private	String note = null;
@@ -18,7 +18,7 @@ class Coast extends BaseClass {
     private	boolean	complete;
     private Date update;
 
-    Coast(Context context) {
+    Cost(Context context) {
         super(context);
     }
 

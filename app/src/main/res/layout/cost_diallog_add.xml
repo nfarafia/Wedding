@@ -20,50 +20,50 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/coast_edit_name"
+                android:id="@+id/cost_edit_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_border"
-                android:hint="@string/coast_dialog_name_hint"
+                android:hint="@string/cost_dialog_name_hint"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textSize="@dimen/TextEdit_textSize" />
 
             <Spinner
-                android:id="@+id/coast_edit_category"
+                android:id="@+id/cost_edit_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/spinner_border"
-                android:prompt="@string/coast_dialog_spinner_prompt" />
+                android:prompt="@string/cost_dialog_spinner_prompt" />
 
 
             <EditText
-                android:id="@+id/coast_edit_note"
+                android:id="@+id/cost_edit_note"
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_border"
                 android:gravity="top"
-                android:hint="@string/coast_dialog_note_hint"
+                android:hint="@string/cost_dialog_note_hint"
                 android:inputType="textMultiLine"
                 android:padding="12dp"
                 android:textSize="@dimen/TextEdit_textSize" />
 
             <EditText
-                android:id="@+id/coast_edit_amount"
+                android:id="@+id/cost_edit_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_border"
-                android:hint="@string/coast_dialog_amount_hint"
+                android:hint="@string/cost_dialog_amount_hint"
                 android:inputType="numberDecimal"
                 android:digits="0123456789.,"
                 android:padding="12dp"
                 android:textSize="@dimen/TextEdit_textSize" />
 
             <RadioGroup
-                android:id="@+id/coast_edit_complete"
+                android:id="@+id/cost_edit_complete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -75,12 +75,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
-                    android:text="@string/coast_dialog_complete_title"
+                    android:text="@string/cost_dialog_complete_title"
                     android:textColor="@color/text"
                     android:textSize="@dimen/TextView_textSize" />
 
                 <RadioButton
-                    android:id="@+id/coast_edit_complete_yes"
+                    android:id="@+id/cost_edit_complete_yes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -88,7 +88,7 @@
                     android:textSize="@dimen/TextView_textSize" />
 
                 <RadioButton
-                    android:id="@+id/coast_edit_complete_no"
+                    android:id="@+id/cost_edit_complete_no"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

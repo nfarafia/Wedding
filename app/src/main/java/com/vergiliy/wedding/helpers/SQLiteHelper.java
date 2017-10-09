@@ -56,7 +56,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.e("Exception", "CoastsSectionsDatabase -> execMultipleSQL: " + e.getMessage());
+            Log.e("Exception", "CostsSectionsDatabase -> execMultipleSQL: " + e.getMessage());
         }
     }
 }

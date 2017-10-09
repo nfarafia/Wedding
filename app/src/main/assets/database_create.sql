@@ -1,5 +1,5 @@
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS `budget_coasts` (
+CREATE TABLE IF NOT EXISTS `budget_costs` (
 	`_id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`id_category`	INTEGER NOT NULL,
 	`name`	TEXT DEFAULT NULL,
@@ -11,16 +11,16 @@ CREATE TABLE IF NOT EXISTS `budget_coasts` (
 	`update`	TEXT DEFAULT NULL,
 	FOREIGN KEY(`id_category`) REFERENCES `budget_categories`(`_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-INSERT INTO `budget_coasts` VALUES (1,1,NULL,'Coast 1','Счет 1',NULL,100.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (2,1,NULL,'Coast 2 (note)','Счет 2 (заметка)','Note 2',200.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (3,1,NULL,'Coast 3 (static)',NULL,NULL,300.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (4,2,NULL,'Coast 4','Счет 4',NULL,400.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (5,2,NULL,'Coast 5 (complete)','Счет 5 (выполнен)',NULL,500.0,1,NULL);
-INSERT INTO `budget_coasts` VALUES (6,3,NULL,'Coast 6 (note, complete)','Счет 6 (заметка, выполнен)','Note 6',600.0,1,NULL);
-INSERT INTO `budget_coasts` VALUES (7,4,NULL,'Coast 7','Счет 7',NULL,700.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (8,4,NULL,'Coast 8','Счет 8',NULL,800.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (9,4,NULL,'Coast 9','Счет 9',NULL,900.0,0,NULL);
-INSERT INTO `budget_coasts` VALUES (10,5,NULL,'Coast 10 (note, static)',NULL,'Note 10',1000.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (1,1,NULL,'Cost 1','Счет 1',NULL,100.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (2,1,NULL,'Cost 2 (note)','Счет 2 (заметка)','Note 2',200.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (3,1,NULL,'Cost 3 (static)',NULL,NULL,300.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (4,2,NULL,'Cost 4','Счет 4',NULL,400.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (5,2,NULL,'Cost 5','Счет 5',NULL,500.0,1,NULL);
+INSERT INTO `budget_costs` VALUES (6,3,NULL,'Cost 6 (note)','Счет 6 (заметка)','Note 6',600.0,1,NULL);
+INSERT INTO `budget_costs` VALUES (7,4,NULL,'Cost 7','Счет 7',NULL,700.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (8,4,NULL,'Cost 8','Счет 8',NULL,800.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (9,4,NULL,'Cost 9','Счет 9',NULL,900.0,0,NULL);
+INSERT INTO `budget_costs` VALUES (10,5,NULL,'Cost 10 (note, static)',NULL,'Note 10',1000.0,0,NULL);
 CREATE TABLE IF NOT EXISTS `budget_categories` (
 	`_id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`name`	TEXT DEFAULT NULL,

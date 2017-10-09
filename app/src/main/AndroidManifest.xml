@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vergiliy.wedding">
 
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -19,12 +18,15 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:label="@string/filter_view_http_wedding">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="vergiliy.com"
                     android:pathPrefix="/wedding"
@@ -46,8 +48,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".budget.BudgetActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".guests.GuestsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -66,5 +68,7 @@
         <activity
             android:name=".setting.SettingFragmentsActivity"
             android:configChanges="orientation|screenSize" />
+        <activity android:name=".budget.CostActivity"></activity>
     </application>
+
 </manifest>

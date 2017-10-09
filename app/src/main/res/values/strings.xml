@@ -42,23 +42,21 @@
 
     <string name="test_tasks_page">Page %1$d</string>
     <string name="test_tasks_item_click">Position %1$d</string>
-    <string name="test_coasts_page">Page %1$d</string>
-    <string name="test_coasts_item_click">Position %1$d</string>
     <string name="test_menu_setting_click">Click button Setting</string>
 
     <string name="budget_tab_edit_button">Edit categories</string>
     <string name="budget_title_none">There is no categories</string>
-    <string name="budget_list_none">There is no coasts. Start adding now</string>
-    <string name="coast_dialog_title_add">Add new coast</string>
-    <string name="coast_dialog_title_edit">Edit cast</string>
-    <string name="coast_dialog_error">Enter name</string>
-    <string name="coast_dialog_cancel">Task cancelled</string>
-    <string name="coast_dialog_spinner_prompt">Select category</string>
-    <string name="coast_dialog_name_hint">Enter name</string>
-    <string name="coast_dialog_note_hint">Enter note</string>
-    <string name="coast_dialog_amount_hint">Enter total amount</string>
-    <string name="coast_dialog_complete_title">Mark as paid</string>
-    <string name="coast_dialog_quantity_hint">Enter quantity</string>
+    <string name="budget_list_none">There is no costs. Start adding now</string>
+    <string name="cost_dialog_title_add">Add new cost</string>
+    <string name="cost_dialog_title_edit">Edit cast</string>
+    <string name="cost_dialog_error">Enter name</string>
+    <string name="cost_dialog_cancel">Task cancelled</string>
+    <string name="cost_dialog_spinner_prompt">Select category</string>
+    <string name="cost_dialog_name_hint">Enter name</string>
+    <string name="cost_dialog_note_hint">Enter note</string>
+    <string name="cost_dialog_amount_hint">Enter total amount</string>
+    <string name="cost_dialog_complete_title">Mark as paid</string>
+    <string name="cost_dialog_quantity_hint">Enter quantity</string>
 
     <string name="settings_names">Names</string>
     <string name="settings_bride_title">Bride\'s name</string>

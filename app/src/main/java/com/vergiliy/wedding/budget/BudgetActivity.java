@@ -2,7 +2,6 @@ package com.vergiliy.wedding.budget;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,11 +24,13 @@ import com.vergiliy.wedding.ZoomOutPageTransformer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
+
 public class BudgetActivity extends NavigationActivity {
 
     protected ViewPager viewPager;
 
-    private CoastDatabase db_main;
+    private CostDatabase db_main;
     protected CategoryDatabase db_category;
 
     private List<Category> categories = new ArrayList<>();
@@ -68,8 +69,10 @@ public class BudgetActivity extends NavigationActivity {
 
         @Override
         public void onPageSelected(int position) {
-            String text = getResources().getString(R.string.test_coasts_page, position);
-            Snackbar.make(viewPager, text, Snackbar.LENGTH_LONG).show();
+            // Close ActionMode if it was open
+            if (actionMode != null) {
+                actionMode.finish();
+            }
         }
 
         @Override
@@ -88,8 +91,8 @@ public class BudgetActivity extends NavigationActivity {
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_budget, frameLayout);
 
-        // Create new CoastDatabase and CategoryDatabase
-        db_main = new CoastDatabase(this);
+        // Create new CostDatabase and CategoryDatabase
+        db_main = new CostDatabase(this);
         db_category = new CategoryDatabase(this);
 
         // Get categories from database
@@ -102,7 +105,7 @@ public class BudgetActivity extends NavigationActivity {
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new CoastProcessing());
+        fab.setOnClickListener(new CostProcessing());
     }
 
     @Override
@@ -197,7 +200,7 @@ public class BudgetActivity extends NavigationActivity {
     }
 
     // Get db_main
-    public CoastDatabase getDbMain() {
+    public CostDatabase getDbMain() {
         return db_main;
     }
 
