@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.cost;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-class Cost extends BaseClass {
+public class Cost extends BaseClass {
     private	int	id, id_category;
     private Map<String, String> name = new HashMap<>();
     private	String note = null;
@@ -42,7 +42,7 @@ class Cost extends BaseClass {
         return name.get(LANGUAGE_DEFAULT);
     }
 
-    String getLocaleName() {
+    public String getLocaleName() {
         return getLocaleValue(name);
     }
 
@@ -66,11 +66,11 @@ class Cost extends BaseClass {
         this.amount = amount;
     }
 
-    boolean getComplete() {
+    public boolean getComplete() {
         return complete;
     }
 
-    void setComplete(boolean complete) {
+    public void setComplete(boolean complete) {
         this.complete = complete;
     }
 

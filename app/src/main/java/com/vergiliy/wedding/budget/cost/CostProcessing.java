@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.cost;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.budget.BudgetActivity;
+import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
 import com.vergiliy.wedding.vendors.BaseClass;
@@ -29,7 +31,7 @@ import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
 
 // Listener clicks on Edit button or FloatingButton (edit or add new cost)
-class CostProcessing implements View.OnClickListener {
+public class CostProcessing implements View.OnClickListener {
 
     private BudgetActivity context;
     private AlertDialog dialog = null;
@@ -44,12 +46,12 @@ class CostProcessing implements View.OnClickListener {
     private Cost cost = null;
 
     // Get cost from main class BudgetRecyclerAdapter
-    CostProcessing(Cost cost) {
+    public CostProcessing(Cost cost) {
         this.cost = cost;
     }
 
     // Default constructor
-    CostProcessing() {}
+    public CostProcessing() {}
 
     // Listener clicks on Edit button
     private class PositiveButtonListener implements View.OnClickListener {

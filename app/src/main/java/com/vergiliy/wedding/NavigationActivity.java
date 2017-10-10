@@ -2,6 +2,7 @@ package com.vergiliy.wedding;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.vergiliy.wedding.main.MainActivity;
@@ -48,6 +50,11 @@ public class NavigationActivity extends BaseActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Hide View with shadow when if the device you are running is >= to Lollipop (API 21)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            findViewById(R.id.toolbar_shadow).setVisibility(View.GONE);
+        }
     }
 
     // Close NavigationDrawer when press button back

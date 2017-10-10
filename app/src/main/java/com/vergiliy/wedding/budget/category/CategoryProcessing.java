@@ -1,10 +1,10 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.category;
 
 import android.view.View;
 import android.widget.Toast;
 
 // Listener clicks on Edit Tabs button (edit or add new cost)
-class CategoryProcessing implements View.OnClickListener {
+public class CategoryProcessing implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {

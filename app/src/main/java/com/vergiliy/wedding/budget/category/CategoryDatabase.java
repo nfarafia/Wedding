@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.category;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +10,7 @@ import com.vergiliy.wedding.vendors.BaseClass;
 import java.util.ArrayList;
 import java.util.List;
 
-class CategoryDatabase extends SQLiteHelper {
+public class CategoryDatabase extends SQLiteHelper {
 
     private	static final String TABLE = "budget_categories";
     private static final String COLUMN_ID = "_id";
@@ -19,12 +19,12 @@ class CategoryDatabase extends SQLiteHelper {
     private static final String COLUMN_UPDATE = "`update`";
 
     // Create access to database
-    CategoryDatabase(Context context) {
+    public CategoryDatabase(Context context) {
         super(context);
     }
 
     // Get all fields
-    List<Category> getAll(){
+    public List<Category> getAll(){
         SQLiteDatabase db = getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE + " ORDER BY " + COLUMN_POSITION + " ASC";
         List<Category> all = new ArrayList<>();

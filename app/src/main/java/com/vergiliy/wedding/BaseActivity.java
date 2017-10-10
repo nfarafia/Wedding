@@ -2,8 +2,8 @@ package com.vergiliy.wedding;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -11,18 +11,25 @@ public class BaseActivity extends AppCompatActivity {
     private String language = null;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle bundle = getIntent().getExtras();
         language = languageClass.getLanguage(); // Save current language
 
         // Get language before flip screen
         if (savedInstanceState != null) {
+            Log.e("savedInstanceState", "not null");
             String language_temp = savedInstanceState.getString("language", null);
             // Restore current language
             if (language_temp != null && !language.equals(language_temp)) {
+                Log.e("setLocale", "call");
                 language = languageClass.setLocale(); // Set chosen locale (and save return value)
             }
+        // Checking language if it start screen
+        } else if (bundle != null && bundle.getBoolean("start")
+                && getLanguageClass().isChangeLanguage(language)) {
+            Log.e("start", "yes");
+            getLanguageClass().setLocale(); // Set chosen locale
         }
     }
 

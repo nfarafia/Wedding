@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.category;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import com.vergiliy.wedding.vendors.BaseClass;
 import java.util.HashMap;
 import java.util.Map;
 
-class Category extends BaseClass {
+public class Category extends BaseClass {
 
     private	int	id;
     private Map<String, String> name = new HashMap<>();
@@ -28,7 +28,7 @@ class Category extends BaseClass {
         return name.get(LANGUAGE_DEFAULT);
     }
 
-    String getLocaleName() {
+    public String getLocaleName() {
         return getLocaleValue(name);
     }
 

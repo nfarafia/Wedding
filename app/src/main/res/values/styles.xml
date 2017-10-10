@@ -3,7 +3,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeStyle">@style/ActionMode</item>
     </style>
@@ -20,7 +19,6 @@
         <item name="background">@color/colorBackgroundActionMode</item>
     </style>
     <style name="DialogFullScreen" parent="ThemeOverlay.AppCompat.Dialog">
-        <!-- <item name="android:windowIsFloating">false</item> -->
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>
     </style>

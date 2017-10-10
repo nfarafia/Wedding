@@ -20,6 +20,11 @@ import android.widget.Toast;
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.ZoomOutPageTransformer;
+import com.vergiliy.wedding.budget.category.Category;
+import com.vergiliy.wedding.budget.category.CategoryDatabase;
+import com.vergiliy.wedding.budget.category.CategoryProcessing;
+import com.vergiliy.wedding.budget.cost.CostDatabase;
+import com.vergiliy.wedding.budget.cost.CostProcessing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +108,7 @@ public class BudgetActivity extends NavigationActivity {
         }
 
         // Creating FloatingButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new CostProcessing());
     }
@@ -133,8 +138,8 @@ public class BudgetActivity extends NavigationActivity {
         tabLayout.setPadding(0,0,padding_right,0);
 
         // Show button Add for add new tab
-        ImageButton tabAdd = (ImageButton) findViewById(R.id.tabs_add);
-        tabAdd.setImageResource(R.drawable.ic_tab_edit);
+        ImageButton tabAdd = (ImageButton) findViewById(R.id.budget_tabs_edit);
+        tabAdd.setImageResource(R.drawable.ic_tabs_edit);
         tabAdd.setVisibility(View.VISIBLE);
         tabAdd.setOnClickListener(new CategoryProcessing());
 

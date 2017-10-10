@@ -68,7 +68,9 @@
         <activity
             android:name=".setting.SettingFragmentsActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".budget.CostActivity"></activity>
+        <activity
+            android:name=".budget.cost.CostActivity"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

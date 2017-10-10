@@ -17,4 +17,9 @@
         <item>ru</item>
     </string-array>
 
+    <string-array name="cost_tabs">
+        <item>Cost</item>
+        <item>Payments</item>
+    </string-array>
+
 </resources>

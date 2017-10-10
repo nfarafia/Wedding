@@ -17,16 +17,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.budget.cost.Cost;
+import com.vergiliy.wedding.budget.cost.CostActivity;
+import com.vergiliy.wedding.budget.cost.CostDatabase;
+import com.vergiliy.wedding.budget.cost.CostProcessing;
 
 import java.util.List;
 
-class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ViewHolder> {
+public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ViewHolder> {
 
     private BudgetActivity context;
     private List<Cost> list;
     private CostDatabase database;
 
-    static ActionMode actionMode = null;
+    public static ActionMode actionMode = null;
     private int position;
 
     // Provide a reference to the views for each data item

@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.cost;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class CostDatabase extends SQLiteHelper {
+public class CostDatabase extends SQLiteHelper {
 
     private	static final String TABLE = "budget_costs";
     private static final String COLUMN_ID = "_id";
@@ -25,7 +25,7 @@ class CostDatabase extends SQLiteHelper {
     private static final String COLUMN_UPDATE = "`update`";
 
     // Create access to database
-    CostDatabase(Context context) {
+    public CostDatabase(Context context) {
         super(context);
     }
 
@@ -68,7 +68,7 @@ class CostDatabase extends SQLiteHelper {
     }
 
     // Get all fields by category id
-    List<Cost> getAllByCategoryId(int id_category){
+    public List<Cost> getAllByCategoryId(int id_category){
         return getAll(id_category);
     }
 
@@ -88,7 +88,7 @@ class CostDatabase extends SQLiteHelper {
     }
 
     // Update field
-    void update(Cost cost){
+    public void update(Cost cost){
         cost.setUpdate(BaseHelper.getCurrentDate()); // Get current date
 
         SQLiteDatabase db = getWritableDatabase();
@@ -104,7 +104,7 @@ class CostDatabase extends SQLiteHelper {
     }
 
     // Delete field
-    void delete(int id){
+    public void delete(int id){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE, COLUMN_ID	+ "	= ?", new String[] { String.valueOf(id)});
     }

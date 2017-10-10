@@ -23,6 +23,7 @@
     <string name="activity_countdown_title">Countdown</string>
     <string name="activity_tasks_title">Tasks</string>
     <string name="activity_budget_title">Budget</string>
+    <string name="activity_cost_title">Cost</string>
     <string name="activity_guests_title">Guests</string>
     <string name="activity_vendors_title">Vendors</string>
 
@@ -42,9 +43,10 @@
 
     <string name="test_tasks_page">Page %1$d</string>
     <string name="test_tasks_item_click">Position %1$d</string>
+    <string name="test_cost_page">Page %1$d</string>
     <string name="test_menu_setting_click">Click button Setting</string>
 
-    <string name="budget_tab_edit_button">Edit categories</string>
+    <string name="budget_tabs_edit_button">Edit categories</string>
     <string name="budget_title_none">There is no categories</string>
     <string name="budget_list_none">There is no costs. Start adding now</string>
     <string name="cost_dialog_title_add">Add new cost</string>

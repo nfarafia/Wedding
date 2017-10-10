@@ -79,6 +79,9 @@ public class SplashActivity extends BaseActivity {
     // Jump to NavigationActivity (call when the button clicked)
     public void start(View view){
         Intent intent = new Intent(context, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("start", true);
+        intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.budget.cost.Cost;
 
 import java.util.List;
 
