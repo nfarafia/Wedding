@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.cost.Cost;
 import com.vergiliy.wedding.budget.cost.CostActivity;
-import com.vergiliy.wedding.budget.cost.CostDatabase;
 import com.vergiliy.wedding.budget.cost.CostProcessing;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
 
     private BudgetActivity context;
     private List<Cost> list;
-    private CostDatabase database;
 
     public static ActionMode actionMode = null;
     private int position;
@@ -114,6 +112,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
             delete = itemView.findViewById(R.id.ic_cost_delete);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
                 @Override
                 public boolean onLongClick(View view) {
                     // ActionMode already running
@@ -132,7 +131,16 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
 
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, CostActivity.class));
+                    // Close ActionMode if it was open
+                    if (actionMode != null) {
+                        actionMode.finish();
+                    }
+
+                    // Start new Activity
+                    Intent intent = new Intent(context, CostActivity.class);
+                    Cost cost = list.get(getAdapterPosition()); // Get clicked cost id
+                    intent.putExtra("id", cost.getId());
+                    context.startActivity(intent);
                 }
             });
         }
@@ -154,7 +162,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
         public void onClick(View view) {
             // Update field complete_enable from db_main
             cost.setComplete(complete);
-            database.update(cost);
+            context.getDbMain().update(cost);
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();
@@ -174,7 +182,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
         @Override
         public void onClick(View view) {
             // Delete row from db_main
-            database.delete(cost.getId());
+            context.getDbMain().delete(cost.getId());
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();
@@ -185,7 +193,6 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     BudgetRecyclerAdapter(Context context, List<Cost> list) {
         this.context = (BudgetActivity) context;
         this.list = list;
-        database = new CostDatabase(context);
     }
 
     // Create new views (invoked by the layout manager)

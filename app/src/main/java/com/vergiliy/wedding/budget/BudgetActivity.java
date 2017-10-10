@@ -31,7 +31,7 @@ import java.util.List;
 
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 
-public class BudgetActivity extends NavigationActivity {
+public class BudgetActivity extends NavigationActivity implements BudgetInterface {
 
     protected ViewPager viewPager;
 
@@ -145,6 +145,7 @@ public class BudgetActivity extends NavigationActivity {
 
         // Show toast when long click button
         tabAdd.setOnLongClickListener(new View.OnLongClickListener() {
+
             @Override
             public boolean onLongClick(View view) {
                 // Get Viw position

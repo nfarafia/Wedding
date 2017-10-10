@@ -29,6 +29,23 @@ public class CostDatabase extends SQLiteHelper {
         super(context);
     }
 
+    // Get cost by id
+    Cost getOne(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = String.format(Locale.getDefault(),
+                "SELECT * FROM %s WHERE _id = %d",  TABLE, id);
+
+        Cost cost = null;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            cost = getCostByCursor(cursor);
+        }
+
+        cursor.close();
+        return cost;
+    }
+
     // Get all fields
     private List<Cost> getAll(){
         return getAll(null);
@@ -47,19 +64,7 @@ public class CostDatabase extends SQLiteHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Cost cost = new Cost(context);
-
-                cost.setId(Integer.parseInt(cursor.getString(0)));
-                cost.setIdCategory(Integer.parseInt(cursor.getString(1)));
-                cost.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(2));
-                cost.setName(BaseClass.LANGUAGE_EN, cursor.getString(3));
-                cost.setName(BaseClass.LANGUAGE_RU, cursor.getString(4));
-                cost.setNote(cursor.getString(5));
-                cost.setAmount(cursor.getDouble(6));
-                cost.setComplete(Integer.parseInt(cursor.getString(7)) > 0);
-                cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(8)));
-
-                all.add(cost);
+                all.add(getCostByCursor(cursor));
             } while (cursor.moveToNext());
         }
 
@@ -107,5 +112,19 @@ public class CostDatabase extends SQLiteHelper {
     public void delete(int id){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE, COLUMN_ID	+ "	= ?", new String[] { String.valueOf(id)});
+    }
+
+    private Cost getCostByCursor(Cursor cursor) {
+        Cost cost = new Cost(context);
+        cost.setId(Integer.parseInt(cursor.getString(0)));
+        cost.setIdCategory(Integer.parseInt(cursor.getString(1)));
+        cost.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(2));
+        cost.setName(BaseClass.LANGUAGE_EN, cursor.getString(3));
+        cost.setName(BaseClass.LANGUAGE_RU, cursor.getString(4));
+        cost.setNote(cursor.getString(5));
+        cost.setAmount(cursor.getDouble(6));
+        cost.setComplete(Integer.parseInt(cursor.getString(7)) > 0);
+        cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(8)));
+        return cost;
     }
 }

@@ -17,8 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.BudgetActivity;
+import com.vergiliy.wedding.budget.BudgetInterface;
 import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
@@ -27,13 +28,15 @@ import com.vergiliy.wedding.vendors.BaseClass;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import static android.R.attr.id;
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
+import static java.nio.file.Paths.get;
 
 // Listener clicks on Edit button or FloatingButton (edit or add new cost)
 public class CostProcessing implements View.OnClickListener {
 
-    private BudgetActivity context;
+    private BaseActivity context;
     private AlertDialog dialog = null;
     private final ViewGroup nullGroup = null;
 
@@ -78,8 +81,16 @@ public class CostProcessing implements View.OnClickListener {
 
                 // Update name if it modified
                 if (cost == null || TextUtils.isEmpty(cost.getLocaleName()) ||
-                        !cost.getLocaleName().equals(name))
+                        !cost.getLocaleName().equals(name)) {
                     item.setName(BaseClass.LANGUAGE_DEFAULT, name);
+
+                    // Update CostActivity Title
+                    if (context instanceof CostActivity ) {
+                        context.setTitle(item.getLocaleName());
+                    }
+                } else {
+                    item.setName(BaseClass.LANGUAGE_DEFAULT, cost.getName());
+                }
 
                 if (!TextUtils.isEmpty(note))
                     item.setNote(note);
@@ -89,9 +100,9 @@ public class CostProcessing implements View.OnClickListener {
 
                 if (cost != null) {
                     item.setId(cost.getId());
-                    context.getDbMain().update(item);
+                    ((BudgetInterface) context).getDbMain().update(item);
                 } else {
-                    context.getDbMain().add(item);
+                    ((BudgetInterface) context).getDbMain().add(item);
                 }
 
                 if (dialog != null) {
@@ -99,7 +110,12 @@ public class CostProcessing implements View.OnClickListener {
                 }
 
                 // Update current fragment
-                context.getViewPager().getAdapter().notifyDataSetChanged();
+                ((BudgetInterface) context).getViewPager().getAdapter().notifyDataSetChanged();
+
+                // Update Cost
+                if (context instanceof CostActivity ) {
+                    cost = ((BudgetInterface) context).getDbMain().getOne(cost.getId());
+                }
             }
         }
     }
@@ -152,13 +168,13 @@ public class CostProcessing implements View.OnClickListener {
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<Category> adapter = new ArrayAdapter<>(context,
-                R.layout.spinner_item, context.getCategories());
+                R.layout.spinner_item, ((BudgetInterface) context).getCategories());
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryField.setAdapter(adapter);
         // Chose the current category
-        categoryField.setSelection(context.getViewPager().getCurrentItem());
+        categoryField.setSelection(((BudgetInterface) context).getViewPager().getCurrentItem());
 
         if (cost != null) {
             nameField.setText(cost.getLocaleName());
@@ -203,11 +219,11 @@ public class CostProcessing implements View.OnClickListener {
     }
 
     // Get main Activity
-    private BudgetActivity getActivity(View view) {
+    private BaseActivity getActivity(View view) {
         Context context = view.getContext();
         while (context instanceof ContextWrapper) {
-            if (context instanceof BudgetActivity) {
-                return (BudgetActivity) context;
+            if (context instanceof BaseActivity) {
+                return (BaseActivity) context;
             }
             context = ((ContextWrapper) context).getBaseContext();
         }

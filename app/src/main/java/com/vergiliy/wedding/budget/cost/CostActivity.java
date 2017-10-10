@@ -2,7 +2,6 @@ package com.vergiliy.wedding.budget.cost;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,12 +15,24 @@ import android.widget.TextView;
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.ZoomOutPageTransformer;
+import com.vergiliy.wedding.budget.BudgetInterface;
+import com.vergiliy.wedding.budget.category.Category;
+import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.payment.PaymentsFragment;
 
-public class CostActivity extends BaseActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CostActivity extends BaseActivity implements BudgetInterface {
 
     ViewPager viewPager;
+    FloatingActionButton fabEdit, fabAdd;
     private final ViewGroup nullGroup = null;
+
+    private CostDatabase db_main;
+    protected CategoryDatabase db_category;
+
+    private List<Category> categories = new ArrayList<>();
 
     // Create ViewPagerAdapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -67,8 +78,17 @@ public class CostActivity extends BaseActivity {
 
         @Override
         public void onPageSelected(int position) {
-            String text = getResources().getString(R.string.test_cost_page, position);
-            Snackbar.make(viewPager, text, Snackbar.LENGTH_LONG).show();
+            // Change active Fab (for edit cost or add new payment)
+            switch (position) {
+                case 0:
+                    fabEdit.setVisibility(View.VISIBLE);
+                    fabAdd.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    fabEdit.setVisibility(View.GONE);
+                    fabAdd.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
 
         @Override
@@ -83,17 +103,39 @@ public class CostActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.activity_cost_title);
         setContentView(R.layout.activity_cost);
         // Change activities with animation
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
 
+        db_main = new CostDatabase(this);
+        db_category = new CategoryDatabase(this);
+
+        // Get cost from extras id
+        Cost cost = null;
+        Bundle bundle = getIntent().getExtras();
+        Integer id = bundle.getInt("id", -1);
+        if (!id.equals(-1)) {
+            cost = db_main.getOne(id);
+        }
+        if (cost == null) {
+            onBackPressed(); // If Id not found, return back
+            return;
+        }
+
+        // Put name to Title
+        setTitle(cost.getLocaleName());
+
+        // Get categories from database
+        categories = db_category.getAll();
+
         // Creating FloatingButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_edit);
-        // fab.setOnClickListener();
+        fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        fabEdit.setOnClickListener(new CostProcessing(cost));
+        // fabAdd.setOnClickListener();
 
         // Show back button in ActionBar
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -124,11 +166,10 @@ public class CostActivity extends BaseActivity {
     // Prepare custom View with notification counter
     private View prepareCustomView(TabLayout.Tab tab) {
         View view = getLayoutInflater().inflate(R.layout.tab_custom_view, nullGroup);
-        TextView tv_title = view.findViewById(R.id.tab_title);
-        TextView tv_count = view.findViewById(R.id.tab_count);
-        tv_title.setText(tab.getText());
-        tv_count.setText("0");
-
+        TextView tab_title = view.findViewById(R.id.tab_title);
+        TextView tab_count = view.findViewById(R.id.tab_count);
+        tab_title.setText(tab.getText());
+        tab_count.setText("0");
         return view;
     }
 
@@ -150,5 +191,32 @@ public class CostActivity extends BaseActivity {
         super.onBackPressed();
         // Show previous activity with animation
         overridePendingTransition(R.anim.back_slide_in, R.anim.back_slide_out);
+    }
+
+    // Close Database connection when activity destroyed
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db_main != null) {
+            db_main.close();
+        }
+        if (db_category != null) {
+            db_category.close();
+        }
+    }
+
+    @Override
+    public CostDatabase getDbMain() {
+        return db_main;
+    }
+
+    @Override
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return categories;
     }
 }
