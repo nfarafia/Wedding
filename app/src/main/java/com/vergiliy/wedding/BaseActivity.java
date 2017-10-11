@@ -1,8 +1,10 @@
 package com.vergiliy.wedding;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -26,6 +28,19 @@ public class BaseActivity extends AppCompatActivity {
         } else if (bundle != null && bundle.getBoolean("start")
                 && getLanguageClass().isChangeLanguage(language)) {
             getLanguageClass().setLocale(); // Set chosen locale
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Hide View with shadow when if the device you are running is >= to Lollipop (API 21)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            View shadow = findViewById(R.id.toolbar_shadow);
+            if (shadow != null) {
+                shadow.setVisibility(View.GONE);
+            }
         }
     }
 

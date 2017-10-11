@@ -1,12 +1,15 @@
 package com.vergiliy.wedding.budget.cost;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.vendors.BaseClass;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Cost extends BaseClass {
@@ -53,6 +56,12 @@ public class Cost extends BaseClass {
         return note;
     }
 
+    // Return note with default string
+    String getNote(int resource) {
+        String note = getNote();
+        return TextUtils.isEmpty(note) ? context.getString(resource) : note;
+    }
+
     void setNote(String note) {
         this.note = note;
     }
@@ -61,12 +70,24 @@ public class Cost extends BaseClass {
         return amount;
     }
 
+    String getAmountAsString() {
+        Double amount = getAmount();
+        String format = amount % 1 == 0 ? "%.0f" : "%.2f";
+        return String.format(Locale.getDefault(), format, amount);
+    }
+
     void setAmount(double amount) {
         this.amount = amount;
     }
 
     public boolean getComplete() {
         return complete;
+    }
+
+    String getCompleteAsString() {
+        int resource = getComplete() ?
+                R.string.cost_view_complete_enable : R.string.cost_view_complete_disable;
+        return context.getString(resource);
     }
 
     public void setComplete(boolean complete) {

@@ -8,7 +8,7 @@ import com.vergiliy.wedding.BaseActivity;
 import java.util.Map;
 
 public class BaseClass {
-    private BaseActivity context;
+    protected BaseActivity context;
 
     public final static String LANGUAGE_DEFAULT = "default";
     public final static String LANGUAGE_EN = "en";

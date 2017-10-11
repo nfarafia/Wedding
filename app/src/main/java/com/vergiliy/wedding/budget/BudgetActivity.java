@@ -24,7 +24,7 @@ import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.category.CategoryProcessing;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
-import com.vergiliy.wedding.budget.cost.CostProcessing;
+import com.vergiliy.wedding.budget.cost.CostDialogListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new CostProcessing());
+        fab.setOnClickListener(new CostDialogListener());
     }
 
     @Override
@@ -141,6 +141,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         ImageButton tabAdd = (ImageButton) findViewById(R.id.budget_tabs_edit);
         tabAdd.setImageResource(R.drawable.ic_tabs_edit);
         tabAdd.setVisibility(View.VISIBLE);
+
         tabAdd.setOnClickListener(new CategoryProcessing());
 
         // Show toast when long click button
@@ -157,7 +158,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
                 getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
                 // Create the toast in found coordinates
-                Toast toast= Toast.makeText(getApplicationContext(), view.getContentDescription(),
+                Toast toast = Toast.makeText(getApplicationContext(), view.getContentDescription(),
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.END,
                         metrics.widthPixels - location[0],
@@ -202,6 +203,15 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         }
         if (db_category != null) {
             db_category.close();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Close ActionMode if it was open
+        if (actionMode != null) {
+            actionMode.finish();
         }
     }
 

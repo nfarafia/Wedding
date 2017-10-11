@@ -1,10 +1,14 @@
 package com.vergiliy.wedding.info;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
+
+import static android.R.attr.name;
 
 public class AboutActivity extends BaseActivity {
 
@@ -17,9 +21,22 @@ public class AboutActivity extends BaseActivity {
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
 
         // Show back button in ActionBar
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+
+
+
+        FragmentManager manager = getSupportFragmentManager();
+        MyDialogFragment fragment = (MyDialogFragment) manager.findFragmentByTag("MyDialog");
+        if (fragment == null) {
+            fragment = new MyDialogFragment();
+            fragment.show(manager, "MyDialog");
+        }
+
+
+
     }
 
     @Override

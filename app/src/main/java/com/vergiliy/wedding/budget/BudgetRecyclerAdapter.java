@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.cost.Cost;
 import com.vergiliy.wedding.budget.cost.CostActivity;
-import com.vergiliy.wedding.budget.cost.CostProcessing;
+import com.vergiliy.wedding.budget.cost.CostDialogListener;
 
 import java.util.List;
 
@@ -217,7 +217,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
 
         holder.complete_enable.setOnClickListener(new CompleteButtonListener(cost, true));
         holder.complete_disable.setOnClickListener(new CompleteButtonListener(cost, false));
-        holder.edit.setOnClickListener(new CostProcessing(cost));
+        holder.edit.setOnClickListener(new CostDialogListener(cost));
         holder.delete.setOnClickListener(new DeleteButtonListener(cost));
     }
 
@@ -225,10 +225,5 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    // Get current ActionMode
-    public ActionMode getActionMode() {
-        return actionMode;
     }
 }

@@ -2,6 +2,8 @@
     <string name="app_name">Wedding</string>
     <string name="app_description">Wedding App description</string>
 
+    <string name="count" translatable="false">%d</string>
+
     <string name="filter_view_http_wedding" translatable="false">Wedding</string>
     <string name="splash_button_start">Start</string>
 
@@ -49,6 +51,7 @@
     <string name="budget_tabs_edit_button">Edit categories</string>
     <string name="budget_title_none">There is no categories</string>
     <string name="budget_list_none">There is no costs. Start adding now</string>
+
     <string name="cost_dialog_title_add">Add new cost</string>
     <string name="cost_dialog_title_edit">Edit cast</string>
     <string name="cost_dialog_error">Enter name</string>
@@ -58,7 +61,16 @@
     <string name="cost_dialog_note_hint">Enter note</string>
     <string name="cost_dialog_amount_hint">Enter total amount</string>
     <string name="cost_dialog_complete_title">Mark as paid</string>
-    <string name="cost_dialog_quantity_hint">Enter quantity</string>
+
+    <string name="cost_view_name">Name</string>
+    <string name="cost_view_category">Category</string>
+    <string name="cost_view_note">Note</string>
+    <string name="cost_view_note_null">Note is not defined</string>
+    <string name="cost_view_amount">Amount</string>
+    <string name="cost_view_complete">Paid</string>
+    <string name="cost_view_complete_enable">Paid in full</string>
+    <string name="cost_view_complete_disable">In the process</string>
+    <string name="cost_view_update">Last update</string>
 
     <string name="settings_names">Names</string>
     <string name="settings_bride_title">Bride\'s name</string>

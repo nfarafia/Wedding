@@ -34,9 +34,7 @@ public class SplashActivity extends BaseActivity {
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-            finish();
+            start(null);
         }
     };
 

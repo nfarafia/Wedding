@@ -48,8 +48,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".budget.BudgetActivity"
-            android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
+        <!-- android:configChanges="orientation|screenSize" -->
         <activity
             android:name=".guests.GuestsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -66,11 +66,12 @@
             android:name=".info.FeedbackActivity"
             android:parentActivityName=".NavigationActivity" />
         <activity
-            android:name=".setting.SettingFragmentsActivity"
-            android:configChanges="orientation|screenSize" />
+            android:name=".setting.SettingFragmentsActivity"/>
+        <!-- android:configChanges="orientation|screenSize" -->
         <activity
             android:name=".budget.cost.CostActivity"
-            android:configChanges="orientation|screenSize" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- android:configChanges="orientation|screenSize" -->
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,14 @@ import java.util.List;
 public class CostActivity extends BaseActivity implements BudgetInterface {
 
     ViewPager viewPager;
+    TabLayout tabLayout;
     FloatingActionButton fabEdit, fabAdd;
     private final ViewGroup nullGroup = null;
 
     private CostDatabase db_main;
     protected CategoryDatabase db_category;
 
+    private Cost cost = null;
     private List<Category> categories = new ArrayList<>();
 
     // Create ViewPagerAdapter
@@ -70,6 +73,17 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         @Override
         public int getItemPosition(Object object) {
             return POSITION_NONE;
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            // Update Cost
+            cost = db_main.getOne(cost.getId());
+
+            super.notifyDataSetChanged();
+
+            // Set custom view for last item
+            setCustomViewForLastItem(1);
         }
     }
 
@@ -111,7 +125,6 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         db_category = new CategoryDatabase(this);
 
         // Get cost from extras id
-        Cost cost = null;
         Bundle bundle = getIntent().getExtras();
         Integer id = bundle.getInt("id", -1);
         if (!id.equals(-1)) {
@@ -131,8 +144,12 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         // Creating FloatingButton
         fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
         fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
-        fabEdit.setOnClickListener(new CostProcessing(cost));
+        fabEdit.setOnClickListener(new CostDialogListener(cost));
         // fabAdd.setOnClickListener();
+
+        // Support ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Show back button in ActionBar
         if (getSupportActionBar() != null) {
@@ -153,24 +170,23 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
 
         // Show TabLayout
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        // Get last tab for add custom view
-        TabLayout.Tab tab = tabLayout.getTabAt(tabLayout.getTabCount() - 1);
-        if (tab != null) {
-            tab.setCustomView(prepareCustomView(tab));
-        }
+        setCustomViewForLastItem(0); // Set custom view for last item
     }
 
-    // Prepare custom View with notification counter
-    private View prepareCustomView(TabLayout.Tab tab) {
-        View view = getLayoutInflater().inflate(R.layout.tab_custom_view, nullGroup);
-        TextView tab_title = view.findViewById(R.id.tab_title);
-        TextView tab_count = view.findViewById(R.id.tab_count);
-        tab_title.setText(tab.getText());
-        tab_count.setText("0");
-        return view;
+    // Set custom View with notification counter for last item
+    private void setCustomViewForLastItem(int count) {
+        TabLayout.Tab tab = tabLayout.getTabAt(tabLayout.getTabCount() - 1);
+
+        if (tab != null) {
+            View view = getLayoutInflater().inflate(R.layout.tab_custom_view, nullGroup);
+            TextView tab_title = view.findViewById(R.id.tab_title);
+            TextView tab_count = view.findViewById(R.id.tab_count);
+            tab_title.setText(tab.getText());
+            tab_count.setText(getString(R.string.count, count));
+            tab.setCustomView(view);
+        }
     }
 
     @Override
@@ -218,5 +234,9 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
     @Override
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public Cost getCost() {
+        return cost;
     }
 }
