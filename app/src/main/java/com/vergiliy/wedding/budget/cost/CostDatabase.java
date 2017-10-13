@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
-import com.vergiliy.wedding.vendors.BaseClass;
+import com.vergiliy.wedding.BaseClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +16,11 @@ import java.util.Locale;
 public class CostDatabase extends SQLiteHelper {
 
     private	static final String TABLE = "budget_costs";
-    private static final String COLUMN_ID = "_id";
     private static final String COLUMN_ID_CATEGORY = "id_category";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_NOTE = "note";
     private static final String COLUMN_AMOUNT = "amount";
     private static final String COLUMN_COMPLETE = "complete";
-    private static final String COLUMN_UPDATE = "`update`";
 
     // Create access to database
     public CostDatabase(Context context) {
@@ -47,16 +45,19 @@ public class CostDatabase extends SQLiteHelper {
     }
 
     // Get all fields
-    private List<Cost> getAll(){
+    /*
+    private List<Payment> getAll(){
         return getAll(null);
     }
+    */
 
     // Get all fields
-    private List<Cost> getAll(Integer category_id){
+    private List<Cost> getAll(Integer id_category){
         SQLiteDatabase db = getReadableDatabase();
         StringBuilder sql = new StringBuilder("SELECT * FROM " + TABLE);
-        if (category_id > 0) {
-            sql.append(String.format(Locale.getDefault(), " WHERE id_category = %d",  category_id));
+
+        if (id_category > 0) {
+            sql.append(String.format(Locale.getDefault(), " WHERE id_category = %d",  id_category));
         }
 
         List<Cost> all = new ArrayList<>();
@@ -73,38 +74,22 @@ public class CostDatabase extends SQLiteHelper {
     }
 
     // Get all fields by category id
-    public List<Cost> getAllByCategoryId(int id_category){
+    public List<Cost> getAllByIdCategory(int id_category){
         return getAll(id_category);
     }
 
     // Add new field
     void add(Cost cost){
         cost.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ID_CATEGORY, cost.getIdCategory());
-        values.put(COLUMN_NAME, cost.getName());
-        values.put(COLUMN_NOTE, cost.getNote());
-        values.put(COLUMN_AMOUNT, cost.getAmount());
-        values.put(COLUMN_COMPLETE, cost.getComplete());
-        values.put(COLUMN_UPDATE, cost.getUpdateAsString());
-        db.insert(TABLE, null, values);
+        db.insert(TABLE, null, getValues(cost));
     }
 
     // Update field
     public void update(Cost cost){
         cost.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ID_CATEGORY, cost.getIdCategory());
-        values.put(COLUMN_NAME, cost.getName());
-        values.put(COLUMN_NOTE, cost.getNote());
-        values.put(COLUMN_AMOUNT, cost.getAmount());
-        values.put(COLUMN_COMPLETE, cost.getComplete());
-        values.put(COLUMN_UPDATE, cost.getUpdateAsString());
-        db.update(TABLE, values, COLUMN_ID	+ "	= ?",
+        db.update(TABLE, getValues(cost), COLUMN_ID	+ "	= ?",
                 new String[] { String.valueOf(cost.getId())});
     }
 
@@ -121,10 +106,23 @@ public class CostDatabase extends SQLiteHelper {
         cost.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(2));
         cost.setName(BaseClass.LANGUAGE_EN, cursor.getString(3));
         cost.setName(BaseClass.LANGUAGE_RU, cursor.getString(4));
-        cost.setNote(cursor.getString(5));
-        cost.setAmount(cursor.getDouble(6));
-        cost.setComplete(Integer.parseInt(cursor.getString(7)) > 0);
-        cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(8)));
+        cost.setNote(BaseClass.LANGUAGE_DEFAULT, cursor.getString(5));
+        cost.setNote(BaseClass.LANGUAGE_EN, cursor.getString(6));
+        cost.setNote(BaseClass.LANGUAGE_RU, cursor.getString(7));
+        cost.setAmount(cursor.getDouble(8));
+        cost.setComplete(Integer.parseInt(cursor.getString(9)) > 0);
+        cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(10)));
         return cost;
+    }
+
+    private ContentValues getValues(Cost cost){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ID_CATEGORY, cost.getIdCategory());
+        values.put(COLUMN_NAME, cost.getName());
+        values.put(COLUMN_NOTE, cost.getNote());
+        values.put(COLUMN_AMOUNT, cost.getAmount());
+        values.put(COLUMN_COMPLETE, cost.getComplete());
+        values.put(COLUMN_UPDATE, cost.getUpdateAsString());
+        return values;
     }
 }

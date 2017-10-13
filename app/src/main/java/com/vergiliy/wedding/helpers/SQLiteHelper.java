@@ -8,11 +8,13 @@ import android.util.Log;
 
 import static com.vergiliy.wedding.helpers.BaseHelper.readFromAssets;
 
-// SQLite helper (main class for access to db_main)
+// SQLite helper (main class for access to db_cost, db_payment etc.)
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     private	static final int VERSION =	1;
     private	static final String	DATABASE_NAME = "wedding";
+    protected static final String COLUMN_ID = "_id";
+    protected static final String COLUMN_UPDATE = "`update`";
     protected Context context;
 
     public SQLiteHelper(Context context) {

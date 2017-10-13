@@ -3,18 +3,21 @@
     <string name="app_description">Wedding App description</string>
 
     <string name="count" translatable="false">%d</string>
+    <string name="date_time">%1$s in %2$s</string>
+    <string name="text">Text</string>
 
-    <string name="filter_view_http_wedding" translatable="false">Wedding</string>
+    <string name="filter_view_http_wedding" translatable="false">@string/app_name</string>
     <string name="splash_button_start">Start</string>
 
     <string name="dialog_title">Title</string>
-    <string name="dialog_button_yes">Yes</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_cancel">Task cancelled</string>
+    <string name="dialog_button_yes" translatable="false">@string/dialog_yes</string>
     <string name="dialog_button_set">Set</string>
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_edit">Edit</string>
     <string name="dialog_button_cancel">Cancel</string>
-    <string name="dialog_yes">Yes</string>
-    <string name="dialog_no">No</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -55,7 +58,6 @@
     <string name="cost_dialog_title_add">Add new cost</string>
     <string name="cost_dialog_title_edit">Edit cast</string>
     <string name="cost_dialog_error">Enter name</string>
-    <string name="cost_dialog_cancel">Task cancelled</string>
     <string name="cost_dialog_spinner_prompt">Select category</string>
     <string name="cost_dialog_name_hint">Enter name</string>
     <string name="cost_dialog_note_hint">Enter note</string>
@@ -71,6 +73,19 @@
     <string name="cost_view_complete_enable">Paid in full</string>
     <string name="cost_view_complete_disable">In the process</string>
     <string name="cost_view_update">Last update</string>
+    <string name="cost_view_update_null">Not modified</string>
+
+    <string name="payments_list_none">There is no payments. Start adding now</string>
+
+    <string name="payment_card_amount_title">Amount:</string>
+    <string name="payment_card_date_null">Date is not defined</string>
+
+    <string name="payment_dialog_title_add">Add new payment</string>
+    <string name="payment_dialog_title_edit">Edit payment</string>
+    <string name="payment_dialog_error">Enter name</string>
+    <string name="payment_dialog_name_hint">Enter name</string>
+    <string name="payment_dialog_amount_hint">Enter total amount</string>
+    <string name="payment_dialog_complete_title">Mark as paid</string>
 
     <string name="settings_names">Names</string>
     <string name="settings_bride_title">Bride\'s name</string>

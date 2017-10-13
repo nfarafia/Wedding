@@ -121,7 +121,6 @@ public class TimePreference extends DialogPreference {
 
     // Convert time in current system format (12/24)
     String getTimeForSummary(String string) {
-        Integer hour, minute;
         String pattern;
         Date date = null;
 

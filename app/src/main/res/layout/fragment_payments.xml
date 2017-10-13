@@ -1,13 +1,14 @@
-<FrameLayout
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vergiliy.wedding.budget.payment.PaymentsFragment">
+    android:orientation="vertical">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/page_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Payments fragment" />
+        android:scrollbars="vertical"
+        android:layout_height="match_parent" />
 
-</FrameLayout>
+</LinearLayout>

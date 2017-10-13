@@ -2,7 +2,7 @@ package com.vergiliy.wedding.budget.category;
 
 import android.content.Context;
 
-import com.vergiliy.wedding.vendors.BaseClass;
+import com.vergiliy.wedding.BaseClass;
 
 import java.util.HashMap;
 import java.util.Map;

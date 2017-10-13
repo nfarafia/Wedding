@@ -9,7 +9,7 @@ import com.vergiliy.wedding.budget.cost.CostDatabase;
 import java.util.List;
 
 public interface BudgetInterface {
-    CostDatabase getDbMain();
+    CostDatabase getDbCost();
     ViewPager getViewPager();
     List<Category> getCategories();
 }

@@ -52,10 +52,10 @@ public class BudgetFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        // Get costs from db_main
+        // Get costs from db_cost
         int id_category = activity.getCategoryIdByPosition(page);
 
-        List<Cost> all = activity.getDbMain().getAllByCategoryId(id_category);
+        List<Cost> all = activity.getDbCost().getAllByIdCategory(id_category);
         if (all.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
             RecyclerView.Adapter adapter = new BudgetRecyclerAdapter(activity, all);

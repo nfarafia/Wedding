@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.cost;
+package com.vergiliy.wedding.budget.payment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -8,19 +8,16 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vergiliy.wedding.BaseDialogFragment;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.BudgetInterface;
-import com.vergiliy.wedding.budget.category.Category;
+import com.vergiliy.wedding.budget.cost.CostActivity;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
 import com.vergiliy.wedding.BaseClass;
@@ -30,13 +27,13 @@ import java.util.Locale;
 
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
 
-public class CostDialogFragment extends BaseDialogFragment {
+public class PaymentDialogFragment extends BaseDialogFragment {
 
-    private Cost cost;
+    private CostActivity context;
+
+    private Payment payment;
 
     private EditText nameField;
-    private Spinner categoryField;
-    private EditText noteField;
     private EditText amountField;
     private RadioGroup completeField;
 
@@ -46,8 +43,6 @@ public class CostDialogFragment extends BaseDialogFragment {
         @Override
         public void onClick(View view) {
             final String name = nameField.getText().toString();
-            final int id_category = ((Category) categoryField.getSelectedItem()).getId();
-            final String note = noteField.getText().toString();
             final double amount = BaseHelper.parseDouble(amountField.getText().toString(), 0);
 
             // Get checked item from complete_enable field
@@ -55,65 +50,51 @@ public class CostDialogFragment extends BaseDialogFragment {
             final boolean complete = completeFieldId == R.id.cost_edit_complete_yes;
 
             if (TextUtils.isEmpty(name)) {
-                Toast.makeText(context, R.string.cost_dialog_error,
+                Toast.makeText(context, R.string.payment_dialog_error,
                         Toast.LENGTH_LONG).show();
             } else {
-                Cost item = new Cost(context);
+                Payment item = new Payment(context);
 
-                item.setIdCategory(id_category);
+                item.setIdCost(context.getCost().getId());
 
                 // Update name if it modified
-                if (cost == null || TextUtils.isEmpty(cost.getLocaleName()) ||
-                        !cost.getLocaleName().equals(name)) {
+                if (payment == null || TextUtils.isEmpty(payment.getLocaleName()) ||
+                        !payment.getLocaleName().equals(name)) {
                     item.setName(BaseClass.LANGUAGE_DEFAULT, name);
-
-                    // Update CostActivity Title
-                    if (context instanceof CostActivity ) {
-                        context.setTitle(item.getLocaleName());
-                    }
                 } else {
-                    item.setName(BaseClass.LANGUAGE_DEFAULT, cost.getName());
-                }
-
-                // Update note if it modified
-                if (!TextUtils.isEmpty(note)) {
-                    if (cost == null || TextUtils.isEmpty(cost.getLocaleNote()) ||
-                            !cost.getLocaleNote().equals(note)) {
-                        item.setNote(BaseClass.LANGUAGE_DEFAULT, note);
-                    } else {
-                        item.setNote(BaseClass.LANGUAGE_DEFAULT, cost.getNote());
-                    }
+                    item.setName(BaseClass.LANGUAGE_DEFAULT, payment.getName());
                 }
 
                 item.setAmount(amount);
                 item.setComplete(complete);
 
-                if (cost != null) {
-                    item.setId(cost.getId());
-                    ((BudgetInterface) context).getDbCost().update(item);
+                if (payment != null) {
+                    item.setId(payment.getId());
+                    context.getDbPayment().update(item);
                 } else {
-                    ((BudgetInterface) context).getDbCost().add(item);
+                    context.getDbPayment().add(item);
                 }
 
                 if (dialog != null) {
                     dialog.dismiss();
                 }
 
-                // Update Cost
-                if (context instanceof CostActivity ) {
-                    cost = ((BudgetInterface) context).getDbCost().getOne(cost.getId());
-                }
-
                 // Update current fragment
-                ((BudgetInterface) context).getViewPager().getAdapter().notifyDataSetChanged();
+                context.getViewPager().getAdapter().notifyDataSetChanged();
             }
         }
     }
 
-    public static CostDialogFragment newInstance(Cost cost) {
-        CostDialogFragment fragment = new CostDialogFragment();
-        fragment.setCost(cost);
+    public static PaymentDialogFragment newInstance(Payment payment) {
+        PaymentDialogFragment fragment = new PaymentDialogFragment();
+        fragment.setPayment(payment);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = (CostActivity) super.context;
     }
 
     @Override
@@ -122,21 +103,19 @@ public class CostDialogFragment extends BaseDialogFragment {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialog_title = inflater.inflate(R.layout.dialog_title, nullGroup);
-        View dialog_body = inflater.inflate(R.layout.cost_diallog_add, nullGroup);
+        View dialog_body = inflater.inflate(R.layout.payment_diallog_add, nullGroup);
 
         // Get Title field
         TextView titleView =  dialog_title.findViewById(R.id.dialog_title);
 
         // Get Body fields
-        nameField = dialog_body.findViewById(R.id.cost_edit_name);
-        categoryField = dialog_body.findViewById(R.id.cost_edit_category);
-        noteField = dialog_body.findViewById(R.id.cost_edit_note);
-        amountField = dialog_body.findViewById(R.id.cost_edit_amount);
-        completeField = dialog_body.findViewById(R.id.cost_edit_complete);
+        nameField = dialog_body.findViewById(R.id.payment_edit_name);
+        amountField = dialog_body.findViewById(R.id.payment_edit_amount);
+        completeField = dialog_body.findViewById(R.id.payment_edit_complete);
 
         // Get RadioButton
-        RadioButton completeFieldYes = completeField.findViewById(R.id.cost_edit_complete_yes);
-        RadioButton completeFieldNo = completeField.findViewById(R.id.cost_edit_complete_no);
+        RadioButton completeFieldYes = completeField.findViewById(R.id.payment_edit_complete_yes);
+        RadioButton completeFieldNo = completeField.findViewById(R.id.payment_edit_complete_no);
 
         // Get service buttons
         Button cancelButton = dialog_body.findViewById(R.id.dialog_button_cancel);
@@ -146,32 +125,21 @@ public class CostDialogFragment extends BaseDialogFragment {
         DecimalFormatSymbols decimal = DecimalFormatSymbols.getInstance(Locale.getDefault());
         amountField.setFilters(new InputFilter[] {new DecimalDigitsInputFilter()});
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<Category> adapter = new ArrayAdapter<>(context,
-                R.layout.spinner_item, ((BudgetInterface) context).getCategories());
+        if (payment != null) {
+            nameField.setText(payment.getLocaleName());
+            amountField.setText(payment.getAmountAsString());
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categoryField.setAdapter(adapter);
-        // Chose the current category
-        categoryField.setSelection(((BudgetInterface) context).getViewPager().getCurrentItem());
-
-        if (cost != null) {
-            nameField.setText(cost.getLocaleName());
-            noteField.setText(cost.getLocaleNote());
-            amountField.setText(cost.getAmountAsString());
-
-            Boolean complete = cost.getComplete();
+            Boolean complete = payment.getComplete();
             if (complete) {
                 completeFieldYes.setChecked(true);
             } else {
                 completeFieldNo.setChecked(true);
             }
 
-            titleView.setText(R.string.cost_dialog_title_edit);
+            titleView.setText(R.string.payment_dialog_title_edit);
             yesButton.setText(R.string.dialog_button_edit);
         } else {
-            titleView.setText(R.string.cost_dialog_title_add);
+            titleView.setText(R.string.payment_dialog_title_add);
             yesButton.setText(R.string.dialog_button_add);
         }
 
@@ -194,7 +162,7 @@ public class CostDialogFragment extends BaseDialogFragment {
         return dialog;
     }
 
-    public void setCost(Cost cost) {
-        this.cost = cost;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

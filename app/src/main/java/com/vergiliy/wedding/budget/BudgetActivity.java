@@ -107,19 +107,6 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
                     Toast.LENGTH_LONG).show();
         }
 
-        // Creating FloatingButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new CostDialogListener());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Check current activity in the NavigationDrawer
-        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_budget)
-                .setChecked(true);
-
         // Create ViewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -168,6 +155,19 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
                 return true;
             }
         });
+
+        // Creating FloatingButton
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(new CostDialogListener());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check current activity in the NavigationDrawer
+        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_budget)
+                .setChecked(true);
     }
 
     // Create top context menu
@@ -216,7 +216,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
     }
 
     // Get db_main
-    public CostDatabase getDbMain() {
+    public CostDatabase getDbCost() {
         return db_main;
     }
 

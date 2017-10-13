@@ -35,6 +35,7 @@ public class BaseHelper {
 
     // Parse String to Double with default value
     public static double parseDouble(String string, int defaultValue ) {
+        string = string.replace(',','.'); // Replace , with .
         try {
             return Double.parseDouble(string);
         }
@@ -99,7 +100,7 @@ public class BaseHelper {
 
     // Get String from Date
     public static String getStringFromDate(Date date) {
-        return CURRENT_DATE_FORMAT.format(date);
+        return date != null ? CURRENT_DATE_FORMAT.format(date) : null;
     }
 
     // Get Date from string
@@ -113,6 +114,8 @@ public class BaseHelper {
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
                 public boolean onTouch(View view, MotionEvent event) {
                     hideKeyboard(context, view);
                     return false;

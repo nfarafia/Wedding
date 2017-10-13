@@ -11,7 +11,15 @@ public class DecimalDigitsInputFilter implements InputFilter {
 
     private Pattern pattern_1, pattern_2;
 
-    public DecimalDigitsInputFilter(Integer digitsBeforeZero, Integer digitsAfterZero) {
+    public DecimalDigitsInputFilter() {
+        setPattern(20, 2);
+    }
+
+    public DecimalDigitsInputFilter(int digitsBeforeZero, int digitsAfterZero) {
+        setPattern(digitsBeforeZero, digitsAfterZero);
+    }
+
+    private void setPattern(int digitsBeforeZero, int digitsAfterZero) {
         pattern_1 = Pattern.compile("[0-9]{0," + digitsBeforeZero + "}+((\\.[0-9]{0,"
                 + digitsAfterZero + "})?)||(\\.)?");
         pattern_2 = Pattern.compile("[0-9]{0," + digitsBeforeZero + "}+((\\,[0-9]{0,"

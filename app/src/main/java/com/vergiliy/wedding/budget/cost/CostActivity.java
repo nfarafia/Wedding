@@ -19,10 +19,15 @@ import com.vergiliy.wedding.ZoomOutPageTransformer;
 import com.vergiliy.wedding.budget.BudgetInterface;
 import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
+import com.vergiliy.wedding.budget.payment.Payment;
+import com.vergiliy.wedding.budget.payment.PaymentDatabase;
+import com.vergiliy.wedding.budget.payment.PaymentDialogListener;
 import com.vergiliy.wedding.budget.payment.PaymentsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.vergiliy.wedding.budget.payment.PaymentsRecyclerAdapter.actionMode;
 
 public class CostActivity extends BaseActivity implements BudgetInterface {
 
@@ -31,10 +36,12 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
     FloatingActionButton fabEdit, fabAdd;
     private final ViewGroup nullGroup = null;
 
-    private CostDatabase db_main;
-    protected CategoryDatabase db_category;
+    private CostDatabase db_cost;
+    private PaymentDatabase db_payment;
+    private CategoryDatabase db_category;
 
     private Cost cost = null;
+    private List<Payment> payments =  new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
 
     // Create ViewPagerAdapter
@@ -77,13 +84,13 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
 
         @Override
         public void notifyDataSetChanged() {
-            // Update Cost
-            cost = db_main.getOne(cost.getId());
+            cost = db_cost.getOne(cost.getId()); // Update Cost
+            payments = db_payment.getAllByIdCost(cost.getId()); // Update all payments for current cost
 
             super.notifyDataSetChanged();
 
             // Set custom view for last item
-            setCustomViewForLastItem(1);
+            setCustomViewForLastItem(payments.size());
         }
     }
 
@@ -107,6 +114,10 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            // Close ActionMode if it was open
+            if (actionMode != null) {
+                actionMode.finish();
+            }
         }
 
         @Override
@@ -121,19 +132,23 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         // Change activities with animation
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
 
-        db_main = new CostDatabase(this);
+        db_cost = new CostDatabase(this);
+        db_payment = new PaymentDatabase(this);
         db_category = new CategoryDatabase(this);
 
         // Get cost from extras id
         Bundle bundle = getIntent().getExtras();
         Integer id = bundle.getInt("id", -1);
         if (!id.equals(-1)) {
-            cost = db_main.getOne(id);
+            cost = db_cost.getOne(id);
         }
         if (cost == null) {
             onBackPressed(); // If Id not found, return back
             return;
         }
+
+        // Get all payments for current cost
+        payments = db_payment.getAllByIdCost(cost.getId());
 
         // Put name to Title
         setTitle(cost.getLocaleName());
@@ -141,25 +156,9 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         // Get categories from database
         categories = db_category.getAll();
 
-        // Creating FloatingButton
-        fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
-        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
-        fabEdit.setOnClickListener(new CostDialogListener(cost));
-        // fabAdd.setOnClickListener();
-
         // Support ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Show back button in ActionBar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         // Create ViewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -172,7 +171,18 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         // Show TabLayout
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        setCustomViewForLastItem(0); // Set custom view for last item
+        setCustomViewForLastItem(payments.size()); // Set custom view for last item
+
+        // Creating FloatingButton
+        fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        fabEdit.setOnClickListener(new CostDialogListener(cost));
+        fabAdd.setOnClickListener(new PaymentDialogListener());
+
+        // Show back button in ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     // Set custom View with notification counter for last item
@@ -213,8 +223,11 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (db_main != null) {
-            db_main.close();
+        if (db_cost != null) {
+            db_cost.close();
+        }
+        if (db_payment != null) {
+            db_payment.close();
         }
         if (db_category != null) {
             db_category.close();
@@ -222,8 +235,21 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
     }
 
     @Override
-    public CostDatabase getDbMain() {
-        return db_main;
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Close ActionMode if it was open
+        if (actionMode != null) {
+            actionMode.finish();
+        }
+    }
+
+    @Override
+    public CostDatabase getDbCost() {
+        return db_cost;
+    }
+
+    public PaymentDatabase getDbPayment() {
+        return db_payment;
     }
 
     @Override
@@ -238,5 +264,9 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
 
     public Cost getCost() {
         return cost;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
     }
 }

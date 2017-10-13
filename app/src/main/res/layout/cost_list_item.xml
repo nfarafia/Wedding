@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cost_list_item"
+    android:id="@+id/payment_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
@@ -15,7 +15,7 @@
         android:padding="12dp">
 
         <TextView
-            android:id="@+id/cost_list_name"
+            android:id="@+id/payment_list_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
@@ -23,7 +23,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/ic_cost_complete_enable"
+            android:id="@+id/ic_payment_complete_enable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,7 +33,7 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/ic_cost_complete_disable"
+            android:id="@+id/ic_payment_complete_disable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -43,7 +43,7 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/ic_cost_edit"
+            android:id="@+id/ic_payment_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -53,7 +53,7 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/ic_cost_delete"
+            android:id="@+id/ic_payment_delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

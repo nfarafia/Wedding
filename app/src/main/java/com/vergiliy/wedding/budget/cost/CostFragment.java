@@ -11,14 +11,11 @@ import com.vergiliy.wedding.R;
 
 public class CostFragment extends Fragment {
 
-    private CostActivity activity;
-    private Cost cost;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        activity = (CostActivity) getActivity();
-        cost = activity.getCost();
+        CostActivity activity = (CostActivity) getActivity();
+        Cost cost = activity.getCost();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cost, container, false);
@@ -33,10 +30,10 @@ public class CostFragment extends Fragment {
 
         nameField.setText(cost.getLocaleName());
         categoryField.setText(activity.getCategories().get(cost.getIdCategory()).getLocaleName());
-        noteField.setText(cost.getNote(R.string.cost_view_note_null));
+        noteField.setText(cost.getLocaleNote(R.string.cost_view_note_null));
         amountField.setText(cost.getAmountAsString());
         completeField.setText(cost.getCompleteAsString());
-        updateField.setText(cost.getUpdateAsString());
+        updateField.setText(cost.getUpdateAsLocale(R.string.cost_view_update_null));
 
         return view;
     }

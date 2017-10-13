@@ -1,35 +1,22 @@
 package com.vergiliy.wedding.budget.cost;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.helpers.BaseHelper;
-import com.vergiliy.wedding.vendors.BaseClass;
+import com.vergiliy.wedding.BaseClass;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Cost extends BaseClass {
-    private	int	id, id_category;
+    private	int	id_category;
     private Map<String, String> name = new HashMap<>();
-    private	String note = null;
+    private Map<String, String> note = new HashMap<>();
     private	double amount;
     private	boolean	complete;
-    private Date update;
 
     Cost(Context context) {
         super(context);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     int getIdCategory() {
@@ -53,17 +40,20 @@ public class Cost extends BaseClass {
     }
 
     String getNote() {
-        return note;
+        return note.get(LANGUAGE_DEFAULT);
     }
 
-    // Return note with default string
-    String getNote(int resource) {
-        String note = getNote();
-        return TextUtils.isEmpty(note) ? context.getString(resource) : note;
+    String getLocaleNote() {
+        return getLocaleValue(note);
     }
 
-    void setNote(String note) {
-        this.note = note;
+    // Return localу note with default string
+    String getLocaleNote(int resource) {
+        return getStringWithDefault(getLocaleNote(), resource);
+    }
+
+    void setNote(String locale, String note) {
+        this.note.put(locale, note);
     }
 
     double getAmount() {
@@ -71,9 +61,7 @@ public class Cost extends BaseClass {
     }
 
     String getAmountAsString() {
-        Double amount = getAmount();
-        String format = amount % 1 == 0 ? "%.0f" : "%.2f";
-        return String.format(Locale.getDefault(), format, amount);
+        return super.getAmountAsString(getAmount());
     }
 
     void setAmount(double amount) {
@@ -92,17 +80,5 @@ public class Cost extends BaseClass {
 
     public void setComplete(boolean complete) {
         this.complete = complete;
-    }
-
-    Date getUpdate() {
-        return update;
-    }
-
-    String getUpdateAsString() {
-        return BaseHelper.getStringFromDate(update);
-    }
-
-    void setUpdate(Date update) {
-        this.update = update;
     }
 }

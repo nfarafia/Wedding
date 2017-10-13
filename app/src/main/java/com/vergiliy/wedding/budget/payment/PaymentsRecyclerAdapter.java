@@ -1,7 +1,6 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.budget.payment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.view.ActionMode;
@@ -17,16 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.cost.Cost;
 import com.vergiliy.wedding.budget.cost.CostActivity;
-import com.vergiliy.wedding.budget.cost.CostDialogListener;
 
 import java.util.List;
 
-public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ViewHolder> {
+public class PaymentsRecyclerAdapter extends RecyclerView.Adapter<PaymentsRecyclerAdapter.ViewHolder> {
 
-    private BudgetActivity context;
-    private List<Cost> list;
+    private CostActivity context;
+    private List<Payment> list;
 
     public static ActionMode actionMode = null;
     private int position;
@@ -34,10 +31,10 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     // Provide a reference to the views for each data item
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        BudgetActivity context;
+        CostActivity context;
         CardView item;
-        public TextView name;
-        ImageView complete_enable, complete_disable, edit, delete;
+        public TextView name, amount, date;
+        ImageView icon, complete_enable, complete_disable, edit, delete;
 
         // Create ActionMode callback (Action Bar for Long click by item)
         private ActionMode.Callback ActionModeCallback = new ActionMode.Callback() {
@@ -47,11 +44,11 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
                 MenuInflater menuInflater = context.getMenuInflater();
                 menuInflater.inflate(R.menu.action_mode, menu);
 
-                // Get current Cost
-                final Cost cost = list.get(position);
+                // Get current Payment
+                final Payment payment = list.get(position);
 
                 // Show button to enable/disable complete
-                if (cost.getComplete()) {
+                if (payment.getComplete()) {
                     menu.findItem(R.id.action_complete_disable).setVisible(true);
                 } else {
                     menu.findItem(R.id.action_complete_enable).setVisible(true);
@@ -103,9 +100,12 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
         ViewHolder(final View itemView) {
             super(itemView);
 
-            context = (BudgetActivity) itemView.getContext();
+            context = (CostActivity) itemView.getContext();
             item = itemView.findViewById(R.id.payment_list_item);
+            icon = itemView.findViewById(R.id.payment_list_icon);
             name = itemView.findViewById(R.id.payment_list_name);
+            date = itemView.findViewById(R.id.payment_list_date);
+            amount = itemView.findViewById(R.id.payment_list_amount);
             complete_enable = itemView.findViewById(R.id.ic_payment_complete_enable);
             complete_disable = itemView.findViewById(R.id.ic_payment_complete_disable);
             edit = itemView.findViewById(R.id.ic_payment_edit);
@@ -135,12 +135,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
                     if (actionMode != null) {
                         actionMode.finish();
                     }
-
-                    // Start new Activity
-                    Intent intent = new Intent(context, CostActivity.class);
-                    Cost cost = list.get(getAdapterPosition()); // Get clicked cost id
-                    intent.putExtra("id", cost.getId());
-                    context.startActivity(intent);
+                    item.findViewById(R.id.ic_payment_edit).callOnClick();
                 }
             });
         }
@@ -149,20 +144,20 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     // Listener clicks on Complete button
     private class CompleteButtonListener implements View.OnClickListener {
 
-        private Cost cost = null;
+        private Payment payment = null;
         private boolean complete;
 
-        // Get cost from main class BudgetRecyclerAdapter
-        CompleteButtonListener(Cost cost, boolean complete) {
-            this.cost = cost;
+        // Get payment from main class BudgetRecyclerAdapter
+        CompleteButtonListener(Payment payment, boolean complete) {
+            this.payment = payment;
             this.complete = complete;
         }
 
         @Override
         public void onClick(View view) {
-            // Update field complete_enable from db_cost
-            cost.setComplete(complete);
-            context.getDbCost().update(cost);
+            // Update field complete_enable from db_payment
+            payment.setComplete(complete);
+            context.getDbPayment().update(payment);
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();
@@ -172,17 +167,17 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     // Listener clicks on Delete button
     private class DeleteButtonListener implements View.OnClickListener {
 
-        private Cost cost = null;
+        private Payment payment = null;
 
-        // Get cost from main class BudgetRecyclerAdapter
-        DeleteButtonListener(Cost cost) {
-            this.cost = cost;
+        // Get payment from main class BudgetRecyclerAdapter
+        DeleteButtonListener(Payment payment) {
+            this.payment = payment;
         }
 
         @Override
         public void onClick(View view) {
-            // Delete row from db_cost
-            context.getDbCost().delete(cost.getId());
+            // Delete row from db_payment
+            context.getDbPayment().delete(payment.getId());
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();
@@ -190,17 +185,17 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    BudgetRecyclerAdapter(Context context, List<Cost> list) {
-        this.context = (BudgetActivity) context;
+    PaymentsRecyclerAdapter(Context context, List<Payment> list) {
+        this.context = (CostActivity) context;
         this.list = list;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public BudgetRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PaymentsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater
-                .from(parent.getContext()).inflate(R.layout.cost_list_item, parent, false);
+                .from(parent.getContext()).inflate(R.layout.payment_list_item, parent, false);
 
         return new ViewHolder(view);
     }
@@ -208,17 +203,20 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Cost cost = list.get(position);
-        holder.name.setText(cost.getLocaleName());
+        final Payment payment = list.get(position);
+        holder.name.setText(payment.getLocaleName());
+        holder.amount.setText(payment.getAmountAsString());
+        holder.date.setText(payment.getDateAsLocale(R.string.payment_card_date_null));
 
         // Creating a strikethrough text in TextView
-        if (cost.getComplete())
-            holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        if (payment.getComplete()) {
+            holder.icon.setImageResource(R.drawable.ic_complete);
+        }
 
-        holder.complete_enable.setOnClickListener(new CompleteButtonListener(cost, true));
-        holder.complete_disable.setOnClickListener(new CompleteButtonListener(cost, false));
-        holder.edit.setOnClickListener(new CostDialogListener(cost));
-        holder.delete.setOnClickListener(new DeleteButtonListener(cost));
+        holder.complete_enable.setOnClickListener(new CompleteButtonListener(payment, true));
+        holder.complete_disable.setOnClickListener(new CompleteButtonListener(payment, false));
+        holder.edit.setOnClickListener(new PaymentDialogListener(payment));
+        holder.delete.setOnClickListener(new DeleteButtonListener(payment));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
