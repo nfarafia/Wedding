@@ -11,7 +11,7 @@ public class Cost extends BaseClass {
     private	int	id_category;
     private Map<String, String> name = new HashMap<>();
     private Map<String, String> note = new HashMap<>();
-    private	double amount;
+    private	double amount, paid, pending;
 
     Cost(Context context) {
         super(context);
@@ -58,11 +58,35 @@ public class Cost extends BaseClass {
         return amount;
     }
 
-    String getAmountAsString() {
-        return super.getAmountAsString(getAmount());
+    public String getAmountAsString() {
+        return super.getDoubleAsString(getAmount());
     }
 
     void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    private double getPaid() {
+        return paid;
+    }
+
+    public String getPaidAsString() {
+        return super.getDoubleAsString(getPaid());
+    }
+
+    void setPaid(double paid) {
+        this.paid = paid;
+    }
+
+    private double getPending() {
+        return pending;
+    }
+
+    public String getPendingAsString() {
+        return super.getDoubleAsString(getPending());
+    }
+
+    void setPending(double pending) {
+        this.pending = pending;
     }
 }

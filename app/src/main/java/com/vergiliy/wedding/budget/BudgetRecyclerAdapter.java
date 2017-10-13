@@ -35,7 +35,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
 
         BudgetActivity context;
         CardView item;
-        public TextView name;
+        TextView name, amount, pending, paid;
         ImageView edit, delete;
 
         // Create ActionMode callback (Action Bar for Long click by item)
@@ -58,12 +58,12 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
                 switch (menuItem.getItemId()) {
                     // Edit item
                     case R.id.action_edit:
-                        item.findViewById(R.id.ic_payment_edit).callOnClick();
+                        item.findViewById(R.id.ic_cost_edit).callOnClick();
                         mode.finish();
                         return true;
                     // Delete item
                     case R.id.action_delete:
-                        item.findViewById(R.id.ic_payment_delete).callOnClick();
+                        item.findViewById(R.id.ic_cost_delete).callOnClick();
                         mode.finish();
                         return true;
                     default:
@@ -82,10 +82,13 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
             super(itemView);
 
             context = (BudgetActivity) itemView.getContext();
-            item = itemView.findViewById(R.id.payment_list_item);
-            name = itemView.findViewById(R.id.payment_list_name);
-            edit = itemView.findViewById(R.id.ic_payment_edit);
-            delete = itemView.findViewById(R.id.ic_payment_delete);
+            item = itemView.findViewById(R.id.cost_card_item);
+            name = itemView.findViewById(R.id.cost_card_name);
+            amount = itemView.findViewById(R.id.cost_card_amount);
+            pending = itemView.findViewById(R.id.cost_card_pending);
+            paid = itemView.findViewById(R.id.cost_card_paid);
+            edit = itemView.findViewById(R.id.ic_cost_edit);
+            delete = itemView.findViewById(R.id.ic_cost_delete);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
 
@@ -163,6 +166,9 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Cost cost = list.get(position);
         holder.name.setText(cost.getLocaleName());
+        holder.amount.setText(cost.getAmountAsString());
+        holder.pending.setText(cost.getPendingAsString());
+        holder.paid.setText(cost.getPaidAsString());
         holder.edit.setOnClickListener(new CostDialogListener(cost));
         holder.delete.setOnClickListener(new DeleteButtonListener(cost));
     }

@@ -100,11 +100,11 @@ public class PaymentsRecyclerAdapter extends RecyclerView.Adapter<PaymentsRecycl
             super(itemView);
 
             context = (CostActivity) itemView.getContext();
-            item = itemView.findViewById(R.id.payment_list_item);
-            icon = itemView.findViewById(R.id.payment_list_icon);
-            name = itemView.findViewById(R.id.payment_list_name);
-            date = itemView.findViewById(R.id.payment_list_date);
-            amount = itemView.findViewById(R.id.payment_list_amount);
+            item = itemView.findViewById(R.id.payment_card_item);
+            icon = itemView.findViewById(R.id.payment_card_icon);
+            name = itemView.findViewById(R.id.payment_card_name);
+            date = itemView.findViewById(R.id.payment_card_date);
+            amount = itemView.findViewById(R.id.payment_card_amount);
             complete_enable = itemView.findViewById(R.id.ic_payment_complete_enable);
             complete_disable = itemView.findViewById(R.id.ic_payment_complete_disable);
             edit = itemView.findViewById(R.id.ic_payment_edit);

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vergiliy.wedding.budget.payment.Payment;
+import com.vergiliy.wedding.budget.payment.PaymentDatabase;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
 import com.vergiliy.wedding.BaseClass;
@@ -15,7 +17,7 @@ import java.util.Locale;
 
 public class CostDatabase extends SQLiteHelper {
 
-    private	static final String TABLE = "budget_costs";
+    private static final String TABLE = "budget_costs";
     private static final String COLUMN_ID_CATEGORY = "id_category";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_NOTE = "note";
@@ -53,18 +55,30 @@ public class CostDatabase extends SQLiteHelper {
     // Get all fields
     private List<Cost> getAll(Integer id_category){
         SQLiteDatabase db = getReadableDatabase();
-        StringBuilder sql = new StringBuilder("SELECT * FROM " + TABLE);
+        StringBuilder sql = new StringBuilder();
+
+        sql.append(String.format(Locale.getDefault(),
+                "SELECT c.*, SUM(CASE WHEN complete > 0 THEN p.amount ELSE 0 END) paid, " +
+                        "SUM(CASE WHEN complete == 0 THEN p.amount ELSE 0 END) pending " +
+                        "FROM %s c " +
+                        "LEFT JOIN %s p ON (c._id = p.id_cost) ",
+                TABLE, PaymentDatabase.TABLE));
 
         if (id_category > 0) {
-            sql.append(String.format(Locale.getDefault(), " WHERE id_category = %d",  id_category));
+            sql.append(String.format(Locale.getDefault(), "WHERE id_category = %d ", id_category));
         }
+
+        sql.append("GROUP BY c._id ORDER BY _id ASC");
 
         List<Cost> all = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql.toString(), null);
 
         if (cursor.moveToFirst()) {
             do {
-                all.add(getCostByCursor(cursor));
+                Cost cost = getCostByCursor(cursor);
+                cost.setPaid(cursor.getDouble(10));
+                cost.setPending(cursor.getDouble(11));
+                all.add(cost);
             } while (cursor.moveToNext());
         }
 

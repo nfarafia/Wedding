@@ -165,7 +165,6 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new PageChangeListener());
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
 
         // Show TabLayout

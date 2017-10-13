@@ -44,7 +44,7 @@ public class Payment extends BaseClass {
     }
 
     String getAmountAsString() {
-        return super.getAmountAsString(getAmount());
+        return super.getDoubleAsString(getAmount());
     }
 
     void setAmount(double amount) {

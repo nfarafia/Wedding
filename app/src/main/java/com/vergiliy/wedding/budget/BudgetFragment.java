@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.cost.Cost;
@@ -40,13 +39,9 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         BudgetActivity activity = (BudgetActivity) this.getActivity();
 
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_budget, container, false);
 
-        TextView pageName = view.findViewById(R.id.page_name);
-        String text = getString(R.string.test_tasks_page, page);
-        pageName.setText(text);
-
-        RecyclerView recyclerView = view.findViewById(R.id.page_list);
+        RecyclerView recyclerView = view.findViewById(R.id.budget_list);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
@@ -61,8 +56,10 @@ public class BudgetFragment extends Fragment {
             RecyclerView.Adapter adapter = new BudgetRecyclerAdapter(activity, all);
             recyclerView.setAdapter(adapter);
         } else {
-            // recyclerView.setVisibility(View.GONE);
-            Toast.makeText(activity, R.string.budget_list_none, Toast.LENGTH_LONG).show();
+            TextView noneText = view.findViewById(R.id.budget_list_none);
+
+            recyclerView.setVisibility(View.GONE);
+            noneText.setVisibility(View.VISIBLE);
         }
 
         return view;

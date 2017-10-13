@@ -48,13 +48,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="3">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:text="@string/payment_dialog_complete_title"
                     android:textColor="@color/text"
                     android:textSize="@dimen/TextView_textSize" />
@@ -64,7 +64,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/dialog_yes"
+                    android:text="@string/payment_dialog_complete_yes_title"
+                    android:checked="true"
                     android:textSize="@dimen/TextView_textSize" />
 
                 <RadioButton
@@ -72,8 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/dialog_no"
+                    android:text="@string/payment_dialog_complete_no_title"
                     android:textSize="@dimen/TextView_textSize" />
 
             </RadioGroup>

@@ -1,47 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/payment_list_item"
+    android:id="@+id/cost_card_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
+    card_view:contentPadding="10dp"
+    card_view:cardElevation="1dp"
+    card_view:cardCornerRadius="1dp"
     card_view:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp" >
+
+            <TextView
+                android:id="@+id/cost_card_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:textSize="@dimen/TextView_textSize"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/cost_card_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/TextView_textSize"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/cost_card_amount"
+                android:layout_toStartOf="@+id/cost_card_amount"
+                android:layout_alignParentTop="true" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:textSize="@dimen/TextView_textSize"
+                    android:textStyle="bold"
+                    android:text="@string/cost_card_pending_title" />
+
+                <TextView
+                    android:id="@+id/cost_card_pending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/TextView_textSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:textSize="@dimen/TextView_textSize"
+                    android:textStyle="bold"
+                    android:text="@string/cost_card_paid_title" />
+
+                <TextView
+                    android:id="@+id/cost_card_paid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/TextView_textSize" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        android:padding="12dp">
-
-        <TextView
-            android:id="@+id/payment_list_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:textSize="@dimen/TextView_textSize"
-            android:textStyle="bold" />
+        android:visibility="gone">
 
         <ImageView
-            android:id="@+id/ic_payment_edit"
-            android:layout_width="0dp"
+            android:id="@+id/ic_cost_edit"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/menu_action_edit"
-            app:srcCompat="@drawable/ic_menu_action_edit"
-            android:visibility="gone" />
+            android:contentDescription="@string/menu_action_edit" />
 
         <ImageView
-            android:id="@+id/ic_payment_delete"
-            android:layout_width="0dp"
+            android:id="@+id/ic_cost_delete"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/menu_action_delete"
-            app:srcCompat="@drawable/ic_menu_action_delete"
-            android:visibility="gone" />
+            android:contentDescription="@string/menu_action_delete" />
 
     </LinearLayout>
 

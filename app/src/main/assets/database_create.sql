@@ -5,22 +5,25 @@ CREATE TABLE IF NOT EXISTS `budget_payments` (
 	`name`	TEXT DEFAULT NULL,
 	`name_en`	TEXT DEFAULT NULL,
 	`name_ru`	TEXT DEFAULT NULL,
-	`amount`	REAL NOT NULL DEFAULT 0,
+	`amount`	REAL NOT NULL DEFAULT 1,
 	`date`	TEXT DEFAULT NULL,
 	`complete`	INTEGER NOT NULL DEFAULT 0,
 	`update`	TEXT DEFAULT NULL,
 	FOREIGN KEY(`id_cost`) REFERENCES `budget_costs`(`_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-INSERT INTO `budget_payments` VALUES (1,1,NULL,'Payment 1','Платеж 1',10.1,'2017-10-13 01:23',0,NULL);
-INSERT INTO `budget_payments` VALUES (2,1,NULL,'Payment 2','Платеж 2',20.22,NULL,1,NULL);
-INSERT INTO `budget_payments` VALUES (3,2,NULL,'Payment 3 (static)',NULL,30.33,NULL,0,NULL);
-INSERT INTO `budget_payments` VALUES (4,3,NULL,'Payment 4','Платеж 4',40.44,NULL,0,NULL);
-INSERT INTO `budget_payments` VALUES (5,4,NULL,'Payment 5','Платеж 5',50.55,NULL,1,NULL);
-INSERT INTO `budget_payments` VALUES (6,5,NULL,'Payment 6','Платеж 6',60.66,NULL,0,NULL);
-INSERT INTO `budget_payments` VALUES (7,5,NULL,'Payment 7','Платеж 7',70.77,NULL,1,NULL);
-INSERT INTO `budget_payments` VALUES (8,5,NULL,'Payment 8','Платеж 8',80.88,NULL,0,NULL);
-INSERT INTO `budget_payments` VALUES (9,6,NULL,'Payment 9','Платеж 9',90.99,NULL,0,NULL);
-INSERT INTO `budget_payments` VALUES (10,7,NULL,'Payment 10 (static)',NULL,100.0,NULL,0,NULL);
+INSERT INTO `budget_payments` VALUES (1,1,NULL,'Payment 1','Платеж 1',10.1,'2017-10-13 01:23',1,NULL);
+INSERT INTO `budget_payments` VALUES (2,1,NULL,'Payment 2','Платеж 2',20.22,NULL,0,NULL);
+INSERT INTO `budget_payments` VALUES (3,2,NULL,'Payment 3 (static)',NULL,30.33,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (4,3,NULL,'Payment 4','Платеж 4',40.44,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (5,4,NULL,'Payment 5','Платеж 5',50.55,NULL,0,NULL);
+INSERT INTO `budget_payments` VALUES (6,5,NULL,'Payment 6','Платеж 6',60.66,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (7,5,NULL,'Payment 7','Платеж 7',70.77,NULL,0,NULL);
+INSERT INTO `budget_payments` VALUES (8,5,NULL,'Payment 8','Платеж 8',80.88,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (9,6,NULL,'Payment 9','Платеж 9',90.99,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (10,7,NULL,'Payment 10 (static)',NULL,100.0,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (11,1,NULL,'Payment 11','Платеж 11',110.01,NULL,1,NULL);
+INSERT INTO `budget_payments` VALUES (12,1,NULL,'Payment 12','Платеж 12',120.02,'2017-07-13 01:23',1,NULL);
+INSERT INTO `budget_payments` VALUES (13,1,NULL,'Payment 13 (static)',NULL,130.03,'2017-12-13 01:23',0,NULL);
 CREATE TABLE IF NOT EXISTS `budget_costs` (
 	`_id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`id_category`	INTEGER NOT NULL,

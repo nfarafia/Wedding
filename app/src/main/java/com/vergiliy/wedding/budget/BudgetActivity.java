@@ -112,7 +112,6 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new PageChangeListener());
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         // Show TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

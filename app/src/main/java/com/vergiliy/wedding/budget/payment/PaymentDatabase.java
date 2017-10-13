@@ -15,11 +15,11 @@ import java.util.Locale;
 
 public class PaymentDatabase extends SQLiteHelper {
 
-    private	static final String TABLE = "budget_payments";
+    public static final String TABLE = "budget_payments";
     private static final String COLUMN_ID_COST = "id_cost";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_AMOUNT = "amount";
-    private static final String COLUMN_DATE = "`date`";
+    private static final String COLUMN_DATE = "date";
     private static final String COLUMN_COMPLETE = "complete";
 
     // Create access to database
@@ -37,11 +37,16 @@ public class PaymentDatabase extends SQLiteHelper {
     // Get all fields
     private List<Payment> getAll(Integer id_cost){
         SQLiteDatabase db = getReadableDatabase();
-        StringBuilder sql = new StringBuilder("SELECT * FROM " + TABLE);
+
+        StringBuilder sql =
+                new StringBuilder(String.format(Locale.getDefault(), "SELECT * FROM %s ", TABLE));
 
         if (id_cost > 0) {
-            sql.append(String.format(Locale.getDefault(), " WHERE id_cost = %d",  id_cost));
+            sql.append(String.format(Locale.getDefault(), "WHERE id_cost = %d ", id_cost));
         }
+
+        sql.append("ORDER BY complete DESC, CASE WHEN date IS NOT NULL THEN 0 ELSE 1 END ASC, " +
+                "DATE(date) ASC, _id ASC");
 
         List<Payment> all = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql.toString(), null);
