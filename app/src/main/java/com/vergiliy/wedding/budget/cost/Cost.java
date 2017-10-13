@@ -2,7 +2,6 @@ package com.vergiliy.wedding.budget.cost;
 
 import android.content.Context;
 
-import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.BaseClass;
 
 import java.util.HashMap;
@@ -13,7 +12,6 @@ public class Cost extends BaseClass {
     private Map<String, String> name = new HashMap<>();
     private Map<String, String> note = new HashMap<>();
     private	double amount;
-    private	boolean	complete;
 
     Cost(Context context) {
         super(context);
@@ -66,19 +64,5 @@ public class Cost extends BaseClass {
 
     void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public boolean getComplete() {
-        return complete;
-    }
-
-    String getCompleteAsString() {
-        int resource = getComplete() ?
-                R.string.cost_view_complete_enable : R.string.cost_view_complete_disable;
-        return context.getString(resource);
-    }
-
-    public void setComplete(boolean complete) {
-        this.complete = complete;
     }
 }

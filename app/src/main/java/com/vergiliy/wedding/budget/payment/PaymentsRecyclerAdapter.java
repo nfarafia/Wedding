@@ -2,7 +2,6 @@ package com.vergiliy.wedding.budget.payment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +41,7 @@ public class PaymentsRecyclerAdapter extends RecyclerView.Adapter<PaymentsRecycl
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 MenuInflater menuInflater = context.getMenuInflater();
-                menuInflater.inflate(R.menu.action_mode, menu);
+                menuInflater.inflate(R.menu.action_mode_payment, menu);
 
                 // Get current Payment
                 final Payment payment = list.get(position);

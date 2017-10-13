@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
-            android:contentDescription="@string/menu_action_complete_enable"
+            android:contentDescription="@string/menu_action_payment_complete_enable"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_pending" />
 
@@ -88,13 +88,13 @@
                 android:id="@+id/ic_payment_complete_enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/menu_action_complete_enable" />
+                android:contentDescription="@string/menu_action_payment_complete_enable" />
 
             <ImageView
                 android:id="@+id/ic_payment_complete_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/menu_action_complete_disable" />
+                android:contentDescription="@string/menu_action_payment_complete_disable" />
 
             <ImageView
                 android:id="@+id/ic_payment_edit"

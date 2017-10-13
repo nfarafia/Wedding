@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +36,6 @@ public class CostDialogFragment extends BaseDialogFragment {
     private Spinner categoryField;
     private EditText noteField;
     private EditText amountField;
-    private RadioGroup completeField;
 
     // Listener clicks on Edit button
     private class PositiveButtonListener implements View.OnClickListener {
@@ -49,10 +46,6 @@ public class CostDialogFragment extends BaseDialogFragment {
             final int id_category = ((Category) categoryField.getSelectedItem()).getId();
             final String note = noteField.getText().toString();
             final double amount = BaseHelper.parseDouble(amountField.getText().toString(), 0);
-
-            // Get checked item from complete_enable field
-            int completeFieldId = completeField.getCheckedRadioButtonId();
-            final boolean complete = completeFieldId == R.id.cost_edit_complete_yes;
 
             if (TextUtils.isEmpty(name)) {
                 Toast.makeText(context, R.string.cost_dialog_error,
@@ -86,7 +79,6 @@ public class CostDialogFragment extends BaseDialogFragment {
                 }
 
                 item.setAmount(amount);
-                item.setComplete(complete);
 
                 if (cost != null) {
                     item.setId(cost.getId());
@@ -132,11 +124,6 @@ public class CostDialogFragment extends BaseDialogFragment {
         categoryField = dialog_body.findViewById(R.id.cost_edit_category);
         noteField = dialog_body.findViewById(R.id.cost_edit_note);
         amountField = dialog_body.findViewById(R.id.cost_edit_amount);
-        completeField = dialog_body.findViewById(R.id.cost_edit_complete);
-
-        // Get RadioButton
-        RadioButton completeFieldYes = completeField.findViewById(R.id.cost_edit_complete_yes);
-        RadioButton completeFieldNo = completeField.findViewById(R.id.cost_edit_complete_no);
 
         // Get service buttons
         Button cancelButton = dialog_body.findViewById(R.id.dialog_button_cancel);
@@ -160,14 +147,6 @@ public class CostDialogFragment extends BaseDialogFragment {
             nameField.setText(cost.getLocaleName());
             noteField.setText(cost.getLocaleNote());
             amountField.setText(cost.getAmountAsString());
-
-            Boolean complete = cost.getComplete();
-            if (complete) {
-                completeFieldYes.setChecked(true);
-            } else {
-                completeFieldNo.setChecked(true);
-            }
-
             titleView.setText(R.string.cost_dialog_title_edit);
             yesButton.setText(R.string.dialog_button_edit);
         } else {

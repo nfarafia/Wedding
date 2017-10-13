@@ -25,14 +25,12 @@ public class CostFragment extends Fragment {
         TextView categoryField = view.findViewById(R.id.cost_view_category);
         TextView noteField = view.findViewById(R.id.cost_view_note);
         TextView amountField = view.findViewById(R.id.cost_view_amount);
-        TextView completeField = view.findViewById(R.id.cost_view_complete);
         TextView updateField = view.findViewById(R.id.cost_view_update);
 
         nameField.setText(cost.getLocaleName());
         categoryField.setText(activity.getCategories().get(cost.getIdCategory()).getLocaleName());
         noteField.setText(cost.getLocaleNote(R.string.cost_view_note_null));
         amountField.setText(cost.getAmountAsString());
-        completeField.setText(cost.getCompleteAsString());
         updateField.setText(cost.getUpdateAsLocale(R.string.cost_view_update_null));
 
         return view;

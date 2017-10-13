@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.BaseListener;
-import com.vergiliy.wedding.budget.payment.PaymentDialogFragment;
 
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 

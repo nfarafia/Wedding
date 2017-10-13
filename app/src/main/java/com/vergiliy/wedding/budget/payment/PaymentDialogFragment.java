@@ -47,7 +47,7 @@ public class PaymentDialogFragment extends BaseDialogFragment {
 
             // Get checked item from complete_enable field
             int completeFieldId = completeField.getCheckedRadioButtonId();
-            final boolean complete = completeFieldId == R.id.cost_edit_complete_yes;
+            final boolean complete = completeFieldId == R.id.payment_edit_complete_yes;
 
             if (TextUtils.isEmpty(name)) {
                 Toast.makeText(context, R.string.payment_dialog_error,

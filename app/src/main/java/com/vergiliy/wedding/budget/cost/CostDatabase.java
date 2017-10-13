@@ -20,7 +20,6 @@ public class CostDatabase extends SQLiteHelper {
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_NOTE = "note";
     private static final String COLUMN_AMOUNT = "amount";
-    private static final String COLUMN_COMPLETE = "complete";
 
     // Create access to database
     public CostDatabase(Context context) {
@@ -110,8 +109,7 @@ public class CostDatabase extends SQLiteHelper {
         cost.setNote(BaseClass.LANGUAGE_EN, cursor.getString(6));
         cost.setNote(BaseClass.LANGUAGE_RU, cursor.getString(7));
         cost.setAmount(cursor.getDouble(8));
-        cost.setComplete(Integer.parseInt(cursor.getString(9)) > 0);
-        cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(10)));
+        cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(9)));
         return cost;
     }
 
@@ -121,7 +119,6 @@ public class CostDatabase extends SQLiteHelper {
         values.put(COLUMN_NAME, cost.getName());
         values.put(COLUMN_NOTE, cost.getNote());
         values.put(COLUMN_AMOUNT, cost.getAmount());
-        values.put(COLUMN_COMPLETE, cost.getComplete());
         values.put(COLUMN_UPDATE, cost.getUpdateAsString());
         return values;
     }

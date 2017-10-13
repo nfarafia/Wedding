@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/payment_list_item"
@@ -21,26 +22,6 @@
             android:layout_weight="4"
             android:textSize="@dimen/TextView_textSize"
             android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ic_payment_complete_enable"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/menu_action_complete_enable"
-            app:srcCompat="@drawable/ic_menu_action_complete_enable"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/ic_payment_complete_disable"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/menu_action_complete_disable"
-            app:srcCompat="@drawable/ic_menu_action_complete_disable"
-            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/ic_payment_edit"
