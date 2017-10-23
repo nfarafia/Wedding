@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ import static com.vergiliy.wedding.budget.payment.PaymentsRecyclerAdapter.action
 
 public class CostActivity extends BaseActivity implements BudgetInterface {
 
-    ViewPager viewPager;
+    static ViewPager viewPager;
     TabLayout tabLayout;
     FloatingActionButton fabEdit, fabAdd;
     private final ViewGroup nullGroup = null;
@@ -86,6 +87,7 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         public void notifyDataSetChanged() {
             cost = db_cost.getOne(cost.getId()); // Update Cost
             payments = db_payment.getAllByIdCost(cost.getId()); // Update all payments for current cost
+            fabEdit.setOnClickListener(new CostDialogListener(cost));
 
             super.notifyDataSetChanged();
 

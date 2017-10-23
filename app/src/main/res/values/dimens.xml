@@ -8,8 +8,5 @@
     <dimen name="TextView_textSize">13sp</dimen>
     <dimen name="Title_textSize">20sp</dimen>
 
-    <dimen name="large_text">16sp</dimen>
-    <dimen name="medium_text">14sp</dimen>
-
 </resources>
 

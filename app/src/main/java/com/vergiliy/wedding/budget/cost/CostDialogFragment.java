@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -98,6 +99,14 @@ public class CostDialogFragment extends BaseDialogFragment {
 
                 // Update current fragment
                 ((BudgetInterface) context).getViewPager().getAdapter().notifyDataSetChanged();
+                /*
+                try {
+                } catch (NullPointerException e){
+                    Log.e("NullPointerException",
+                            "CostDialogFragment -> PositiveButtonListener -> onClick (read): "
+                                    + e.getMessage());
+                }
+                */
             }
         }
     }
@@ -140,6 +149,7 @@ public class CostDialogFragment extends BaseDialogFragment {
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryField.setAdapter(adapter);
+
         // Chose the current category
         categoryField.setSelection(((BudgetInterface) context).getViewPager().getCurrentItem());
 
@@ -147,6 +157,7 @@ public class CostDialogFragment extends BaseDialogFragment {
             nameField.setText(cost.getLocaleName());
             noteField.setText(cost.getLocaleNote());
             amountField.setText(cost.getAmountAsString());
+            categoryField.setSelection(cost.getIdCategory() - 1);
             titleView.setText(R.string.cost_dialog_title_edit);
             yesButton.setText(R.string.dialog_button_edit);
         } else {

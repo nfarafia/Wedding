@@ -89,4 +89,13 @@ public class Cost extends BaseClass {
     void setPending(double pending) {
         this.pending = pending;
     }
+
+    double getBalance() {
+        return getAmount() - getPaid() - getPending();
+    }
+
+    String getBalanceAsString() {
+        double balance = getBalance();
+        return (balance > 0 ? "+"  : "") + super.getDoubleAsString(balance);
+    }
 }

@@ -33,7 +33,7 @@ import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 
 public class BudgetActivity extends NavigationActivity implements BudgetInterface {
 
-    protected ViewPager viewPager;
+    protected static ViewPager viewPager;
 
     private CostDatabase db_main;
     protected CategoryDatabase db_category;
@@ -167,6 +167,9 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         // Check current activity in the NavigationDrawer
         MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_budget)
                 .setChecked(true);
+
+        // Update current fragment
+        getViewPager().getAdapter().notifyDataSetChanged();
     }
 
     // Create top context menu

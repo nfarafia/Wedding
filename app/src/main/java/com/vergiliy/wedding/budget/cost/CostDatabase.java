@@ -32,7 +32,12 @@ public class CostDatabase extends SQLiteHelper {
     Cost getOne(int id) {
         SQLiteDatabase db = getReadableDatabase();
         String sql = String.format(Locale.getDefault(),
-                "SELECT * FROM %s WHERE _id = %d",  TABLE, id);
+                "SELECT c.*, SUM(CASE WHEN complete > 0 THEN p.amount ELSE 0 END) paid, " +
+                        "SUM(CASE WHEN complete == 0 THEN p.amount ELSE 0 END) pending " +
+                        "FROM %s c " +
+                        "LEFT JOIN %s p ON (c._id = p.id_cost) " +
+                        "WHERE c._id = %d",
+                TABLE, PaymentDatabase.TABLE, id);
 
         Cost cost = null;
         Cursor cursor = db.rawQuery(sql, null);
@@ -76,8 +81,6 @@ public class CostDatabase extends SQLiteHelper {
         if (cursor.moveToFirst()) {
             do {
                 Cost cost = getCostByCursor(cursor);
-                cost.setPaid(cursor.getDouble(10));
-                cost.setPending(cursor.getDouble(11));
                 all.add(cost);
             } while (cursor.moveToNext());
         }
@@ -124,6 +127,8 @@ public class CostDatabase extends SQLiteHelper {
         cost.setNote(BaseClass.LANGUAGE_RU, cursor.getString(7));
         cost.setAmount(cursor.getDouble(8));
         cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(9)));
+        cost.setPaid(cursor.getDouble(10));
+        cost.setPending(cursor.getDouble(11));
         return cost;
     }
 
