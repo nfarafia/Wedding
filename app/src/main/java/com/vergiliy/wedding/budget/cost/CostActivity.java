@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.ZoomOutPageTransformer;
 import com.vergiliy.wedding.budget.BudgetInterface;
 import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
@@ -233,6 +231,7 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         if (db_category != null) {
             db_category.close();
         }
+        viewPager = null;
     }
 
     @Override

@@ -27,6 +27,7 @@
                 android:background="@drawable/edit_text_border"
                 android:hint="@string/payment_dialog_name_hint"
                 android:inputType="text"
+                android:imeOptions="flagNoExtractUi"
                 android:padding="12dp"
                 android:textSize="@dimen/TextEdit_textSize" />
 
@@ -38,6 +39,7 @@
                 android:background="@drawable/edit_text_border"
                 android:hint="@string/payment_dialog_amount_hint"
                 android:inputType="numberDecimal"
+                android:imeOptions="flagNoExtractUi"
                 android:digits="0123456789.,"
                 android:padding="12dp"
                 android:textSize="@dimen/TextEdit_textSize" />

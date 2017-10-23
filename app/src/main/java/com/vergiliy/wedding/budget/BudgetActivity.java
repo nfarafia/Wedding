@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.ZoomOutPageTransformer;
 import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.category.CategoryProcessing;
@@ -206,6 +205,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         if (db_category != null) {
             db_category.close();
         }
+        viewPager = null;
     }
 
     @Override
