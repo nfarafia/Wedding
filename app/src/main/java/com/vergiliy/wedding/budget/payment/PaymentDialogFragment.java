@@ -33,10 +33,12 @@ public class PaymentDialogFragment extends BaseDialogFragment {
 
     private CostActivity context;
 
-    private Payment payment;
-
     private EditText nameField, amountField, dateField;
     private RadioGroup completeField;
+
+    private Payment payment;
+    public static Date date;
+    private static boolean isDateSet = false;
 
     // Listener clicks on Edit button
     private class PositiveButtonListener implements View.OnClickListener {
@@ -45,7 +47,6 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         public void onClick(View view) {
             final String name = nameField.getText().toString();
             final double amount = BaseHelper.parseDouble(amountField.getText().toString(), 0);
-            final Date date = (Date) dateField.getTag();
 
             // Get checked item from complete_enable field
             int completeFieldId = completeField.getCheckedRadioButtonId();
@@ -145,7 +146,10 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         if (payment != null) {
             nameField.setText(payment.getLocaleName());
             amountField.setText(payment.getAmountAsString());
-            dateField.setTag(payment.getDate());
+            if (!isDateSet) {
+                date = payment.getDate();
+                isDateSet = true;
+            }
             dateField.setText(payment.getDateAsLocale());
 
             Boolean complete = payment.getComplete();

@@ -27,6 +27,9 @@ public class SettingFragmentsActivity extends BaseActivity {
                     fragment = new SettingsGeneralFragment();
                     break;
                 case 1:
+                    fragment = new SettingsNotificationFragment();
+                    break;
+                case 2:
                     fragment = new SettingsOtherFragment();
                     break;
             }

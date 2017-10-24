@@ -13,6 +13,7 @@ import com.vergiliy.wedding.R;
 public class SettingsGeneralFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings_general);

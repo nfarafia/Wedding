@@ -54,19 +54,19 @@ public class Payment extends BaseClass {
     }
 
     Date getDate() {
-        return date;
+        return (complete && date == null) ? update : date;
     }
 
     String getDateAsString() {
-        return super.getDateAsString(date);
+        return super.getDateAsString(getDate());
     }
 
     String getDateAsLocale() {
-        return super.getDateAsLocale(date);
+        return super.getDateAsLocale(getDate());
     }
 
     String getDateAsLocale(int resource) {
-        return super.getDateAsLocale(date, resource);
+        return super.getDateAsLocale(getDate(), resource);
     }
 
     void setDate(Date date) {

@@ -63,6 +63,7 @@ public class SettingActivity extends BaseActivity {
             switch (position) {
                 case 0:
                 case 1:
+                case 2:
                     Intent intent = new Intent(getApplicationContext(),
                             SettingFragmentsActivity.class);
                     intent.putExtra("position", position); // Transfer id

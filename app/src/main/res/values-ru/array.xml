@@ -2,6 +2,7 @@
 <resources>
     <string-array name="settings_list_entries">
         <item>Основное</item>
+        <item>Уведомления</item>
         <item>Прочее</item>
     </string-array>
 

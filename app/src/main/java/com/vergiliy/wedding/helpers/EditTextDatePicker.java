@@ -9,10 +9,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.budget.payment.PaymentDialogFragment;
 
 import java.text.Format;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class EditTextDatePicker  implements View.OnClickListener,
@@ -41,7 +41,8 @@ public class EditTextDatePicker  implements View.OnClickListener,
                 case DialogInterface.BUTTON_NEUTRAL:
                     isOkayClicked = false;
                     dateField.setText(null);
-                    dateField.setTag(null);
+                    PaymentDialogFragment.date = null;
+                    // dateField.setTag(null);
                     break;
             }
             dialog.dismiss();
@@ -52,10 +53,9 @@ public class EditTextDatePicker  implements View.OnClickListener,
         this.context = context;
         this.dateField = dateField;
         calendar = Calendar.getInstance(Locale.getDefault());
-        Date date = (Date) dateField.getTag();
         // Set default date
-        if (date != null) {
-            calendar.setTime(date);
+        if (PaymentDialogFragment.date != null) {
+            calendar.setTime(PaymentDialogFragment.date);
         }
     }
 
@@ -74,7 +74,7 @@ public class EditTextDatePicker  implements View.OnClickListener,
         dateField.setText(format.format(calendar.getTime()));
 
         // Save chosen date
-        dateField.setTag(calendar.getTime());
+        PaymentDialogFragment.date = calendar.getTime();
     }
 
     @Override
