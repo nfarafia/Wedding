@@ -21,8 +21,10 @@ import com.vergiliy.wedding.budget.cost.CostActivity;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
 import com.vergiliy.wedding.BaseClass;
+import com.vergiliy.wedding.helpers.EditTextDatePicker;
 
 import java.text.DecimalFormatSymbols;
+import java.util.Date;
 import java.util.Locale;
 
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
@@ -33,8 +35,7 @@ public class PaymentDialogFragment extends BaseDialogFragment {
 
     private Payment payment;
 
-    private EditText nameField;
-    private EditText amountField;
+    private EditText nameField, amountField, dateField;
     private RadioGroup completeField;
 
     // Listener clicks on Edit button
@@ -44,6 +45,7 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         public void onClick(View view) {
             final String name = nameField.getText().toString();
             final double amount = BaseHelper.parseDouble(amountField.getText().toString(), 0);
+            final Date date = (Date) dateField.getTag();
 
             // Get checked item from complete_enable field
             int completeFieldId = completeField.getCheckedRadioButtonId();
@@ -66,6 +68,7 @@ public class PaymentDialogFragment extends BaseDialogFragment {
                 }
 
                 item.setAmount(amount);
+                item.setDate(date);
                 item.setComplete(complete);
 
                 if (payment != null) {
@@ -112,10 +115,24 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         nameField = dialog_body.findViewById(R.id.payment_edit_name);
         amountField = dialog_body.findViewById(R.id.payment_edit_amount);
         completeField = dialog_body.findViewById(R.id.payment_edit_complete);
+        dateField = dialog_body.findViewById(R.id.payment_edit_date);
 
         // Get RadioButton
         RadioButton completeFieldYes = completeField.findViewById(R.id.payment_edit_complete_yes);
         RadioButton completeFieldNo = completeField.findViewById(R.id.payment_edit_complete_no);
+
+        // Switch Hint to date EditTex
+        completeField.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged (RadioGroup group,int id){
+                if (id == R.id.payment_edit_complete_no) {
+                    dateField.setHint(R.string.payment_dialog_date_pending_hint);
+                } else {
+                    dateField.setHint(R.string.payment_dialog_date_paid_hint);
+                }
+            }
+        });
 
         // Get service buttons
         Button cancelButton = dialog_body.findViewById(R.id.dialog_button_cancel);
@@ -128,12 +145,15 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         if (payment != null) {
             nameField.setText(payment.getLocaleName());
             amountField.setText(payment.getAmountAsString());
+            dateField.setTag(payment.getDate());
+            dateField.setText(payment.getDateAsLocale());
 
             Boolean complete = payment.getComplete();
             if (complete) {
                 completeFieldYes.setChecked(true);
             } else {
                 completeFieldNo.setChecked(true);
+                dateField.setHint(R.string.payment_dialog_date_pending_hint);
             }
 
             titleView.setText(R.string.payment_dialog_title_edit);
@@ -142,6 +162,9 @@ public class PaymentDialogFragment extends BaseDialogFragment {
             titleView.setText(R.string.payment_dialog_title_add);
             yesButton.setText(R.string.dialog_button_add);
         }
+
+        // Show DatePicker when click EditText
+        dateField.setOnClickListener(new EditTextDatePicker(context, dateField));
 
         // Create new alert dialog
         dialog = new AlertDialog.Builder(context, R.style.DialogFullScreen)

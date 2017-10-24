@@ -57,7 +57,7 @@ public class SettingsGeneralFragment extends PreferenceFragment
             text = SharedPreferences.getString(key, null);
             if (text != null) {
                 DatePreference date = (DatePreference) preference;
-                text = date.getDateForSummary(text.toString());
+                text = date.getStringForSummary(text.toString());
             }
         // Summary for TimePreference
         } else if (preference instanceof TimePreference) {

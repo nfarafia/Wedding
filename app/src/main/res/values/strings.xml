@@ -18,6 +18,7 @@
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_edit">Edit</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_clear">Clear</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -90,6 +91,8 @@
     <string name="payment_dialog_error">Enter name</string>
     <string name="payment_dialog_name_hint">Enter name</string>
     <string name="payment_dialog_amount_hint">Enter amount</string>
+    <string name="payment_dialog_date_paid_hint">Choose paid date</string>
+    <string name="payment_dialog_date_pending_hint">Choose expiration date</string>
     <string name="payment_dialog_complete_title">Type</string>
     <string name="payment_dialog_complete_yes_title">Paid</string>
     <string name="payment_dialog_complete_no_title">Pending</string>

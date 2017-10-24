@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.R.attr.resource;
+
 public class Payment extends BaseClass {
     private	int	id_cost;
     private Map<String, String> name = new HashMap<>();
@@ -57,6 +59,10 @@ public class Payment extends BaseClass {
 
     String getDateAsString() {
         return super.getDateAsString(date);
+    }
+
+    String getDateAsLocale() {
+        return super.getDateAsLocale(date);
     }
 
     String getDateAsLocale(int resource) {

@@ -44,6 +44,20 @@
                 android:padding="12dp"
                 android:textSize="@dimen/TextEdit_textSize" />
 
+            <EditText
+                android:id="@+id/payment_edit_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="@string/payment_dialog_date_paid_hint"
+                android:inputType="date"
+                android:imeOptions="flagNoExtractUi"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="false"
+                android:textSize="@dimen/TextEdit_textSize" />
+
             <RadioGroup
                 android:id="@+id/payment_edit_complete"
                 android:layout_width="match_parent"

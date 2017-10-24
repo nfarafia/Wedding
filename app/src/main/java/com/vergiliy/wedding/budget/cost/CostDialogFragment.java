@@ -99,14 +99,6 @@ public class CostDialogFragment extends BaseDialogFragment {
 
                 // Update current fragment
                 ((BudgetInterface) context).getViewPager().getAdapter().notifyDataSetChanged();
-                /*
-                try {
-                } catch (NullPointerException e){
-                    Log.e("NullPointerException",
-                            "CostDialogFragment -> PositiveButtonListener -> onClick (read): "
-                                    + e.getMessage());
-                }
-                */
             }
         }
     }

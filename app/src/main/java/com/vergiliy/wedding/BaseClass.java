@@ -79,7 +79,7 @@ public class BaseClass {
         return BaseHelper.getStringFromDate(date);
     }
 
-    private String getDateAsLocale(Date date) {
+    protected String getDateAsLocale(Date date) {
         Format format = DateFormat.getDateFormat(context); // Get system date format
         return date != null ? format.format(date): null;
     }

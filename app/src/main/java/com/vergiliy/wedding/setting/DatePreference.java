@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DatePreference extends DialogPreference {
-    private Integer date, month, year;
+    private int date, month, year;
     private DatePicker picker = null;
     public static final SimpleDateFormat DATA_FORMAT = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
 
@@ -122,8 +122,8 @@ public class DatePreference extends DialogPreference {
         return Integer.parseInt(pieces[2]);
     }
 
-    // Get date for summary
-    String getDateForSummary(String string) {
+    // Get string for summary
+    String getStringForSummary(String string) {
         Date date = null;
 
         // Get Date from string
