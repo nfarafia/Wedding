@@ -3,6 +3,8 @@
     package="com.vergiliy.wedding">
 
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity
             android:name=".main.SplashActivity"
             android:screenOrientation="portrait"
@@ -64,11 +72,11 @@
         <activity
             android:name=".info.FeedbackActivity"
             android:parentActivityName=".NavigationActivity" />
-        <activity
-            android:name=".setting.SettingFragmentsActivity"/>
+        <activity android:name=".setting.SettingFragmentsActivity" />
         <activity
             android:name=".budget.cost.CostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

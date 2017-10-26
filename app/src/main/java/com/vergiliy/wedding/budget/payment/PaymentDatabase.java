@@ -4,12 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
 import com.vergiliy.wedding.BaseClass;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,6 +23,7 @@ public class PaymentDatabase extends SQLiteHelper {
     private static final String COLUMN_AMOUNT = "amount";
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_COMPLETE = "complete";
+    private static final String COLUMN_NOTIFICATION = "notification";
 
     // Create access to database
     public PaymentDatabase(Context context) {
@@ -66,6 +69,38 @@ public class PaymentDatabase extends SQLiteHelper {
         return getAll(id_cost);
     }
 
+    // Get fields for notification
+    public List<Payment> getAllForNotification(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        String sql = String.format(Locale.getDefault(),
+                "SELECT * FROM %s WHERE complete = 0 " +
+                        "AND (notification IS NULL || DATE(notification) < DATE(DATETIME('now'))) " +
+                        "AND DATE(date) = DATE(DATETIME('now'))",
+                TABLE);
+
+        List<Payment> all = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                all.add(getPaymentByCursor(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return all;
+    }
+
+    // Mark field as notified
+    public void setNotification(String[] id){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOTIFICATION, BaseHelper.getStringFromDate(BaseHelper.getCurrentDate()));
+        SQLiteDatabase db = getReadableDatabase();
+        db.update(TABLE, values, COLUMN_ID
+                + "	IN (" + TextUtils.join(",", Collections.nCopies(id.length, "?"))  + ")", id);
+    }
+
     // Add new field
     void add(Payment payment){
         payment.setUpdate(BaseHelper.getCurrentDate()); // Get current date
@@ -78,7 +113,7 @@ public class PaymentDatabase extends SQLiteHelper {
         payment.setUpdate(BaseHelper.getCurrentDate()); // Get current date
         SQLiteDatabase db = getWritableDatabase();
         db.update(TABLE, getValues(payment), COLUMN_ID	+ "	= ?",
-                new String[] { String.valueOf(payment.getId())});
+                new String[] {String.valueOf(payment.getId())});
     }
 
     // Delete field
@@ -97,7 +132,7 @@ public class PaymentDatabase extends SQLiteHelper {
         payment.setAmount(cursor.getDouble(5));
         payment.setDate(BaseHelper.getDateFromString(cursor.getString(6)));
         payment.setComplete(Integer.parseInt(cursor.getString(7)) > 0);
-        payment.setUpdate(BaseHelper.getDateFromString(cursor.getString(8)));
+        payment.setUpdate(BaseHelper.getDateFromString(cursor.getString(9)));
         return payment;
     }
 

@@ -12,6 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.vergiliy.wedding.AlarmNotification;
 import com.vergiliy.wedding.BaseActivity;
 
 import com.vergiliy.wedding.R;
@@ -49,6 +50,10 @@ public class SplashActivity extends BaseActivity {
         // Create shortcut icon
         ShortcutIcon icon = new ShortcutIcon(this);
         icon.createShortcutIcon();
+
+        // Create Alarm for notification
+        AlarmNotification alarm = new AlarmNotification(this);
+        alarm.createAlarm();
     }
 
     @Override

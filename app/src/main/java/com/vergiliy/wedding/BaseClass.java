@@ -3,9 +3,7 @@ package com.vergiliy.wedding;
 import android.content.Context;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.util.Log;
 
-import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.helpers.BaseHelper;
 
 import java.text.Format;
@@ -14,12 +12,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import static android.R.attr.resource;
 import static android.text.TextUtils.isEmpty;
-import static com.vergiliy.wedding.setting.DatePreference.DATA_FORMAT;
 
 public class BaseClass {
-    protected BaseActivity context;
+    protected Context context;
 
     protected int id;
     protected Date update;
@@ -29,7 +25,7 @@ public class BaseClass {
     public final static String LANGUAGE_RU = "ru";
 
     protected BaseClass(Context context) {
-        this.context = (BaseActivity) context;
+        this.context = context;
     }
 
     public int getId() {
@@ -111,7 +107,17 @@ public class BaseClass {
         String userValue = map.get(LANGUAGE_DEFAULT);
 
         if (isEmpty(userValue)) {
-            String localeValue = map.get(context.getLanguage());
+            String language;
+
+            if (context instanceof BaseActivity) {
+                language = ((BaseActivity) context).getLanguage();
+            // Get current language, if main class is not BaseActivity
+            } else {
+                Language languageClass = new Language(context);
+                language = languageClass.getLanguage();
+            }
+
+            String localeValue = map.get(language);
             String defaultValue = map.get(LANGUAGE_EN);
             if (!isEmpty(localeValue)) {
                 return localeValue;

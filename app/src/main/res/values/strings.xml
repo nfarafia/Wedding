@@ -48,7 +48,7 @@
     <string name="menu_action_payment_complete_enable">Mark as paid</string>
     <string name="menu_action_payment_complete_disable">Mark as pending</string>
 
-    <string name="test_tasks_page">Page %1$d</string>
+    <string name="test_tasks_page">Page %d</string>
     <string name="test_tasks_item_click">Position %1$d</string>
     <string name="test_menu_setting_click">Click button Setting</string>
 
@@ -85,6 +85,9 @@
 
     <string name="payment_card_amount_title">Amount:</string>
     <string name="payment_card_date_null">Date is not defined</string>
+
+    <string name="payment_notification_title">%1$d payment%2$s is pending</string>
+    <string name="payment_notification_text">Pending payment%s:</string>
 
     <string name="payment_dialog_title_add">Add new payment</string>
     <string name="payment_dialog_title_edit">Edit payment</string>

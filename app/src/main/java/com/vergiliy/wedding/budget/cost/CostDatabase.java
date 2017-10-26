@@ -106,7 +106,7 @@ public class CostDatabase extends SQLiteHelper {
         cost.setUpdate(BaseHelper.getCurrentDate()); // Get current date
         SQLiteDatabase db = getWritableDatabase();
         db.update(TABLE, getValues(cost), COLUMN_ID	+ "	= ?",
-                new String[] { String.valueOf(cost.getId())});
+                new String[] {String.valueOf(cost.getId())});
     }
 
     // Delete field
