@@ -51,13 +51,6 @@ public class CostDatabase extends SQLiteHelper {
     }
 
     // Get all fields
-    /*
-    private List<Payment> getAll(){
-        return getAll(null);
-    }
-    */
-
-    // Get all fields
     private List<Cost> getAll(Integer id_category){
         SQLiteDatabase db = getReadableDatabase();
         StringBuilder sql = new StringBuilder();
@@ -92,6 +85,31 @@ public class CostDatabase extends SQLiteHelper {
     // Get all fields by category id
     public List<Cost> getAllByIdCategory(int id_category){
         return getAll(id_category);
+    }
+
+    // Get all fields
+    private int getCount(Integer id_category){
+        SQLiteDatabase db = getReadableDatabase();
+        StringBuilder sql = new StringBuilder();
+
+        sql.append(String.format(Locale.getDefault(), "SELECT COUNT(_id) FROM %s ", TABLE));
+
+        if (id_category > 0) {
+            sql.append(String.format(Locale.getDefault(), "WHERE id_category = %d ", id_category));
+        }
+
+        Cursor cursor = db.rawQuery(sql.toString(), null);
+        if (cursor.moveToFirst()) {
+            return cursor.getInt(0);
+        }
+        cursor.close();
+
+        return 0;
+    }
+
+    // Get count fields by category id
+    public int getCountByIdCategory(int id_category){
+        return getCount(id_category);
     }
 
     // Add new field

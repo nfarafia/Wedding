@@ -14,7 +14,7 @@ import com.vergiliy.wedding.budget.cost.CostActivity;
 
 import java.util.List;
 
-public class PaymentsFragment extends Fragment {
+public class PaymentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,12 +31,13 @@ public class PaymentsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         List<Payment> all = activity.getPayments();
+        TextView noneText = view.findViewById(R.id.payments_list_none);
         if (all.size() > 0) {
-            RecyclerView.Adapter adapter = new PaymentsRecyclerAdapter(activity, all);
+            RecyclerView.Adapter adapter = new PaymentRecyclerAdapter(activity, all);
             recyclerView.setAdapter(adapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            noneText.setVisibility(View.GONE);
         } else {
-            TextView noneText = view.findViewById(R.id.payments_list_none);
-
             recyclerView.setVisibility(View.GONE);
             noneText.setVisibility(View.VISIBLE);
         }

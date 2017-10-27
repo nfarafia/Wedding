@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver
             android:name=".NotificationReceiver"
             android:enabled="true"
@@ -76,7 +75,7 @@
         <activity
             android:name=".budget.cost.CostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity android:name=".budget.category.CategoryActivity" />
     </application>
 
 </manifest>

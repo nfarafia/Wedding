@@ -1,6 +1,5 @@
 package com.vergiliy.wedding.budget.cost;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -9,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.vergiliy.wedding.BaseClass;
 import com.vergiliy.wedding.R;
-
-import static com.vergiliy.wedding.R.id.textView;
+import com.vergiliy.wedding.budget.category.Category;
 
 public class CostFragment extends Fragment {
 
@@ -35,9 +34,12 @@ public class CostFragment extends Fragment {
         TextView updateField = view.findViewById(R.id.cost_view_update);
 
         nameField.setText(cost.getLocaleName());
-        categoryField.setText(activity.getCategories().get(cost.getIdCategory() - 1).getLocaleName());
+        Category category = BaseClass
+                .findObjectInListById(activity.getCategories(), cost.getIdCategory());
+        String categoryName = category != null ?
+                category.getLocaleName() : getString(R.string.cost_view_category_null);
+        categoryField.setText(categoryName);
         noteField.setText(cost.getLocaleNote(R.string.cost_view_note_null));
-
         amountField.setText(cost.getAmountAsString());
         pendingField.setText(cost.getPendingAsString());
         paidField.setText(cost.getPaidAsString());

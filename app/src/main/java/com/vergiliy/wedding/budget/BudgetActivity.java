@@ -1,5 +1,6 @@
 package com.vergiliy.wedding.budget;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -14,14 +15,16 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.category.Category;
+import com.vergiliy.wedding.budget.category.CategoryActivity;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
-import com.vergiliy.wedding.budget.category.CategoryProcessing;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
 import com.vergiliy.wedding.budget.cost.CostDialogListener;
 
@@ -34,7 +37,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
 
     protected static ViewPager viewPager;
 
-    private CostDatabase db_main;
+    private CostDatabase db_cost;
     protected CategoryDatabase db_category;
 
     private List<Category> categories = new ArrayList<>();
@@ -96,18 +99,15 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         getLayoutInflater().inflate(R.layout.contant_budget, frameLayout);
 
         // Create new CostDatabase and CategoryDatabase
-        db_main = new CostDatabase(this);
+        db_cost = new CostDatabase(this);
         db_category = new CategoryDatabase(this);
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
         // Get categories from database
-        categories = db_category.getAll();
-        if (categories.size() == 0 ) {
-            Toast.makeText(getApplicationContext(), R.string.budget_title_none,
-                    Toast.LENGTH_LONG).show();
-        }
+        updateCategories();
 
         // Create ViewPager
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new PageChangeListener());
@@ -115,22 +115,33 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         // Show TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setVisibility(View.VISIBLE);
 
         // Add padding to TabLayout
         int padding_right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
                 getResources().getDisplayMetrics());
         tabLayout.setPadding(0,0,padding_right,0);
 
-        // Show button Add for add new tab
-        ImageButton tabAdd = (ImageButton) findViewById(R.id.budget_tabs_edit);
-        tabAdd.setImageResource(R.drawable.ic_tabs_edit);
-        tabAdd.setVisibility(View.VISIBLE);
+        // Show CategoryActivity
+        View.OnClickListener budgetListener = new View.OnClickListener() {
 
-        tabAdd.setOnClickListener(new CategoryProcessing());
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        };
+
+        // Show button Add for add new tab
+        ImageButton tabEdit = (ImageButton) findViewById(R.id.budget_tabs_edit);
+        tabEdit.setImageResource(R.drawable.ic_tabs_edit);
+        tabEdit.setVisibility(View.VISIBLE);
+        tabEdit.setOnClickListener(budgetListener);
+
+        Button tabAdd = (Button) findViewById(R.id.budget_tabs_add);
+        tabAdd.setOnClickListener(budgetListener);
 
         // Show toast when long click button
-        tabAdd.setOnLongClickListener(new View.OnLongClickListener() {
+        tabEdit.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View view) {
@@ -156,7 +167,6 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
 
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new CostDialogListener());
     }
 
@@ -170,6 +180,20 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         // Update current fragment
         getViewPager().getAdapter().notifyDataSetChanged();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+
+        // Refresh TabLayout when return from CategoryActivity
+        if (data.getStringExtra("class").equals(CategoryActivity.class.getSimpleName())) {
+            // Update categories from database
+            updateCategories();
+        }
+    }
+
 
     // Create top context menu
     @Override
@@ -199,8 +223,8 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (db_main != null) {
-            db_main.close();
+        if (db_cost != null) {
+            db_cost.close();
         }
         if (db_category != null) {
             db_category.close();
@@ -217,9 +241,28 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         }
     }
 
-    // Get db_main
+    // Get categories from database
+    private void updateCategories() {
+        categories = db_category.getAll();
+        TabLayout tab = (TabLayout) findViewById(R.id.tabs);
+        LinearLayout noneText = (LinearLayout) findViewById(R.id.budget_category_none);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        if (categories.size() == 0) {
+            viewPager.setVisibility(View.GONE);
+            tab.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
+            noneText.setVisibility(View.VISIBLE);
+        } else {
+            viewPager.setVisibility(View.VISIBLE);
+            tab.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
+            noneText.setVisibility(View.GONE);
+        }
+    }
+
+    // Get db_cost
     public CostDatabase getDbCost() {
-        return db_main;
+        return db_cost;
     }
 
     // Get viewPager

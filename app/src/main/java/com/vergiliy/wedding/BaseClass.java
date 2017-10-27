@@ -9,6 +9,7 @@ import com.vergiliy.wedding.helpers.BaseHelper;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -127,5 +128,24 @@ public class BaseClass {
         }
 
         return userValue;
+    }
+
+    // Find index (and return it) in List<Object>
+    public static <T> Integer findIndexInListById(List<T> all, int id) {
+        for (int i = 0; i < all.size(); i++) {
+            if (((BaseClass) all.get(i)).getId() == id) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    // Find Object (and return it) in List<Object>
+    public static <T> T findObjectInListById(List<T> all, int id) {
+        Integer index = findIndexInListById(all, id);
+        if (index != null) {
+            return all.get(index);
+        }
+        return null;
     }
 }

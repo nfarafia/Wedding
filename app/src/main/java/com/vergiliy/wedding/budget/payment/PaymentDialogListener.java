@@ -6,7 +6,7 @@ import android.view.View;
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.BaseListener;
 
-import static com.vergiliy.wedding.budget.payment.PaymentsRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.budget.payment.PaymentRecyclerAdapter.actionMode;
 
 // Creating Payment Dialog
 public class PaymentDialogListener extends BaseListener implements View.OnClickListener {

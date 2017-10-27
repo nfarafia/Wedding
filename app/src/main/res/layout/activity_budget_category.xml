@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vergiliy.wedding.budget.category.CategoryActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/categories_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:id="@+id/categories_list_none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="60dp"
+            android:gravity="center"
+            android:text="@string/categories_list_none"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_margin="@dimen/fab_margin"
+        android:tint="@color/white"
+        app:layout_anchor="@+id/categories"
+        app:layout_anchorGravity="bottom|right"
+        app:srcCompat="@drawable/ic_fab_add" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -11,5 +11,6 @@
     <color name="whiteTransparentDark">#aaffffff</color>
 
     <color name="black">#000000</color>
+    <color name="gray">#838383</color>
     <color name="text">#000000</color>
 </resources>

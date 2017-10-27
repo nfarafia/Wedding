@@ -10,6 +10,7 @@
     <string name="splash_button_start">Start</string>
 
     <string name="dialog_title">Title</string>
+    <string name="dialog_alert">Alert</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_cancel">Task cancelled</string>
@@ -29,6 +30,7 @@
     <string name="activity_countdown_title">Countdown</string>
     <string name="activity_tasks_title">Tasks</string>
     <string name="activity_budget_title">Budget</string>
+    <string name="activity_budget_category_title">Category</string>
     <string name="activity_cost_title">Cost</string>
     <string name="activity_guests_title">Guests</string>
     <string name="activity_vendors_title">Vendors</string>
@@ -52,9 +54,10 @@
     <string name="test_tasks_item_click">Position %1$d</string>
     <string name="test_menu_setting_click">Click button Setting</string>
 
+    <string name="budget_tabs_add_button">Add categories</string>
     <string name="budget_tabs_edit_button">Edit categories</string>
-    <string name="budget_title_none">There is no categories</string>
     <string name="budget_list_none">There is no costs. Start adding now</string>
+    <string name="budget_category_none">There is no categories</string>
 
     <string name="cost_card_amount_title">Amount:</string>
     <string name="cost_card_paid_title">Paid:</string>
@@ -72,6 +75,7 @@
     <string name="cost_view_note">Note</string>
     <string name="cost_view_note_null">Note is not defined</string>
     <string name="cost_view_category">Category</string>
+    <string name="cost_view_category_null">Category is not defined</string>
     <string name="cost_view_amount_title">Amount</string>
     <string name="cost_view_amount">Estimate</string>
     <string name="cost_view_balance">Balance</string>
@@ -99,6 +103,17 @@
     <string name="payment_dialog_complete_title">Type</string>
     <string name="payment_dialog_complete_yes_title">Paid</string>
     <string name="payment_dialog_complete_no_title">Pending</string>
+
+    <string name="categories_list_none">There is no categories. Start adding now</string>
+
+    <string name="category_card_drag">Reordering</string>
+    <string name="category_delete_alert_one">There is a cost in this category. Before deleting move it or delete</string>
+    <string name="category_delete_alert_several">There are %d costs in this category. Before deleting move them or delete</string>
+
+    <string name="category_dialog_title_add">Add new category</string>
+    <string name="category_dialog_title_edit">Edit category</string>
+    <string name="category_dialog_error">Enter name</string>
+    <string name="category_dialog_name_hint">Enter name</string>
 
     <string name="settings_names">Names</string>
     <string name="settings_bride_title">Bride\'s name</string>

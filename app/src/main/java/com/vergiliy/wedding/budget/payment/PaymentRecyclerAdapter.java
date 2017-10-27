@@ -19,7 +19,7 @@ import com.vergiliy.wedding.budget.cost.CostActivity;
 
 import java.util.List;
 
-public class PaymentsRecyclerAdapter extends RecyclerView.Adapter<PaymentsRecyclerAdapter.ViewHolder> {
+public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecyclerAdapter.ViewHolder> {
 
     private CostActivity context;
     private List<Payment> list;
@@ -184,14 +184,14 @@ public class PaymentsRecyclerAdapter extends RecyclerView.Adapter<PaymentsRecycl
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    PaymentsRecyclerAdapter(Context context, List<Payment> list) {
+    PaymentRecyclerAdapter(Context context, List<Payment> list) {
         this.context = (CostActivity) context;
         this.list = list;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public PaymentsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PaymentRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater
                 .from(parent.getContext()).inflate(R.layout.payment_list_item, parent, false);

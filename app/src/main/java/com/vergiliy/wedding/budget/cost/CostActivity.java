@@ -21,12 +21,12 @@ import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.payment.Payment;
 import com.vergiliy.wedding.budget.payment.PaymentDatabase;
 import com.vergiliy.wedding.budget.payment.PaymentDialogListener;
-import com.vergiliy.wedding.budget.payment.PaymentsFragment;
+import com.vergiliy.wedding.budget.payment.PaymentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vergiliy.wedding.budget.payment.PaymentsRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.budget.payment.PaymentRecyclerAdapter.actionMode;
 
 public class CostActivity extends BaseActivity implements BudgetInterface {
 
@@ -59,7 +59,7 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
                 case 0:
                     return new CostFragment(); // Show CostFragment
                 case 1:
-                    return new PaymentsFragment(); // Show PaymentsFragment
+                    return new PaymentFragment(); // Show PaymentFragment
                 default:
                     return null;
             }

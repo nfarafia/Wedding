@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -149,7 +148,13 @@ public class CostDialogFragment extends BaseDialogFragment {
             nameField.setText(cost.getLocaleName());
             noteField.setText(cost.getLocaleNote());
             amountField.setText(cost.getAmountAsString());
-            categoryField.setSelection(cost.getIdCategory() - 1);
+
+            Integer index = BaseClass
+                    .findIndexInListById(((BudgetInterface) context).getCategories(), cost.getIdCategory());
+            if (index != null) {
+                categoryField.setSelection(index);
+            }
+
             titleView.setText(R.string.cost_dialog_title_edit);
             yesButton.setText(R.string.dialog_button_edit);
         } else {

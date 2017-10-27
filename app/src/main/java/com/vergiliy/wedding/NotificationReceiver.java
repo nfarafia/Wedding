@@ -110,6 +110,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setContentIntent(pendingIntent)
                 .setNumber(count);
 
+        // If lengths bigger than 30 letters, change the style to multiline
         if (text.length() > 30) {
             builder.setStyle(new NotificationCompat.BigTextStyle().bigText(text));
         }

@@ -31,13 +31,6 @@ public class PaymentDatabase extends SQLiteHelper {
     }
 
     // Get all fields
-    /*
-    private List<Payment> getAll(){
-        return getAll(null);
-    }
-    */
-
-    // Get all fields
     private List<Payment> getAll(Integer id_cost){
         SQLiteDatabase db = getReadableDatabase();
 
