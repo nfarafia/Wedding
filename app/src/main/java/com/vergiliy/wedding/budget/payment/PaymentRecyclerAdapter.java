@@ -176,7 +176,7 @@ public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecycler
         @Override
         public void onClick(View view) {
             // Delete row from db_payment
-            context.getDbPayment().delete(payment.getId());
+            context.getDbPayment().delete(payment);
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();

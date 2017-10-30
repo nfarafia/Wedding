@@ -11,6 +11,7 @@ import com.vergiliy.wedding.BaseClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CategoryDatabase extends SQLiteHelper {
 
@@ -23,11 +24,27 @@ public class CategoryDatabase extends SQLiteHelper {
         super(context);
     }
 
+    @Override
+    public String getTable() {
+        return TABLE;
+    }
+
+    @Override
+    protected ContentValues getValues(BaseClass item) {
+        Category category = (Category) item;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, category.getName());
+        values.put(COLUMN_POSITION, category.getPosition());
+        return addDefaultContentValues(values, item);
+    }
+
     // Get all fields
     public List<Category> getAll(){
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE + " ORDER BY " +
-                "CASE WHEN position IS NOT NULL THEN 0 ELSE 1 END ASC, position ASC, _id ASC";
+        String sql = String.format(Locale.getDefault(),
+                "SELECT * FROM %s WHERE active = 1 " +
+                        "ORDER BY CASE WHEN position IS NOT NULL THEN 0 ELSE 1 END ASC, " +
+                        "position ASC, _id ASC", TABLE);
         List<Category> all = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -40,27 +57,6 @@ public class CategoryDatabase extends SQLiteHelper {
         cursor.close();
         return all;
     }
-
-    // Add new field
-    void add(Category category){
-        category.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE, null, getValues(category));
-    }
-
-    // Update field
-    public void update(Category category){
-        category.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-        SQLiteDatabase db = getWritableDatabase();
-        db.update(TABLE, getValues(category), COLUMN_ID	+ "	= ?",
-                new String[] {String.valueOf(category.getId())});
-    }
-
-    // Delete field
-    void delete(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE, COLUMN_ID	+ "	= ?", new String[] { String.valueOf(id)});
-    }
     
     private Category getCategoryByCursor(Cursor cursor) {
         Category category = new Category(context);
@@ -71,13 +67,5 @@ public class CategoryDatabase extends SQLiteHelper {
         category.setPosition(Integer.parseInt(cursor.getString(4)));
         category.setUpdate(BaseHelper.getDateFromString(cursor.getString(5)));
         return category;
-    }
-
-    private ContentValues getValues(Category category){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, category.getName());
-        values.put(COLUMN_POSITION, category.getPosition());
-        values.put(COLUMN_UPDATE, category.getUpdateAsString());
-        return values;
     }
 }

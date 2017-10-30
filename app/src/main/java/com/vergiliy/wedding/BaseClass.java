@@ -20,6 +20,7 @@ public class BaseClass {
 
     protected int id;
     protected Date update;
+    private boolean active = true;
 
     public final static String LANGUAGE_DEFAULT = "default";
     public final static String LANGUAGE_EN = "en";
@@ -35,6 +36,14 @@ public class BaseClass {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Date getUpdate() {

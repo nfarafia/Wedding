@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vergiliy.wedding.budget.payment.Payment;
 import com.vergiliy.wedding.budget.payment.PaymentDatabase;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
@@ -28,15 +27,31 @@ public class CostDatabase extends SQLiteHelper {
         super(context);
     }
 
+    @Override
+    public String getTable() {
+        return TABLE;
+    }
+
+    @Override
+    protected ContentValues getValues(BaseClass item) {
+        Cost cost = (Cost) item;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ID_CATEGORY, cost.getIdCategory());
+        values.put(COLUMN_NAME, cost.getName());
+        values.put(COLUMN_NOTE, cost.getNote());
+        values.put(COLUMN_AMOUNT, cost.getAmount());
+        return addDefaultContentValues(values, item);
+    }
+
     // Get cost by id
     Cost getOne(int id) {
         SQLiteDatabase db = getReadableDatabase();
         String sql = String.format(Locale.getDefault(),
-                "SELECT c.*, SUM(CASE WHEN complete > 0 THEN p.amount ELSE 0 END) paid, " +
-                        "SUM(CASE WHEN complete == 0 THEN p.amount ELSE 0 END) pending " +
+                "SELECT c.*, SUM(CASE WHEN p.complete > 0 THEN p.amount ELSE 0 END) paid, " +
+                        "SUM(CASE WHEN p.complete == 0 THEN p.amount ELSE 0 END) pending " +
                         "FROM %s c " +
-                        "LEFT JOIN %s p ON (c._id = p.id_cost) " +
-                        "WHERE c._id = %d",
+                        "LEFT JOIN %s p ON (p.active = 1 AND c._id = p.id_cost) " +
+                        "WHERE c.active = 1 AND c._id = %d",
                 TABLE, PaymentDatabase.TABLE, id);
 
         Cost cost = null;
@@ -56,14 +71,15 @@ public class CostDatabase extends SQLiteHelper {
         StringBuilder sql = new StringBuilder();
 
         sql.append(String.format(Locale.getDefault(),
-                "SELECT c.*, SUM(CASE WHEN complete > 0 THEN p.amount ELSE 0 END) paid, " +
-                        "SUM(CASE WHEN complete == 0 THEN p.amount ELSE 0 END) pending " +
+                "SELECT c.*, SUM(CASE WHEN p.complete > 0 THEN p.amount ELSE 0 END) paid, " +
+                        "SUM(CASE WHEN p.complete == 0 THEN p.amount ELSE 0 END) pending " +
                         "FROM %s c " +
-                        "LEFT JOIN %s p ON (c._id = p.id_cost) ",
+                        "LEFT JOIN %s p ON (p.active = 1 AND c._id = p.id_cost) " +
+                        "WHERE c.active = 1 ",
                 TABLE, PaymentDatabase.TABLE));
 
         if (id_category > 0) {
-            sql.append(String.format(Locale.getDefault(), "WHERE id_category = %d ", id_category));
+            sql.append(String.format(Locale.getDefault(), "AND c.id_category = %d ", id_category));
         }
 
         sql.append("GROUP BY c._id ORDER BY _id ASC");
@@ -92,10 +108,11 @@ public class CostDatabase extends SQLiteHelper {
         SQLiteDatabase db = getReadableDatabase();
         StringBuilder sql = new StringBuilder();
 
-        sql.append(String.format(Locale.getDefault(), "SELECT COUNT(_id) FROM %s ", TABLE));
+        sql.append(String.format(Locale.getDefault(),
+                "SELECT COUNT(_id) FROM %s WHERE active = 1 ", TABLE));
 
         if (id_category > 0) {
-            sql.append(String.format(Locale.getDefault(), "WHERE id_category = %d ", id_category));
+            sql.append(String.format(Locale.getDefault(), "AND id_category = %d ", id_category));
         }
 
         Cursor cursor = db.rawQuery(sql.toString(), null);
@@ -110,27 +127,6 @@ public class CostDatabase extends SQLiteHelper {
     // Get count fields by category id
     public int getCountByIdCategory(int id_category){
         return getCount(id_category);
-    }
-
-    // Add new field
-    void add(Cost cost){
-        cost.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE, null, getValues(cost));
-    }
-
-    // Update field
-    public void update(Cost cost){
-        cost.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-        SQLiteDatabase db = getWritableDatabase();
-        db.update(TABLE, getValues(cost), COLUMN_ID	+ "	= ?",
-                new String[] {String.valueOf(cost.getId())});
-    }
-
-    // Delete field
-    public void delete(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE, COLUMN_ID	+ "	= ?", new String[] { String.valueOf(id)});
     }
 
     private Cost getCostByCursor(Cursor cursor) {
@@ -148,15 +144,5 @@ public class CostDatabase extends SQLiteHelper {
         cost.setPaid(cursor.getDouble(10));
         cost.setPending(cursor.getDouble(11));
         return cost;
-    }
-
-    private ContentValues getValues(Cost cost){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ID_CATEGORY, cost.getIdCategory());
-        values.put(COLUMN_NAME, cost.getName());
-        values.put(COLUMN_NOTE, cost.getNote());
-        values.put(COLUMN_AMOUNT, cost.getAmount());
-        values.put(COLUMN_UPDATE, cost.getUpdateAsString());
-        return values;
     }
 }

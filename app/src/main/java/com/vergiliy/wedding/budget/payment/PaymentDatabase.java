@@ -30,15 +30,33 @@ public class PaymentDatabase extends SQLiteHelper {
         super(context);
     }
 
+    @Override
+    public String getTable() {
+        return TABLE;
+    }
+
+    @Override
+    protected ContentValues getValues(BaseClass item) {
+        Payment payment = (Payment) item;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ID_COST, payment.getIdCost());
+        values.put(COLUMN_NAME, payment.getName());
+        values.put(COLUMN_AMOUNT, payment.getAmount());
+        values.put(COLUMN_DATE, payment.getDateAsString());
+        values.put(COLUMN_COMPLETE, payment.getComplete());
+        return addDefaultContentValues(values, item);
+    }
+
     // Get all fields
     private List<Payment> getAll(Integer id_cost){
         SQLiteDatabase db = getReadableDatabase();
 
         StringBuilder sql =
-                new StringBuilder(String.format(Locale.getDefault(), "SELECT * FROM %s ", TABLE));
+                new StringBuilder(String.format(Locale.getDefault(),
+                        "SELECT * FROM %s WHERE active = 1 ", TABLE));
 
         if (id_cost > 0) {
-            sql.append(String.format(Locale.getDefault(), "WHERE id_cost = %d ", id_cost));
+            sql.append(String.format(Locale.getDefault(), "AND id_cost = %d ", id_cost));
         }
 
         sql.append("ORDER BY complete DESC, CASE WHEN date IS NOT NULL THEN 0 ELSE 1 END ASC, " +
@@ -67,7 +85,7 @@ public class PaymentDatabase extends SQLiteHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String sql = String.format(Locale.getDefault(),
-                "SELECT * FROM %s WHERE complete = 0 " +
+                "SELECT * FROM %s WHERE active = 1 AND complete = 0 " +
                         "AND (notification IS NULL || DATE(notification) < DATE(DATETIME('now'))) " +
                         "AND DATE(date) = DATE(DATETIME('now'))",
                 TABLE);
@@ -94,27 +112,6 @@ public class PaymentDatabase extends SQLiteHelper {
                 + "	IN (" + TextUtils.join(",", Collections.nCopies(id.length, "?"))  + ")", id);
     }
 
-    // Add new field
-    void add(Payment payment){
-        payment.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE, null, getValues(payment));
-    }
-
-    // Update field
-    public void update(Payment payment){
-        payment.setUpdate(BaseHelper.getCurrentDate()); // Get current date
-        SQLiteDatabase db = getWritableDatabase();
-        db.update(TABLE, getValues(payment), COLUMN_ID	+ "	= ?",
-                new String[] {String.valueOf(payment.getId())});
-    }
-
-    // Delete field
-    void delete(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE, COLUMN_ID	+ "	= ?", new String[] { String.valueOf(id)});
-    }
-
     private Payment getPaymentByCursor(Cursor cursor) {
         Payment payment = new Payment(context);
         payment.setId(Integer.parseInt(cursor.getString(0)));
@@ -127,16 +124,5 @@ public class PaymentDatabase extends SQLiteHelper {
         payment.setComplete(Integer.parseInt(cursor.getString(7)) > 0);
         payment.setUpdate(BaseHelper.getDateFromString(cursor.getString(9)));
         return payment;
-    }
-
-    private ContentValues getValues(Payment payment){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ID_COST, payment.getIdCost());
-        values.put(COLUMN_NAME, payment.getName());
-        values.put(COLUMN_AMOUNT, payment.getAmount());
-        values.put(COLUMN_DATE, payment.getDateAsString());
-        values.put(COLUMN_COMPLETE, payment.getComplete());
-        values.put(COLUMN_UPDATE, payment.getUpdateAsString());
-        return values;
     }
 }

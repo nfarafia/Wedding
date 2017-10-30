@@ -135,7 +135,7 @@ class CategoryRecyclerAdapter
 
             if (count == 0) {
                 // Delete row from db_category
-                context.getDbCategory().delete(category.getId());
+                context.getDbCategory().delete(category);
 
                 // Update RecyclerView
                 context.fillRecyclerView();

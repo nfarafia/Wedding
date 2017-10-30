@@ -138,7 +138,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
         @Override
         public void onClick(View view) {
             // Delete row from db_cost
-            context.getDbCost().delete(cost.getId());
+            context.getDbCost().delete(cost);
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();
