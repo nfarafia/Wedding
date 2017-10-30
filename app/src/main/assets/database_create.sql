@@ -56,15 +56,15 @@ CREATE TABLE IF NOT EXISTS `budget_categories` (
 	`position`	INTEGER DEFAULT NULL,
 	`update`	TEXT DEFAULT NULL
 );
-INSERT INTO `budget_categories` VALUES (1,NULL,'Attire & Accessories','Одежда & Aксессуары',1,NULL);
-INSERT INTO `budget_categories` VALUES (2,NULL,'Health & Beauty','Красота & Здоровье',2,NULL);
-INSERT INTO `budget_categories` VALUES (3,NULL,'Music','Музыка',3,NULL);
-INSERT INTO `budget_categories` VALUES (4,NULL,'Flowers','Цветы',4,NULL);
-INSERT INTO `budget_categories` VALUES (5,NULL,'Jewelry','Ювелирные изделия',5,NULL);
-INSERT INTO `budget_categories` VALUES (6,NULL,'Photo & Video','Фото & Видео',6,NULL);
-INSERT INTO `budget_categories` VALUES (7,NULL,'Ceremony','Церемония',7,NULL);
-INSERT INTO `budget_categories` VALUES (8,NULL,'Reception','Вечеринка',8,NULL);
-INSERT INTO `budget_categories` VALUES (9,NULL,'Transportation','Транспорт',9,NULL);
-INSERT INTO `budget_categories` VALUES (10,NULL,'Accommodation','Жилье',10,NULL);
-INSERT INTO `budget_categories` VALUES (11,NULL,'Miscellaneous','Разное',11,NULL);
+INSERT INTO `budget_categories` VALUES (1,NULL,'Attire & Accessories','Одежда & Aксессуары',0,NULL);
+INSERT INTO `budget_categories` VALUES (2,NULL,'Health & Beauty','Красота & Здоровье',1,NULL);
+INSERT INTO `budget_categories` VALUES (3,NULL,'Music','Музыка',2,NULL);
+INSERT INTO `budget_categories` VALUES (4,NULL,'Flowers','Цветы',3,NULL);
+INSERT INTO `budget_categories` VALUES (5,NULL,'Jewelry','Ювелирные изделия',4,NULL);
+INSERT INTO `budget_categories` VALUES (6,NULL,'Photo & Video','Фото & Видео',5,NULL);
+INSERT INTO `budget_categories` VALUES (7,NULL,'Ceremony','Церемония',6,NULL);
+INSERT INTO `budget_categories` VALUES (8,NULL,'Reception','Вечеринка',7,NULL);
+INSERT INTO `budget_categories` VALUES (9,NULL,'Transportation','Транспорт',8,NULL);
+INSERT INTO `budget_categories` VALUES (10,NULL,'Accommodation','Жилье',9,NULL);
+INSERT INTO `budget_categories` VALUES (11,NULL,'Miscellaneous','Разное',10,NULL);
 COMMIT;

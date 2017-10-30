@@ -6,11 +6,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,8 +33,8 @@ class CategoryRecyclerAdapter
 
         CategoryActivity context;
         CardView item;
-        public TextView name;
-        ImageView edit, delete;
+        public final TextView name;
+        final ImageView reorder, edit, delete;
 
         // Create ActionMode callback (Action Bar for Long click by item)
         private ActionMode.Callback ActionModeCallback = new ActionMode.Callback() {
@@ -84,6 +84,7 @@ class CategoryRecyclerAdapter
             context = (CategoryActivity) itemView.getContext();
             item = itemView.findViewById(R.id.category_card_item);
             name = itemView.findViewById(R.id.category_card_name);
+            reorder = itemView.findViewById(R.id.category_card_reorder);
             edit = itemView.findViewById(R.id.ic_category_edit);
             delete = itemView.findViewById(R.id.ic_category_delete);
 
@@ -179,6 +180,15 @@ class CategoryRecyclerAdapter
         holder.name.setText(category.getLocaleName());
         holder.edit.setOnClickListener(new CategoryDialogListener(category));
         holder.delete.setOnClickListener(new DeleteButtonListener(category));
+        holder.reorder.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    context.onStartDrag(holder);
+                }
+                return false;
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

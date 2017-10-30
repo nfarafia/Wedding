@@ -106,7 +106,7 @@
 
     <string name="categories_list_none">There is no categories. Start adding now</string>
 
-    <string name="category_card_drag">Reordering</string>
+    <string name="category_card_reorder">Reordering</string>
     <string name="category_delete_alert_one">There is a cost in this category. Before deleting move it or delete</string>
     <string name="category_delete_alert_several">There are %d costs in this category. Before deleting move them or delete</string>
 

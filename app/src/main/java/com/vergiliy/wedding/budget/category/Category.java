@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Category extends BaseClass {
 
-    private	int	id;
+    private	int	id, position;
     private Map<String, String> name = new HashMap<>();
 
     Category(Context context) {
@@ -34,6 +34,14 @@ public class Category extends BaseClass {
 
     void setName(String locale, String name) {
         this.name.put(locale, name);
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override

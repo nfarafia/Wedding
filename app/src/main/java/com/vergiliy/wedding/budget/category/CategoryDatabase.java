@@ -68,6 +68,7 @@ public class CategoryDatabase extends SQLiteHelper {
         category.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(1));
         category.setName(BaseClass.LANGUAGE_EN, cursor.getString(2));
         category.setName(BaseClass.LANGUAGE_RU, cursor.getString(3));
+        category.setPosition(Integer.parseInt(cursor.getString(4)));
         category.setUpdate(BaseHelper.getDateFromString(cursor.getString(5)));
         return category;
     }
@@ -75,6 +76,7 @@ public class CategoryDatabase extends SQLiteHelper {
     private ContentValues getValues(Category category){
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, category.getName());
+        values.put(COLUMN_POSITION, category.getPosition());
         values.put(COLUMN_UPDATE, category.getUpdateAsString());
         return values;
     }

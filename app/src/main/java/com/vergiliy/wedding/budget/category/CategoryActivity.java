@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.vergiliy.wedding.budget.category.CategoryRecyclerAdapter.actionMode;
@@ -23,6 +26,58 @@ public class CategoryActivity extends BaseActivity {
     private CategoryDatabase db_category;
 
     private static RecyclerView recyclerView;
+    private ItemTouchHelper itemTouchHelper;
+    private List<Category> all;
+
+    private class CategoriesTouchHelper extends ItemTouchHelper.Callback {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                              RecyclerView.ViewHolder target) {
+            final int fromPosition = viewHolder.getAdapterPosition();
+            final int toPosition = target.getAdapterPosition();
+
+            if (fromPosition < toPosition) {
+                for (int i = fromPosition; i < toPosition; i++) {
+                    Collections.swap(all, i, i + 1);
+                }
+            } else {
+                for (int i = fromPosition; i > toPosition; i--) {
+                    Collections.swap(all, i, i - 1);
+                }
+            }
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+
+        // Defines the enabled move directions in each state (idle, swiping, dragging)
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView,
+                                    RecyclerView.ViewHolder viewHolder) {
+            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                    ItemTouchHelper.DOWN | ItemTouchHelper.UP);
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return false;
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+
+            // Save new position
+            for (int i = 0; i < all.size(); i++) {
+                Category category =  all.get(i);
+                category.setPosition(i);
+                getDbCategory().update(category);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +98,10 @@ public class CategoryActivity extends BaseActivity {
 
         // Fill RecyclerView
         fillRecyclerView();
+
+        // Implement reordering category
+        itemTouchHelper = new ItemTouchHelper(new CategoriesTouchHelper());
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -103,12 +162,12 @@ public class CategoryActivity extends BaseActivity {
         }
     }
 
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        itemTouchHelper.startDrag(viewHolder);
     }
 
     public void fillRecyclerView() {
-        List<Category> all = db_category.getAll();
+        all = db_category.getAll();
         TextView noneText = (TextView) findViewById(R.id.categories_list_none);
 
         if (all.size() > 0) {
