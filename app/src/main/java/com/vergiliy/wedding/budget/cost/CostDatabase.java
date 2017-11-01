@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vergiliy.wedding.budget.balance.Balance;
 import com.vergiliy.wedding.budget.payment.PaymentDatabase;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
@@ -78,7 +79,7 @@ public class CostDatabase extends SQLiteHelper {
                         "WHERE c.active = 1 ",
                 TABLE, PaymentDatabase.TABLE));
 
-        if (id_category > 0) {
+        if (id_category != null && id_category > 0) {
             sql.append(String.format(Locale.getDefault(), "AND c.id_category = %d ", id_category));
         }
 
@@ -98,6 +99,47 @@ public class CostDatabase extends SQLiteHelper {
         return all;
     }
 
+    // Get balance by Category
+    public Balance getBalance(Integer id_category){
+        SQLiteDatabase db = getReadableDatabase();
+        StringBuilder sql = new StringBuilder();
+
+        sql.append(String.format(Locale.getDefault(),
+                "SELECT SUM(g.amount) amount, SUM(g.paid) paid, SUM(g.pending) pending, " +
+                        "SUM(g.costs) costs, SUM(g.payments) payments, " +
+                        "SUM(g.payments_complete) payments_complete " +
+                        "FROM (SELECT c.amount, " +
+                        "SUM(CASE WHEN p.complete > 0 THEN p.amount ELSE 0 END) paid, " +
+                        "SUM(CASE WHEN p.complete == 0 THEN p.amount ELSE 0 END) pending, " +
+                        "COUNT(DISTINCT c._id) costs, COUNT(DISTINCT p._id) payments, " +
+                        "SUM(CASE WHEN p.complete > 0 THEN 1 ELSE 0 END) payments_complete " +
+                        "FROM %s c " +
+                        "LEFT JOIN %s p ON (p.active = 1 AND c._id = p.id_cost) " +
+                        "WHERE c.active = 1 ",
+                TABLE, PaymentDatabase.TABLE));
+
+        if (id_category != null && id_category > 0) {
+            sql.append(String.format(Locale.getDefault(), "AND c.id_category = %d ", id_category));
+        }
+
+        sql.append("GROUP BY c._id) g");
+
+        Balance balance = new Balance(context);
+        Cursor cursor = db.rawQuery(sql.toString(), null);
+
+        if (cursor.moveToFirst()) {
+            balance.setAmount(cursor.getDouble(0));
+            balance.setPaid(cursor.getDouble(1));
+            balance.setPending(cursor.getDouble(2));
+            balance.setCoatsTotal(cursor.getInt(3));
+            balance.setPaymentsTotal(cursor.getInt(4));
+            balance.setPaymentsPaid(cursor.getInt(5));
+        }
+
+        cursor.close();
+        return balance;
+    }
+
     // Get all fields by category id
     public List<Cost> getAllByIdCategory(int id_category){
         return getAll(id_category);
@@ -111,7 +153,7 @@ public class CostDatabase extends SQLiteHelper {
         sql.append(String.format(Locale.getDefault(),
                 "SELECT COUNT(_id) FROM %s WHERE active = 1 ", TABLE));
 
-        if (id_category > 0) {
+        if (id_category != null && id_category > 0) {
             sql.append(String.format(Locale.getDefault(), "AND id_category = %d ", id_category));
         }
 
@@ -141,8 +183,8 @@ public class CostDatabase extends SQLiteHelper {
         cost.setNote(BaseClass.LANGUAGE_RU, cursor.getString(7));
         cost.setAmount(cursor.getDouble(8));
         cost.setUpdate(BaseHelper.getDateFromString(cursor.getString(9)));
-        cost.setPaid(cursor.getDouble(10));
-        cost.setPending(cursor.getDouble(11));
+        cost.setPaid(cursor.getDouble(11));
+        cost.setPending(cursor.getDouble(12));
         return cost;
     }
 }

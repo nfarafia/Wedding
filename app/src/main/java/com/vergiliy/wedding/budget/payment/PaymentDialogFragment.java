@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
+import static com.vergiliy.wedding.helpers.EditTextDatePicker.date;
 
 public class PaymentDialogFragment extends BaseDialogFragment {
 
@@ -37,8 +38,6 @@ public class PaymentDialogFragment extends BaseDialogFragment {
     private RadioGroup completeField;
 
     private Payment payment;
-    public static Date date;
-    private static boolean isDateSet = false;
 
     // Listener clicks on Edit button
     private class PositiveButtonListener implements View.OnClickListener {
@@ -146,10 +145,6 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         if (payment != null) {
             nameField.setText(payment.getLocaleName());
             amountField.setText(payment.getAmountAsString());
-            if (!isDateSet) {
-                date = payment.getDate();
-                isDateSet = true;
-            }
             dateField.setText(payment.getDateAsLocale());
 
             Boolean complete = payment.getComplete();
@@ -168,7 +163,11 @@ public class PaymentDialogFragment extends BaseDialogFragment {
         }
 
         // Show DatePicker when click EditText
-        dateField.setOnClickListener(new EditTextDatePicker(context, dateField));
+        Date date = null;
+        if (!EditTextDatePicker.isDateSet && payment != null) {
+            date = payment.getDate();
+        }
+        dateField.setOnClickListener(new EditTextDatePicker(context, dateField, date));
 
         // Create new alert dialog
         dialog = new AlertDialog.Builder(context, R.style.DialogFullScreen)

@@ -55,7 +55,7 @@ public class PaymentDatabase extends SQLiteHelper {
                 new StringBuilder(String.format(Locale.getDefault(),
                         "SELECT * FROM %s WHERE active = 1 ", TABLE));
 
-        if (id_cost > 0) {
+        if (id_cost != null &&  id_cost > 0) {
             sql.append(String.format(Locale.getDefault(), "AND id_cost = %d ", id_cost));
         }
 

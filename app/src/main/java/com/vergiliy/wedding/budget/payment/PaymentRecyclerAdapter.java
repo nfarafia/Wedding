@@ -205,7 +205,7 @@ public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecycler
         final Payment payment = list.get(position);
         holder.name.setText(payment.getLocaleName());
         holder.amount.setText(payment.getAmountAsString());
-        holder.date.setText(payment.getDateAsLocale(R.string.payment_card_date_null));
+        holder.date.setText(payment.getDateAsLocaleWithComplete(R.string.payment_card_date_null));
 
         // Creating a strikethrough text in TextView
         if (payment.getComplete()) {

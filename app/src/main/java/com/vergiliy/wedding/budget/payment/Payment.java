@@ -52,7 +52,7 @@ public class Payment extends BaseClass {
     }
 
     Date getDate() {
-        return (complete && date == null) ? update : date;
+        return date;
     }
 
     String getDateAsString() {
@@ -63,8 +63,12 @@ public class Payment extends BaseClass {
         return super.getDateAsLocale(getDate());
     }
 
-    String getDateAsLocale(int resource) {
-        return super.getDateAsLocale(getDate(), resource);
+    private Date getDateWithComplete() {
+        return (complete && date == null) ? update : date;
+    }
+
+    String getDateAsLocaleWithComplete(int resource) {
+        return super.getDateAsLocale(getDateWithComplete(), resource);
     }
 
     void setDate(Date date) {

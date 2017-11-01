@@ -27,6 +27,7 @@ import com.vergiliy.wedding.budget.category.CategoryActivity;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
 import com.vergiliy.wedding.budget.cost.CostDialogListener;
+import com.vergiliy.wedding.budget.balance.BalanceActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,7 +179,9 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
                 .setChecked(true);
 
         // Update current fragment
-        getViewPager().getAdapter().notifyDataSetChanged();
+        if (getViewPager() != null) {
+            getViewPager().getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -199,7 +202,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.budget_action_menu, menu);
 
         return true;
     }
@@ -209,14 +212,22 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // Display Toasts when pressed button action_settings in top context menu
-        if (id == R.id.action_settings) {
-            Toast.makeText(this, R.string.test_menu_setting_click,
-                    Toast.LENGTH_LONG).show();
-            return true;
+        // Switch activity from NavigationDrawer
+        switch(id) {
+            // Open new Activity when click Summary icon
+            case R.id.menu_action_balance:
+                startActivity(new Intent(this, BalanceActivity.class));
+                break;
+            // Display Toasts when pressed button action_settings in top context menu
+            case R.id.menu_action_settings:
+                Toast.makeText(this, R.string.test_menu_setting_click,
+                        Toast.LENGTH_LONG).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     // Close Database connection when activity destroyed

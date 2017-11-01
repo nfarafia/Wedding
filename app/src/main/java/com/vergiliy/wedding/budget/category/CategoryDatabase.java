@@ -64,7 +64,8 @@ public class CategoryDatabase extends SQLiteHelper {
         category.setName(BaseClass.LANGUAGE_DEFAULT, cursor.getString(1));
         category.setName(BaseClass.LANGUAGE_EN, cursor.getString(2));
         category.setName(BaseClass.LANGUAGE_RU, cursor.getString(3));
-        category.setPosition(Integer.parseInt(cursor.getString(4)));
+        String position = cursor.getString(4);
+        category.setPosition(position == null ? null : Integer.parseInt(position));
         category.setUpdate(BaseHelper.getDateFromString(cursor.getString(5)));
         return category;
     }

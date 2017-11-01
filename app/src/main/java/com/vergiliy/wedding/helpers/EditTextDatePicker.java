@@ -4,15 +4,16 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.payment.PaymentDialogFragment;
 
 import java.text.Format;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class EditTextDatePicker  implements View.OnClickListener,
@@ -24,6 +25,9 @@ public class EditTextDatePicker  implements View.OnClickListener,
     private boolean isOkayClicked = true;
     private DatePickerDialog dialog;
 
+    public static Date date;
+    public static boolean isDateSet = false;
+
     private class DialogOnClickListener implements DialogInterface.OnClickListener {
 
         @Override
@@ -32,6 +36,8 @@ public class EditTextDatePicker  implements View.OnClickListener,
                 // Set new date
                 case DialogInterface.BUTTON_POSITIVE:
                     isOkayClicked = true;
+                    DatePicker datePicker = dialog.getDatePicker();
+                    onDateSet(datePicker, datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
                     break;
                 // Return previous date
                 case DialogInterface.BUTTON_NEGATIVE:
@@ -41,21 +47,25 @@ public class EditTextDatePicker  implements View.OnClickListener,
                 case DialogInterface.BUTTON_NEUTRAL:
                     isOkayClicked = false;
                     dateField.setText(null);
-                    PaymentDialogFragment.date = null;
-                    // dateField.setTag(null);
+                    date = null;
                     break;
             }
             dialog.dismiss();
         }
     }
 
-    public EditTextDatePicker(Context context, EditText dateField) {
+    public EditTextDatePicker(Context context, EditText dateField, Date date) {
         this.context = context;
         this.dateField = dateField;
         calendar = Calendar.getInstance(Locale.getDefault());
         // Set default date
-        if (PaymentDialogFragment.date != null) {
-            calendar.setTime(PaymentDialogFragment.date);
+        if (date != null) {
+            EditTextDatePicker.isDateSet = true;
+            EditTextDatePicker.date = date;
+            calendar.setTime(date);
+        } else {
+            EditTextDatePicker.isDateSet = false;
+            EditTextDatePicker.date = null;
         }
     }
 
@@ -74,7 +84,7 @@ public class EditTextDatePicker  implements View.OnClickListener,
         dateField.setText(format.format(calendar.getTime()));
 
         // Save chosen date
-        PaymentDialogFragment.date = calendar.getTime();
+        date = calendar.getTime();
     }
 
     @Override
