@@ -76,7 +76,7 @@ public class BaseClass {
         this.update = update;
     }
 
-    protected String getDoubleAsString(Double amount) {
+    public String getDoubleAsString(Double amount) {
         String format = amount % 1 == 0 ? "%.0f" : "%.2f";
         return String.format(Locale.getDefault(), format, amount);
     }

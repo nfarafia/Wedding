@@ -24,16 +24,16 @@ public class SettingActivity extends BaseActivity {
             overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
         }
 
-        // Show back button in ActionBar
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Получаем элемент ListView
         ListView listView = (ListView) findViewById(R.id.settingsList);
 
         // Open selected Fragment from SettingFragmentsActivity
         listView.setOnItemClickListener(new onItemClickListener());
+
+        // Show back button in ActionBar
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

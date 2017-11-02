@@ -2,6 +2,7 @@ package com.vergiliy.wedding.budget.balance;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,14 +19,15 @@ import com.vergiliy.wedding.budget.cost.CostDatabase;
 
 import java.util.List;
 
+import static com.vergiliy.wedding.R.string.count;
+
 public class BalanceActivity extends BaseActivity {
 
     private CostDatabase db_cost;
     private CategoryDatabase db_category;
 
-    TextView totalField, usedField, amountField, pendingField, paidField,
-            balanceField, totalCostsField, totalPaymentsField;
-
+    TextView totalField, usedField, amountField, pendingField, paidField, balanceField,
+            costsTotalField, paymentsTotalField, paymentsPendingField, paymentsPaidField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,10 @@ public class BalanceActivity extends BaseActivity {
         pendingField = (TextView) findViewById(R.id.budget_balance_pending);
         paidField = (TextView) findViewById(R.id.budget_balance_paid);
         balanceField = (TextView) findViewById(R.id.budget_balance_balance);
-        totalCostsField = (TextView) findViewById(R.id.budget_balance_total_costs);
-        totalPaymentsField = (TextView) findViewById(R.id.budget_balance_total_payments);
+        costsTotalField = (TextView) findViewById(R.id.budget_balance_total_costs);
+        paymentsTotalField = (TextView) findViewById(R.id.budget_balance_total_payments);
+        paymentsPendingField = (TextView) findViewById(R.id.budget_balance_total_payments_pending);
+        paymentsPaidField = (TextView) findViewById(R.id.budget_balance_total_payments_paid);
 
         // Create default item (all category)
         Category item = new Category(this);
@@ -77,9 +81,6 @@ public class BalanceActivity extends BaseActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-
-        // Get balance
-        updateBalance();
 
         // Show back button in ActionBar
         if (getSupportActionBar() != null) {
@@ -120,16 +121,33 @@ public class BalanceActivity extends BaseActivity {
     }
 
     private void updateBalance(Integer id_category) {
+        Integer color;
+
         Balance balance = db_cost.getBalance(id_category);
+
+        Double total = 5123.45;
+        totalField.setText(balance.getDoubleAsString(total));
+
+        Double used = (balance.getPending() + balance.getPaid()) * 100 / total;
+        if (used < 0) {
+            color = ContextCompat.getColor(this, R.color.colorPrimary);
+        } else if (used > 0){
+            color = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+        } else {
+            color = balanceField.getCurrentTextColor();
+        }
+        usedField.setTextColor(color);
+        usedField.setText(getString(R.string.percent, balance.getDoubleAsString(used)));
 
         amountField.setText(balance.getAmountAsString());
         pendingField.setText(balance.getPendingAsString());
         paidField.setText(balance.getPaidAsString());
-        totalCostsField.setText(balance.getCoatsTotalAsString());
-        totalPaymentsField.setText(balance.getPaymentsTotalAsString());
+        costsTotalField.setText(balance.getCoatsTotalAsString());
+        paymentsTotalField.setText(balance.getPaymentsTotalAsString());
+        paymentsPendingField.setText(balance.getPaymentsPendingAsString());
+        paymentsPaidField.setText(balance.getPaymentsPaidAsString());
 
         Double balanceValue = balance.getBalance();
-        Integer color;
         if (balanceValue < 0) {
             color = ContextCompat.getColor(this, R.color.colorPrimary);
         } else if (balanceValue > 0){
@@ -139,9 +157,5 @@ public class BalanceActivity extends BaseActivity {
         }
         balanceField.setTextColor(color);
         balanceField.setText(balance.getBalanceAsString());
-    }
-
-    private void updateBalance() {
-        updateBalance(null);
     }
 }

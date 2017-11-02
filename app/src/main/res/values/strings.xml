@@ -3,6 +3,7 @@
     <string name="app_description">Wedding App description</string>
 
     <string name="count" translatable="false">%d</string>
+    <string name="percent" translatable="false">%s%%</string>
     <string name="date_time">%1$s in %2$s</string>
     <string name="text">Text</string>
 
@@ -72,8 +73,12 @@
     <string name="budget_balance_paid">Paid</string>
     <string name="budget_balance_balance">Balance</string>
     <string name="budget_balance_summary_title">Summary</string>
-    <string name="budget_balance_costs">Total costs</string>
-    <string name="budget_balance_payments">Total payments</string>
+    <string name="budget_balance_costs">Costs</string>
+    <string name="budget_balance_costs_total">total</string>
+    <string name="budget_balance_payments">Payments</string>
+    <string name="budget_balance_payments_total" translatable="false">@string/budget_balance_costs_total</string>
+    <string name="budget_balance_payments_pending">pending</string>
+    <string name="budget_balance_payments_paid">paid</string>
 
     <string name="cost_card_amount_title">Amount:</string>
     <string name="cost_card_paid_title">Paid:</string>

@@ -24,7 +24,7 @@ public class Balance extends BaseClass {
         this.amount = amount;
     }
 
-    private double getPaid() {
+    double getPaid() {
         return paid;
     }
 
@@ -36,7 +36,7 @@ public class Balance extends BaseClass {
         this.paid = paid;
     }
 
-    private double getPending() {
+    double getPending() {
         return pending;
     }
 
