@@ -1,8 +1,9 @@
 package com.vergiliy.wedding.budget.balance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,10 +17,10 @@ import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
+import com.vergiliy.wedding.setting.SettingActivity;
+import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.List;
-
-import static com.vergiliy.wedding.R.string.count;
 
 public class BalanceActivity extends BaseActivity {
 
@@ -88,17 +89,35 @@ public class BalanceActivity extends BaseActivity {
         }
     }
 
+    // Create top context menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.budget_balance_action_menu, menu);
+
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Return to previous activity; call method onBackPressed
             case android.R.id.home:
                 onBackPressed();
-                return true;
+                break;
+            // Open SettingsWeddingFragment to edit budget
+            case R.id.menu_action_budget:
+                Intent intent = new Intent(getApplicationContext(),
+                        SettingFragmentsActivity.class);
+                intent.putExtra("position", 1); // Transfer id
+                startActivity(intent);
+                break;
             // If another id, call super method
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        return true;
     }
 
     @Override

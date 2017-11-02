@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="settings_list_entries">
-        <item>General</item>
-        <item>Notification</item>
+        <item>Profile</item>
+        <item>Wedding</item>
         <item>Other</item>
     </string-array>
 

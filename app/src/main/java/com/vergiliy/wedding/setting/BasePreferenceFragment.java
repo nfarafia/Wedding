@@ -6,18 +6,26 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.Language;
 
-public class SettingsGeneralFragment extends PreferenceFragment
+public class BasePreferenceFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    protected SharedPreferences sharedPreferences;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings_general);
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        sharedPreferences = getPreferenceScreen().getSharedPreferences();
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -43,46 +51,51 @@ public class SettingsGeneralFragment extends PreferenceFragment
     }
 
     // Update summary text
-    private void updatePreference(Preference preference, String key) {
-        CharSequence text = null;
+    protected void updatePreference(Preference preference, String key) {
+        CharSequence text;
 
         if (preference == null) return;
 
         // Summary for ListPreference
         if (preference instanceof ListPreference) {
             ListPreference list = (ListPreference) preference;
-            list.setSummary(list.getEntry());
+            text = list.getEntry();
         // Summary for DatePreference
         } else if (preference instanceof DatePreference) {
-            SharedPreferences SharedPreferences = getPreferenceManager().getSharedPreferences();
-            text = SharedPreferences.getString(key, null);
+            text = sharedPreferences.getString(key, null);
             if (text != null) {
                 DatePreference date = (DatePreference) preference;
                 text = date.getStringForSummary(text.toString());
             }
         // Summary for TimePreference
         } else if (preference instanceof TimePreference) {
-            SharedPreferences SharedPreferences = getPreferenceManager().getSharedPreferences();
-            text = SharedPreferences.getString(key, null);
+            text = sharedPreferences.getString(key, null);
             if (text != null) {
                 TimePreference time = (TimePreference) preference;
                 text = time.getTimeForSummary(text.toString());
             }
         // Summary for another elements
         } else {
-            SharedPreferences SharedPreferences = getPreferenceManager().getSharedPreferences();
-            text = SharedPreferences.getString(key, null);
+            text = sharedPreferences.getString(key, null);
         }
 
         // If getting text not found, return default summary
         if (TextUtils.isEmpty(text)) {
-            String name = "settings_" + key + "_title";
-            Integer id = getResources()
-                    .getIdentifier(name, "string", getActivity().getPackageName());
-            try {
-                text = getResources().getString(id);
-            } catch (Exception e) {
-                System.out.println("String " + name + " not found; " + e.getMessage());
+            switch (key) {
+                case "language_temp":
+                    break;
+                case "currency":
+                    text = Language.getLocalCurrency().getCurrencyCode();
+                    break;
+                default:
+                    String name = "settings_" + key + "_summary";
+                    Integer id = getResources()
+                            .getIdentifier(name, "string", getActivity().getPackageName());
+                    try {
+                        text = getResources().getString(id);
+                    } catch (Exception e) {
+                        System.out.println("String " + name + " not found; " + e.getMessage());
+                    }
             }
         }
 

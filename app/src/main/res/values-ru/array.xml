@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="settings_list_entries">
-        <item>Основное</item>
-        <item>Уведомления</item>
+        <item>Профиль</item>
+        <item>Свадьба</item>
         <item>Прочее</item>
     </string-array>
 

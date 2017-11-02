@@ -1,15 +1,14 @@
 package com.vergiliy.wedding.setting;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 
 import com.vergiliy.wedding.R;
 
-public class SettingsNotificationFragment extends PreferenceFragment {
+public class SettingsProfileFragment extends BasePreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings_notification);
+        addPreferencesFromResource(R.xml.settings_profile);
     }
 }

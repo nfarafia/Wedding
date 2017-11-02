@@ -24,10 +24,10 @@ public class SettingFragmentsActivity extends BaseActivity {
             // Open called fragment
             switch(position) {
                 case 0:
-                    fragment = new SettingsGeneralFragment();
+                    fragment = new SettingsProfileFragment();
                     break;
                 case 1:
-                    fragment = new SettingsNotificationFragment();
+                    fragment = new SettingsWeddingFragment();
                     break;
                 case 2:
                     fragment = new SettingsOtherFragment();

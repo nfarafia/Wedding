@@ -2,19 +2,15 @@ package com.vergiliy.wedding.setting;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 
 import com.vergiliy.wedding.R;
 
-public class SettingsOtherFragment extends PreferenceFragment
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsOtherFragment extends BasePreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings_other);
-        getPreferenceManager().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -40,5 +36,7 @@ public class SettingsOtherFragment extends PreferenceFragment
                         .commit();
             }
         }
+
+        updatePreference(findPreference(key), key);
     }
 }

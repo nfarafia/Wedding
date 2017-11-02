@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:key="language"
-        android:title="@string/settings_language_title"
-        android:summary="@string/settings_language_summary"
-        android:entries="@array/settings_language_entries"
-        android:entryValues="@array/settings_language_values"
-        android:defaultValue="@string/settings_language_default"
-        android:dialogTitle="@string/settings_language_dialog_title" />
+    <PreferenceCategory android:title="@string/settings_notification" />
+
+    <PreferenceCategory android:title="@string/settings_application">
+        <ListPreference
+            android:key="language"
+            android:title="@string/settings_language_title"
+            android:summary="@string/settings_language_summary"
+            android:entries="@array/settings_language_entries"
+            android:entryValues="@array/settings_language_values"
+            android:defaultValue="@string/settings_language_default"
+            android:dialogTitle="@string/settings_language_dialog_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

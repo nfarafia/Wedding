@@ -12,6 +12,23 @@ import com.vergiliy.wedding.R;
 
 public class SettingActivity extends BaseActivity {
 
+    private class onItemClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            switch (position) {
+                case 0:
+                case 1:
+                case 2:
+                    Intent intent = new Intent(getApplicationContext(),
+                            SettingFragmentsActivity.class);
+                    intent.putExtra("position", position); // Transfer id
+                    startActivity(intent);
+                    break;
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,22 +71,5 @@ public class SettingActivity extends BaseActivity {
         super.onBackPressed();
         // Show previous activity with animation
         overridePendingTransition(R.anim.back_slide_in, R.anim.back_slide_out);
-    }
-
-    private class onItemClickListener implements AdapterView.OnItemClickListener {
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            switch (position) {
-                case 0:
-                case 1:
-                case 2:
-                    Intent intent = new Intent(getApplicationContext(),
-                            SettingFragmentsActivity.class);
-                    intent.putExtra("position", position); // Transfer id
-                    startActivity(intent);
-                    break;
-            }
-        }
     }
 }

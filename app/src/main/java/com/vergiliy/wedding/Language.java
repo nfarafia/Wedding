@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+import java.util.Currency;
 import java.util.Locale;
 
 import static android.content.res.Resources.getSystem;
@@ -14,9 +15,11 @@ import static android.content.res.Resources.getSystem;
 public class Language {
 
     protected Context context;
+    private SharedPreferences preferences;
 
     Language(Context context) {
         this.context = context;
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     // Get current language
@@ -33,7 +36,6 @@ public class Language {
 
     // Get system language
     public Boolean isChangeLanguage(String language) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String preferencesLanguage = preferences.getString("language_temp", null);
 
         // Log.e("Logs", "Language: current = " + language + ", new = " + preferencesLanguage);
@@ -44,7 +46,6 @@ public class Language {
     // Set chosen locale
     // @SuppressWarnings("deprecation")
     public String setLocale() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String preferencesLanguage = preferences.getString("language", "default");
 
         // Set default language (equal system language)
@@ -68,7 +69,7 @@ public class Language {
         Resources resources = context.getResources();
         Configuration configuration = context.getResources().getConfiguration();
 
-        Locale locale = new Locale(preferencesLanguage);
+        Locale locale = new Locale(preferencesLanguage, Locale.getDefault().getCountry());
         Locale.setDefault(locale);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -84,5 +85,13 @@ public class Language {
         }
 
         return preferencesLanguage;
+    }
+
+    public static Currency getLocalCurrency() {
+        try {
+            return Currency.getInstance(Locale.getDefault());
+        } catch (NullPointerException | IllegalArgumentException ex) {
+            return Currency.getInstance(new Locale("en", "US"));
+        }
     }
 }
