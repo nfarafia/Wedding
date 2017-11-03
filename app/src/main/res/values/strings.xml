@@ -67,7 +67,9 @@
 
     <string name="budget_balance_budget_title">Budget</string>
     <string name="budget_balance_total">Total</string>
+    <string name="budget_balance_total_none">Budget is not defined</string>
     <string name="budget_balance_used">Used</string>
+    <string name="budget_balance_used_none">Undefined</string>
     <string name="budget_balance_amount_title">Amount</string>
     <string name="budget_balance_amount">Estimate</string>
     <string name="budget_balance_pending">Pending</string>

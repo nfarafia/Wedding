@@ -88,8 +88,8 @@ public class TasksActivity extends NavigationActivity {
                 .setChecked(true);
 
         // Get wedding date from preferences
-        SharedPreferences SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String text = SharedPreferences.getString("date", null);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String text = preferences.getString("date", null);
 
         // Get Date from string
         if (text != null) {

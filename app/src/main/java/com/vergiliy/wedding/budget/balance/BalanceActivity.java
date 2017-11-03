@@ -17,16 +17,16 @@ import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.category.Category;
 import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
-import com.vergiliy.wedding.setting.SettingActivity;
+import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.List;
-
 public class BalanceActivity extends BaseActivity {
 
     private CostDatabase db_cost;
     private CategoryDatabase db_category;
 
+    Spinner categoryField;
     TextView totalField, usedField, amountField, pendingField, paidField, balanceField,
             costsTotalField, paymentsTotalField, paymentsPendingField, paymentsPaidField;
 
@@ -42,7 +42,7 @@ public class BalanceActivity extends BaseActivity {
         db_category = new CategoryDatabase(this);
 
         // Get fields
-        final Spinner categoryField = (Spinner) findViewById(R.id.budget_balance_category);
+        categoryField = (Spinner) findViewById(R.id.budget_balance_category);
         totalField = (TextView) findViewById(R.id.budget_balance_total);
         usedField = (TextView) findViewById(R.id.budget_balance_used);
         amountField = (TextView) findViewById(R.id.budget_balance_amount);
@@ -89,6 +89,20 @@ public class BalanceActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+
+        // Refresh TabLayout when return from CategoryActivity
+        if (data.getStringExtra("class").equals(SettingFragmentsActivity.class.getSimpleName())) {
+            // Update statistics
+            Category category = (Category) categoryField.getSelectedItem();
+            updateBalance(category.getId());
+        }
+    }
+
     // Create top context menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,10 +121,9 @@ public class BalanceActivity extends BaseActivity {
                 break;
             // Open SettingsWeddingFragment to edit budget
             case R.id.menu_action_budget:
-                Intent intent = new Intent(getApplicationContext(),
-                        SettingFragmentsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SettingFragmentsActivity.class);
                 intent.putExtra("position", 1); // Transfer id
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 break;
             // If another id, call super method
             default:
@@ -141,22 +154,29 @@ public class BalanceActivity extends BaseActivity {
 
     private void updateBalance(Integer id_category) {
         Integer color;
-
         Balance balance = db_cost.getBalance(id_category);
 
-        Double total = 5123.45;
-        totalField.setText(balance.getDoubleAsString(total));
+        final double budget = BaseHelper.parseDouble(preferences.getString("budget", "0"), 0);
 
-        Double used = (balance.getPending() + balance.getPaid()) * 100 / total;
-        if (used < 0) {
-            color = ContextCompat.getColor(this, R.color.colorPrimary);
-        } else if (used > 0){
-            color = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+        if (budget > 0) {
+            totalField.setText(BaseClass.getDoubleAsString(budget));
+            double used = 0.0;
+            if (budget > 0) {
+                used = (balance.getPending() + balance.getPaid()) * 100 / budget;
+            }
+            if (used < 0) {
+                color = ContextCompat.getColor(this, R.color.colorPrimary);
+            } else if (used > 0){
+                color = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+            } else {
+                color = balanceField.getCurrentTextColor();
+            }
+            usedField.setTextColor(color);
+            usedField.setText(getString(R.string.percent, BaseClass.getDoubleAsString(used)));
         } else {
-            color = balanceField.getCurrentTextColor();
+            totalField.setText(getString(R.string.budget_balance_total_none));
+            usedField.setText(getString(R.string.budget_balance_used_none));
         }
-        usedField.setTextColor(color);
-        usedField.setText(getString(R.string.percent, balance.getDoubleAsString(used)));
 
         amountField.setText(balance.getAmountAsString());
         pendingField.setText(balance.getPendingAsString());

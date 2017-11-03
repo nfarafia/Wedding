@@ -1,5 +1,6 @@
 package com.vergiliy.wedding.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
@@ -52,6 +53,14 @@ public class SettingFragmentsActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(list[position]);
         }
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("class", SettingFragmentsActivity.class.getSimpleName());
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 
     @Override

@@ -197,7 +197,6 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         }
     }
 
-
     // Create top context menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

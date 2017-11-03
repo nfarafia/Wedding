@@ -76,7 +76,8 @@ public class BaseClass {
         this.update = update;
     }
 
-    public String getDoubleAsString(Double amount) {
+    public static String getDoubleAsString(Double amount) {
+        amount = amount == null ? 0 : amount;
         String format = amount % 1 == 0 ? "%.0f" : "%.2f";
         return String.format(Locale.getDefault(), format, amount);
     }
@@ -123,8 +124,8 @@ public class BaseClass {
                 language = ((BaseActivity) context).getLanguage();
             // Get current language, if main class is not BaseActivity
             } else {
-                Language languageClass = new Language(context);
-                language = languageClass.getLanguage();
+                BaseLocale locale = new BaseLocale(context);
+                language = locale.getLanguage();
             }
 
             String localeValue = map.get(language);

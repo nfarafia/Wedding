@@ -5,7 +5,10 @@
         <EditTextPreference
             android:key="budget"
             android:title="@string/settings_budget_title"
-            android:summary="@string/settings_budget_summary" />
+            android:summary="@string/settings_budget_summary"
+            android:inputType="numberDecimal"
+            android:imeOptions="flagNoExtractUi"
+            android:digits="0123456789.," />
         <ListPreference
             android:key="currency"
             android:title="@string/settings_currency_title"

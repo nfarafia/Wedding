@@ -2,11 +2,16 @@ package com.vergiliy.wedding.setting;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.text.InputFilter;
+import android.util.Log;
 
-import com.vergiliy.wedding.Language;
+import com.vergiliy.wedding.BaseLocale;
 import com.vergiliy.wedding.R;
+import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
@@ -24,7 +29,16 @@ public class SettingsWeddingFragment extends BasePreferenceFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Get fields
         ListPreference currencyField = (ListPreference) findPreference("currency");
+        EditTextPreference budgetField = (EditTextPreference) findPreference("budget");
+
+        // Set filter to budgetField (20 digits before zero and 2 digits after zero)
+        DecimalFormatSymbols decimal = DecimalFormatSymbols.getInstance(Locale.getDefault());
+        budgetField.getEditText().setFilters(new InputFilter[] {new DecimalDigitsInputFilter()});
+
+        // Set data to currencyField
         setListPreferenceData(currencyField);
     }
 
@@ -52,7 +66,8 @@ public class SettingsWeddingFragment extends BasePreferenceFragment {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Locale " + locale + " not found; " + e.getMessage());
+                Log.e("SettingsWeddingFragment",
+                        "Locale \"" + locale + "\" not found; " + e.getMessage());
             }
         }
 
@@ -65,7 +80,7 @@ public class SettingsWeddingFragment extends BasePreferenceFragment {
         listPreference.setEntryValues(values.toArray(new CharSequence[values.size()]));
 
         String text = sharedPreferences.getString("currency", null);
-        Currency currency = Language.getLocalCurrency();
+        Currency currency = BaseLocale.getLocalCurrency();
         if (text == null && currency != null) {
             listPreference.setValueIndex(values.indexOf(currency.getCurrencyCode()));
         }

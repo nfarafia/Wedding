@@ -8,8 +8,11 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.vergiliy.wedding.Language;
+import com.vergiliy.wedding.BaseClass;
+import com.vergiliy.wedding.BaseLocale;
+import com.vergiliy.wedding.helpers.BaseHelper;
 
 public class BasePreferenceFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -46,7 +49,16 @@ public class BasePreferenceFragment extends PreferenceFragment
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        if (key.equals("budget")) {
+            double budget = BaseHelper.parseDouble(preferences.getString(key, "0"), 0);
+            if (budget == 0) {
+                preferences.edit().remove(key).apply();
+            } else {
+                preferences.edit().putString(key, BaseClass.getDoubleAsString(budget)).apply();
+            }
+        }
+
         updatePreference(findPreference(key), key);
     }
 
@@ -85,16 +97,19 @@ public class BasePreferenceFragment extends PreferenceFragment
                 case "language_temp":
                     break;
                 case "currency":
-                    text = Language.getLocalCurrency().getCurrencyCode();
+                    text = BaseLocale.getLocalCurrency().getCurrencyCode();
                     break;
                 default:
-                    String name = "settings_" + key + "_summary";
-                    Integer id = getResources()
-                            .getIdentifier(name, "string", getActivity().getPackageName());
-                    try {
-                        text = getResources().getString(id);
-                    } catch (Exception e) {
-                        System.out.println("String " + name + " not found; " + e.getMessage());
+                    if (isAdded()) {
+                        String name = "settings_" + key + "_summary";
+                        Integer id = getResources()
+                                .getIdentifier(name, "string", getActivity().getPackageName());
+                        try {
+                            text = getResources().getString(id);
+                        } catch (Exception e) {
+                            Log.e("BasePreferenceFragment", "String \"" + name + "\"  not found; " + e.getMessage());
+
+                        }
                     }
             }
         }

@@ -15,17 +15,12 @@ import android.util.Log;
 import com.vergiliy.wedding.budget.BudgetActivity;
 import com.vergiliy.wedding.budget.payment.Payment;
 import com.vergiliy.wedding.budget.payment.PaymentDatabase;
-import com.vergiliy.wedding.main.SplashActivity;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
-import static android.R.attr.id;
-import static android.R.attr.x;
-import static android.R.id.list;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.vergiliy.wedding.R.string.count;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -38,9 +33,9 @@ public class NotificationReceiver extends BroadcastReceiver {
         Log.e("AlarmNotification", "NotificationReceiver -> onReceive");
 
         // Set chosen locale
-        Language languageClass = new Language(context);
-        if (languageClass.isChangeLanguage(languageClass.getLanguage())) {
-            languageClass.setLocale(); // Set chosen locale
+        BaseLocale locale = new BaseLocale(context);
+        if (locale.isChangeLanguage(locale.getLanguage())) {
+            locale.setLocale(); // Set chosen locale
         }
 
         Calendar calendar = Calendar.getInstance();

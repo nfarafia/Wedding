@@ -5,15 +5,18 @@
         <EditTextPreference
             android:key="bride"
             android:title="@string/settings_bride_title"
-            android:summary="@string/settings_bride_summary" />
+            android:summary="@string/settings_bride_summary"
+            android:inputType="text" />
         <EditTextPreference
             android:key="groom"
             android:title="@string/settings_groom_title"
-            android:summary="@string/settings_groom_summary" />
+            android:summary="@string/settings_groom_summary"
+            android:inputType="text" />
         <EditTextPreference
             android:key="couple"
             android:title="@string/settings_couple_title"
-            android:summary="@string/settings_couple_summary" />
+            android:summary="@string/settings_couple_summary"
+            android:inputType="text" />
     </PreferenceCategory>
 
 </PreferenceScreen>

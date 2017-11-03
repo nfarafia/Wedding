@@ -61,8 +61,8 @@ public class SplashActivity extends BaseActivity {
         super.onResume();
 
         // Replace current language
-        if (getLanguageClass().isChangeLanguage(getLanguage())) {
-            getLanguageClass().setLocale(); // Set chosen locale
+        if (getLocaleClass().isChangeLanguage(getLanguage())) {
+            getLocaleClass().setLocale(); // Set chosen locale
         }
 
         setContentView(R.layout.activity_splash);

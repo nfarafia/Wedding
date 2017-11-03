@@ -34,12 +34,13 @@ public class BaseHelper {
     }
 
     // Parse String to Double with default value
-    public static double parseDouble(String string, int defaultValue ) {
+    public static double parseDouble(String string, int defaultValue) {
         string = string.replace(',','.'); // Replace , with .
         try {
             return Double.parseDouble(string);
-        }
-        catch (NumberFormatException e ) {
+        } catch (NumberFormatException e) {
+            Log.e("NumberFormatException",
+                    "BaseHelper -> parseDouble: Error parse double from string \"" + string + "\"; " + e.getMessage());
             return defaultValue;
         }
     }

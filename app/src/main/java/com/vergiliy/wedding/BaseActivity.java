@@ -1,33 +1,41 @@
 package com.vergiliy.wedding;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private Language languageClass = new Language(this);
+    private BaseLocale locale;
     private String language = null;
+
+    protected SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
-        language = languageClass.getLanguage(); // Save current language
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        locale = new BaseLocale(this);
+        language = locale.getLanguage(); // Save current language
 
         // Get language before flip screen
         if (savedInstanceState != null) {
             String language_temp = savedInstanceState.getString("language", null);
             // Restore current language
             if (language_temp != null && !language.equals(language_temp)) {
-                language = languageClass.setLocale(); // Set chosen locale (and save return value)
+                language = locale.setLocale(); // Set chosen locale (and save return value)
             }
         // Checking language if it start screen
         } else if (bundle != null && bundle.getBoolean("start")
-                && getLanguageClass().isChangeLanguage(language)) {
-            getLanguageClass().setLocale(); // Set chosen locale
+                && locale.isChangeLanguage(language)) {
+            locale.setLocale(); // Set chosen locale
         }
     }
 
@@ -47,7 +55,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onRestart() {
         super.onRestart();
-        if (languageClass.isChangeLanguage(language)) {
+        if (locale.isChangeLanguage(language)) {
             Intent intent = getIntent();
             overridePendingTransition(0,0);
             intent.putExtra("animation", false);
@@ -63,8 +71,8 @@ public class BaseActivity extends AppCompatActivity {
         outState.putString("language", language);
     }
 
-    public Language getLanguageClass() {
-        return languageClass;
+    public BaseLocale getLocaleClass() {
+        return locale;
     }
 
     public String getLanguage() {

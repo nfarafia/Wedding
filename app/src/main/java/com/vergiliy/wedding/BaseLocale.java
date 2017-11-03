@@ -12,12 +12,12 @@ import java.util.Locale;
 
 import static android.content.res.Resources.getSystem;
 
-public class Language {
+public class BaseLocale {
 
     protected Context context;
     private SharedPreferences preferences;
 
-    Language(Context context) {
+    BaseLocale(Context context) {
         this.context = context;
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
