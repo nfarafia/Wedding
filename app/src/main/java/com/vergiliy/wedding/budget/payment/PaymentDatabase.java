@@ -87,7 +87,7 @@ public class PaymentDatabase extends SQLiteHelper {
         String sql = String.format(Locale.getDefault(),
                 "SELECT * FROM %s WHERE active = 1 AND complete = 0 " +
                         "AND (notification IS NULL || DATE(notification) < DATE(DATETIME('now'))) " +
-                        "AND DATE(date) = DATE(DATETIME('now'))",
+                        "AND DATE(date) <= DATE(DATETIME('now'))",
                 TABLE);
 
         List<Payment> all = new ArrayList<>();

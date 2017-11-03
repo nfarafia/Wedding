@@ -2,6 +2,7 @@ package com.vergiliy.wedding.setting;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -64,7 +65,7 @@ public class BasePreferenceFragment extends PreferenceFragment
 
     // Update summary text
     protected void updatePreference(Preference preference, String key) {
-        CharSequence text;
+        CharSequence text = null;
 
         if (preference == null) return;
 
@@ -87,7 +88,7 @@ public class BasePreferenceFragment extends PreferenceFragment
                 text = time.getTimeForSummary(text.toString());
             }
         // Summary for another elements
-        } else {
+        } else if (!(preference instanceof CheckBoxPreference)) {
             text = sharedPreferences.getString(key, null);
         }
 
@@ -114,6 +115,8 @@ public class BasePreferenceFragment extends PreferenceFragment
             }
         }
 
-        preference.setSummary(text);
+        if (!TextUtils.isEmpty(text)) {
+            preference.setSummary(text);
+        }
     }
 }

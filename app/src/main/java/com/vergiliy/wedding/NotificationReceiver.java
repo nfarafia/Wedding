@@ -6,8 +6,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,7 +45,13 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         // Check Notification between 9:00 and 21:00
         if (hour >= 9 && hour <= 21) {
-            sendPaymentNotification(); // Send payment notification
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+            Boolean notificationPayment = preferences.getBoolean("notification_payment", true);
+            Log.e("notificationPayment", notificationPayment + "");
+            if (notificationPayment) {
+                sendPaymentNotification(); // Send payment notification
+            }
         }
     }
 

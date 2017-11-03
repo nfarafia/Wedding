@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/settings_notification" />
+    <PreferenceCategory android:title="@string/settings_notification">
+        <CheckBoxPreference
+            android:key="notification_payment"
+            android:title="@string/settings_notification_payment_title"
+            android:defaultValue="true" />
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_application">
         <ListPreference

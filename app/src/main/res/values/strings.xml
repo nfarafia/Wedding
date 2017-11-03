@@ -163,6 +163,8 @@
     <string name="settings_currency_summary">Choose currency</string>
 
     <string name="settings_notification">Notification</string>
+    <string name="settings_notification_payment_title">Payments</string>
+    <string name="settings_notification_payment_summary">Notification about pending payments</string>
 
     <string name="settings_application">Application</string>
     <string name="settings_language_title">Language</string>
