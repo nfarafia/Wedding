@@ -22,13 +22,14 @@ import com.vergiliy.wedding.budget.cost.CostDialogListener;
 
 import java.util.List;
 
+import static com.vergiliy.wedding.R.string.currency;
+
 public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ViewHolder> {
 
     private BudgetActivity context;
     private List<Cost> list;
 
     public static ActionMode actionMode = null;
-    private int position;
 
     // Provide a reference to the views for each data item
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,6 +83,7 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
             super(itemView);
 
             context = (BudgetActivity) itemView.getContext();
+
             item = itemView.findViewById(R.id.cost_card_item);
             name = itemView.findViewById(R.id.cost_card_name);
             amount = itemView.findViewById(R.id.cost_card_amount);
@@ -98,7 +100,6 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
                     if (actionMode != null) {
                         return false;
                     }
-                    position = getAdapterPosition(); // Save current position to Tag
                     actionMode = context.startSupportActionMode(ActionModeCallback);
                     item.setCardBackgroundColor(Color.LTGRAY);
 
@@ -166,7 +167,8 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Cost cost = list.get(position);
         holder.name.setText(cost.getLocaleName());
-        holder.amount.setText(cost.getAmountAsString());
+        holder.amount.setText(context.getString(currency, cost.getAmountAsString(),
+                context.getLocaleClass().getCurrency()));
         holder.pending.setText(cost.getPendingAsString());
         holder.paid.setText(cost.getPaidAsString());
         holder.edit.setOnClickListener(new CostDialogListener(cost));

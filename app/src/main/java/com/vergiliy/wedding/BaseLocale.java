@@ -94,4 +94,11 @@ public class BaseLocale {
             return Currency.getInstance(new Locale("en", "US"));
         }
     }
+
+    // Get symbol from current currency
+    public String getCurrency() {
+        String string = preferences.getString("currency", "");
+        Currency currency = string.isEmpty() ? getLocalCurrency() : Currency.getInstance(string);
+        return currency.getSymbol();
+    }
 }

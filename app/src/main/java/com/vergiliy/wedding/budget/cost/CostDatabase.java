@@ -5,11 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vergiliy.wedding.BaseClass;
 import com.vergiliy.wedding.budget.balance.Balance;
 import com.vergiliy.wedding.budget.payment.PaymentDatabase;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.SQLiteHelper;
-import com.vergiliy.wedding.BaseClass;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,10 @@ import static com.vergiliy.wedding.helpers.BaseHelper.readFromAssets;
 // SQLite helper (main class for access to db_cost, db_payment etc.)
 public abstract class SQLiteHelper extends SQLiteOpenHelper {
 
-    private	static final int VERSION =	1;
+    private static final int TYPE_All = 0;
+    public static final int TYPE_BUDGET = 1;
+
+    private	static final int VERSION = 1;
     private	static final String	DATABASE_NAME = "wedding";
     protected static final String COLUMN_ID = "_id";
     private static final String COLUMN_UPDATE = "`update`";
@@ -31,21 +34,15 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
     // Create table from appropriate file when it does not exist
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Get SQL query from file
-        String sql = readFromAssets(context, "database_create.sql");
-
-        // Execution multiple SQL queries
-        execMultipleSQL(db, sql);
+        // Create tables for budget and fill them data
+        restore(db, TYPE_All);
     }
 
     // Update table when version change
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Get SQL query from file
-        String sql = readFromAssets(context, "database_delete.sql");
-
-        // Execution multiple SQL queries
-        execMultipleSQL(db, sql);
+        // Delete tables if exist
+        execMultipleSQL(db, readFromAssets(context, "database_delete.sql"));
 
         // Recreate tablets
         onCreate(db);
@@ -62,7 +59,7 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
     public void update(BaseClass item){
         item.setUpdate(BaseHelper.getCurrentDate()); // Set current date
         SQLiteDatabase db = getWritableDatabase();
-        db.update(getTable(), getValues(item), COLUMN_ID	+ "	= ?",
+        db.update(getTable(), getValues(item), COLUMN_ID + " = ?",
                 new String[] {String.valueOf(item.getId())});
     }
 
@@ -71,8 +68,17 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
         item.setUpdate(BaseHelper.getCurrentDate()); // Set current date
         item.setActive(false); // Mark as deleted
         SQLiteDatabase db = getWritableDatabase();
-        db.update(getTable(), getValues(item), COLUMN_ID	+ "	= ?",
+        db.update(getTable(), getValues(item), COLUMN_ID + " = ?",
                 new String[] {String.valueOf(item.getId())});
+    }
+
+    // Delete all field
+    public void deleteAll() {
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_UPDATE, BaseHelper.getStringFromDate(BaseHelper.getCurrentDate()));
+        values.put(COLUMN_ACTIVE, false);
+        db.update(getTable(), values, COLUMN_ACTIVE + "	> 0", null);
     }
 
     protected abstract ContentValues getValues(BaseClass item);
@@ -90,7 +96,6 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
                 String[] queries = sql.split(";");
                 for (String query : queries) {
                     if (!TextUtils.isEmpty(query)) {
-                        // Log.e("Query", query);
                         db.execSQL(query);
                     }
                 }
@@ -98,5 +103,18 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("Exception", "CostsSectionsDatabase -> execMultipleSQL: " + e.getMessage());
         }
+    }
+
+    // Restore budget tables from onCreate
+    private void restore(SQLiteDatabase db, int type) {
+        if (type == TYPE_All || type == TYPE_BUDGET) {
+            execMultipleSQL(db, readFromAssets(context, "database_create_budget.sql"));
+        }
+    }
+
+    // Restore budget tables
+    public void restore(int type) {
+        SQLiteDatabase db = getWritableDatabase();
+        restore(db, type);
     }
 }

@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vergiliy.wedding.helpers.BaseHelper;
-import com.vergiliy.wedding.helpers.SQLiteHelper;
 import com.vergiliy.wedding.BaseClass;
+import com.vergiliy.wedding.helpers.SQLiteHelper;
 
 import java.util.ArrayList;
 import java.util.List;

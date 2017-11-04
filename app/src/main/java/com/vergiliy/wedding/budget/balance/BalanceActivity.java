@@ -21,6 +21,9 @@ import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.List;
+
+import static com.vergiliy.wedding.R.string.currency;
+
 public class BalanceActivity extends BaseActivity {
 
     private CostDatabase db_cost;
@@ -155,18 +158,20 @@ public class BalanceActivity extends BaseActivity {
     private void updateBalance(Integer id_category) {
         Integer color;
         Balance balance = db_cost.getBalance(id_category);
+        String currency = getLocaleClass().getCurrency();
 
         final double budget = BaseHelper.parseDouble(preferences.getString("budget", "0"), 0);
 
         if (budget > 0) {
-            totalField.setText(BaseClass.getDoubleAsString(budget));
+            totalField.setText(getString(R.string.currency,
+                    BaseClass.getDoubleAsString(budget), currency));
             double used = 0.0;
             if (budget > 0) {
                 used = (balance.getPending() + balance.getPaid()) * 100 / budget;
             }
-            if (used < 0) {
+            if (used > 100) {
                 color = ContextCompat.getColor(this, R.color.colorPrimary);
-            } else if (used > 0){
+            } else if (used > 0 && used < 100){
                 color = ContextCompat.getColor(this, R.color.colorPrimaryDark);
             } else {
                 color = balanceField.getCurrentTextColor();
@@ -178,9 +183,9 @@ public class BalanceActivity extends BaseActivity {
             usedField.setText(getString(R.string.budget_balance_used_none));
         }
 
-        amountField.setText(balance.getAmountAsString());
-        pendingField.setText(balance.getPendingAsString());
-        paidField.setText(balance.getPaidAsString());
+        amountField.setText(getString(R.string.currency, balance.getAmountAsString(), currency));
+        pendingField.setText(getString(R.string.currency, balance.getPendingAsString(), currency));
+        paidField.setText(getString(R.string.currency, balance.getPaidAsString(), currency));
         costsTotalField.setText(balance.getCoatsTotalAsString());
         paymentsTotalField.setText(balance.getPaymentsTotalAsString());
         paymentsPendingField.setText(balance.getPaymentsPendingAsString());
@@ -195,6 +200,6 @@ public class BalanceActivity extends BaseActivity {
             color = balanceField.getCurrentTextColor();
         }
         balanceField.setTextColor(color);
-        balanceField.setText(balance.getBalanceAsString());
+        balanceField.setText(getString(R.string.currency, balance.getBalanceAsString(), currency));
     }
 }

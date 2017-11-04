@@ -48,7 +48,6 @@ public class NotificationReceiver extends BroadcastReceiver {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
             Boolean notificationPayment = preferences.getBoolean("notification_payment", true);
-            Log.e("notificationPayment", notificationPayment + "");
             if (notificationPayment) {
                 sendPaymentNotification(); // Send payment notification
             }

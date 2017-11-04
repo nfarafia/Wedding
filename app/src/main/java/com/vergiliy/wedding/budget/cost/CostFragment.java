@@ -19,6 +19,7 @@ public class CostFragment extends Fragment {
                              Bundle savedInstanceState) {
         CostActivity activity = (CostActivity) getActivity();
         Cost cost = activity.getCost();
+        String currency = activity.getLocaleClass().getCurrency();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cost, container, false);
@@ -40,9 +41,9 @@ public class CostFragment extends Fragment {
                 category.getLocaleName() : getString(R.string.cost_view_category_null);
         categoryField.setText(categoryName);
         noteField.setText(cost.getLocaleNote(R.string.cost_view_note_null));
-        amountField.setText(cost.getAmountAsString());
-        pendingField.setText(cost.getPendingAsString());
-        paidField.setText(cost.getPaidAsString());
+        amountField.setText(getString(R.string.currency, cost.getAmountAsString(), currency));
+        pendingField.setText(getString(R.string.currency, cost.getPendingAsString(), currency));
+        paidField.setText(getString(R.string.currency, cost.getPaidAsString(), currency));
 
         Double balance = cost.getBalance();
         Integer color;
@@ -54,7 +55,7 @@ public class CostFragment extends Fragment {
             color = balanceField.getCurrentTextColor();
         }
         balanceField.setTextColor(color);
-        balanceField.setText(cost.getBalanceAsString());
+        balanceField.setText(getString(R.string.currency, cost.getBalanceAsString(), currency));
 
         updateField.setText(cost.getUpdateAsLocale(R.string.cost_view_update_null));
 

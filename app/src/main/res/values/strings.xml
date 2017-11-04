@@ -4,6 +4,7 @@
 
     <string name="count" translatable="false">%d</string>
     <string name="percent" translatable="false">%s%%</string>
+    <string name="currency">%1$s %2$s</string>
     <string name="date_time">%1$s in %2$s</string>
     <string name="text">Text</string>
 
@@ -12,6 +13,7 @@
 
     <string name="dialog_title">Title</string>
     <string name="dialog_alert">Alert</string>
+    <string name="dialog_attention">Attention</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_cancel">Task cancelled</string>
@@ -20,6 +22,7 @@
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_edit">Edit</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_confirm">Confirm</string>
     <string name="dialog_button_clear">Clear</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -42,11 +45,10 @@
     <string name="activity_feedback_title">Feedback</string>
     <string name="menu_info_rate">Rate this app</string>
 
-    <string name="menu_setting_setting">Settings</string>
-
-    <string name="menu_action_budget">Budget</string>
+    <string name="menu_action_budget">Set budget</string>
     <string name="menu_action_balance">Balance</string>
-    <string name="menu_action_settings">Settings</string>
+    <string name="menu_action_restore">Restore</string>
+    <string name="menu_action_restore_message">This will replace all costs with default data! Expenses including those you added manually will be permanently removed</string>
     <string name="menu_action_edit">Edit</string>
     <string name="menu_action_delete">Delete</string>
 

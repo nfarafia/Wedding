@@ -19,6 +19,8 @@ import com.vergiliy.wedding.budget.cost.CostActivity;
 
 import java.util.List;
 
+import static com.vergiliy.wedding.R.string.currency;
+
 public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecyclerAdapter.ViewHolder> {
 
     private CostActivity context;
@@ -204,7 +206,8 @@ public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecycler
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Payment payment = list.get(position);
         holder.name.setText(payment.getLocaleName());
-        holder.amount.setText(payment.getAmountAsString());
+        holder.amount.setText(context.getString(R.string.currency, payment.getAmountAsString(),
+                context.getLocaleClass().getCurrency()));
         holder.date.setText(payment.getDateAsLocaleWithComplete(R.string.payment_card_date_null));
 
         // Creating a strikethrough text in TextView

@@ -48,6 +48,7 @@ public class CategoryDialogFragment extends BaseDialogFragment {
 
                 if (category != null) {
                     item.setId(category.getId());
+                    item.setPosition(category.getPosition());
                     context.getDbCategory().update(item);
                 } else {
                     context.getDbCategory().add(item);

@@ -66,8 +66,7 @@ public class SettingsWeddingFragment extends BasePreferenceFragment {
                     }
                 }
             } catch (Exception e) {
-                Log.e("SettingsWeddingFragment",
-                        "Locale \"" + locale + "\" not found; " + e.getMessage());
+                Log.e("SettingsWeddingFragment", "Locale \"" + locale + "\" not found; " + e.getMessage());
             }
         }
 

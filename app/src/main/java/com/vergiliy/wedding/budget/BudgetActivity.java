@@ -1,5 +1,6 @@
 package com.vergiliy.wedding.budget;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -28,17 +30,21 @@ import com.vergiliy.wedding.budget.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
 import com.vergiliy.wedding.budget.cost.CostDialogListener;
 import com.vergiliy.wedding.budget.balance.BalanceActivity;
+import com.vergiliy.wedding.budget.payment.PaymentDatabase;
+import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.helpers.SQLiteHelper.TYPE_BUDGET;
 
 public class BudgetActivity extends NavigationActivity implements BudgetInterface {
 
     protected static ViewPager viewPager;
 
     private CostDatabase db_cost;
+    private PaymentDatabase db_payment;
     protected CategoryDatabase db_category;
 
     private List<Category> categories = new ArrayList<>();
@@ -99,8 +105,9 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         // Replace FrameLayout on our activity layout
         getLayoutInflater().inflate(R.layout.contant_budget, frameLayout);
 
-        // Create new CostDatabase and CategoryDatabase
+        // Create new CostDatabase, PaymentDatabase and CategoryDatabase
         db_cost = new CostDatabase(this);
+        db_payment = new PaymentDatabase(this);
         db_category = new CategoryDatabase(this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -217,10 +224,40 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
             case R.id.menu_action_balance:
                 startActivity(new Intent(this, BalanceActivity.class));
                 break;
-            // Display Toasts when pressed button action_settings in top context menu
-            case R.id.menu_action_settings:
-                Toast.makeText(this, R.string.test_menu_setting_click,
-                        Toast.LENGTH_LONG).show();
+            // Open SettingsWeddingFragment to edit budget
+            case R.id.menu_action_budget:
+                Intent intent = new Intent(getApplicationContext(), SettingFragmentsActivity.class);
+                intent.putExtra("position", 1); // Transfer id
+                startActivityForResult(intent, 1);
+                break;
+            // Restore costs
+            case R.id.menu_action_restore:
+                // Show message
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.dialog_attention)
+                        .setMessage(R.string.menu_action_restore_message)
+                        .setNegativeButton(R.string.dialog_button_cancel, null)
+                        .setPositiveButton(R.string.dialog_button_confirm,
+                                new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        // Delete all dara in budget tables
+                                        db_cost.deleteAll();
+                                        db_payment.deleteAll();
+                                        db_category.deleteAll();
+
+                                        // Restore budget tables
+                                        db_cost.restore(TYPE_BUDGET);
+
+                                        // Update categories from database
+                                        updateCategories();
+
+                                        // Update current fragment
+                                        getViewPager().getAdapter().notifyDataSetChanged();
+                                    }
+                                })
+                        .show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

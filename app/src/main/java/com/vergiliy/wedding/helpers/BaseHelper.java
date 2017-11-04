@@ -40,7 +40,8 @@ public class BaseHelper {
             return Double.parseDouble(string);
         } catch (NumberFormatException e) {
             Log.e("NumberFormatException",
-                    "BaseHelper -> parseDouble: Error parse double from string \"" + string + "\"; " + e.getMessage());
+                    "BaseHelper -> parseDouble: Error parse double from string \""
+                            + string + "\"; " + e.getMessage());
             return defaultValue;
         }
     }

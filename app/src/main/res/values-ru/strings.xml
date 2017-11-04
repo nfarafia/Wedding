@@ -6,9 +6,6 @@
 
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
-
-    <string name="menu_action_settings">Настройки</string>
-
     <string name="activity_main_title">Главная</string>
     <string name="activity_countdown_title">Счетчик</string>
     <string name="activity_tasks_title">Задачи</string>
