@@ -21,7 +21,7 @@ import java.util.Locale;
 public class BaseHelper {
 
     private static final SimpleDateFormat CURRENT_DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd kk:mm", Locale.getDefault());
+            new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.getDefault());
 
     // Parse String to Integer with default value
     public static Integer parseInteger(String string, int defaultValue ) {
