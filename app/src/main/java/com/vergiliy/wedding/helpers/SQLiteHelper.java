@@ -9,13 +9,11 @@ import android.util.Log;
 
 import com.vergiliy.wedding.BaseClass;
 
+import static android.R.attr.type;
 import static com.vergiliy.wedding.helpers.BaseHelper.readFromAssets;
 
 // SQLite helper (main class for access to db_cost, db_payment etc.)
 public abstract class SQLiteHelper extends SQLiteOpenHelper {
-
-    private static final int TYPE_All = 0;
-    public static final int TYPE_BUDGET = 1;
 
     private	static final int VERSION = 1;
     private	static final String	DATABASE_NAME = "wedding";
@@ -35,7 +33,7 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create tables for budget and fill them data
-        restore(db, TYPE_All);
+        restore(db);
     }
 
     // Update table when version change
@@ -106,15 +104,13 @@ public abstract class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Restore budget tables from onCreate
-    private void restore(SQLiteDatabase db, int type) {
-        if (type == TYPE_All || type == TYPE_BUDGET) {
-            execMultipleSQL(db, readFromAssets(context, "database_create_budget.sql"));
-        }
+    private void restore(SQLiteDatabase db) {
+        execMultipleSQL(db, readFromAssets(context, "database_create.sql"));
     }
 
     // Restore budget tables
-    public void restore(int type) {
+    public void restore() {
         SQLiteDatabase db = getWritableDatabase();
-        restore(db, type);
+        restore(db);
     }
 }

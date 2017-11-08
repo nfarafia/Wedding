@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.category;
+package com.vergiliy.wedding.category;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,8 +20,7 @@ import com.vergiliy.wedding.R;
 
 import java.util.List;
 
-class CategoryRecyclerAdapter
-        extends RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder> {
+class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder> {
 
     private CategoryActivity context;
     private List<Category> list;

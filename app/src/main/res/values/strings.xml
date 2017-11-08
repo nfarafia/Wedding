@@ -32,7 +32,7 @@
     <string name="activity_countdown_title">Countdown</string>
     <string name="activity_tasks_title">Tasks</string>
     <string name="activity_budget_title">Budget</string>
-    <string name="activity_budget_category_title">Category</string>
+    <string name="activity_category_title">Category</string>
     <string name="activity_budget_balance_title">Summary</string>
     <string name="activity_cost_title">Cost</string>
     <string name="activity_guests_title">Guests</string>
@@ -48,7 +48,7 @@
     <string name="menu_action_budget">Set budget</string>
     <string name="menu_action_balance">Balance</string>
     <string name="menu_action_restore">Restore</string>
-    <string name="menu_action_restore_message">This will replace all costs with default data! Expenses including those you added manually will be permanently removed</string>
+    <string name="menu_action_restore_message">This will replace all data with default data! Expenses including those you added manually will be permanently removed</string>
     <string name="menu_action_edit">Edit</string>
     <string name="menu_action_delete">Delete</string>
 
@@ -133,7 +133,7 @@
     <string name="categories_list_none">There is no categories. Start adding now</string>
 
     <string name="category_card_reorder">Reordering</string>
-    <string name="category_delete_alert_one">There is a cost in this category. Before deleting move it or delete</string>
+    <string name="category_delete_alert_one">There is a cost or task in this category. Before deleting move it or delete</string>
     <string name="category_delete_alert_several">There are %d costs in this category. Before deleting move them or delete</string>
 
     <string name="category_dialog_title_add">Add new category</string>

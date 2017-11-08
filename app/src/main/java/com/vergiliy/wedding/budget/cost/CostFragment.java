@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.vergiliy.wedding.BaseClass;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.category.Category;
+import com.vergiliy.wedding.category.Category;
 
 public class CostFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.category;
+package com.vergiliy.wedding.category;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.category;
+package com.vergiliy.wedding.category;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class CategoryDatabase extends SQLiteHelper {
 
-    private	static final String TABLE = "budget_categories";
+    private	static final String TABLE = "categories";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_POSITION = "position";
 

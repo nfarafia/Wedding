@@ -24,9 +24,9 @@ import android.widget.Toast;
 
 import com.vergiliy.wedding.NavigationActivity;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.category.Category;
-import com.vergiliy.wedding.budget.category.CategoryActivity;
-import com.vergiliy.wedding.budget.category.CategoryDatabase;
+import com.vergiliy.wedding.category.Category;
+import com.vergiliy.wedding.category.CategoryActivity;
+import com.vergiliy.wedding.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
 import com.vergiliy.wedding.budget.cost.CostDialogListener;
 import com.vergiliy.wedding.budget.balance.BalanceActivity;
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
-import static com.vergiliy.wedding.helpers.SQLiteHelper.TYPE_BUDGET;
 
 public class BudgetActivity extends NavigationActivity implements BudgetInterface {
 
@@ -248,7 +247,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
                                         db_category.deleteAll();
 
                                         // Restore budget tables
-                                        db_cost.restore(TYPE_BUDGET);
+                                        db_cost.restore();
 
                                         // Update categories from database
                                         updateCategories();

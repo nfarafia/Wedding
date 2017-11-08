@@ -75,7 +75,7 @@
         <activity
             android:name=".budget.cost.CostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".budget.category.CategoryActivity" />
+        <activity android:name=".category.CategoryActivity" />
         <activity android:name=".budget.balance.BalanceActivity" />
     </application>
 

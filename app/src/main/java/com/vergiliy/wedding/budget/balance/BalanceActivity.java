@@ -14,15 +14,13 @@ import android.widget.TextView;
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.BaseClass;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.category.Category;
-import com.vergiliy.wedding.budget.category.CategoryDatabase;
+import com.vergiliy.wedding.category.Category;
+import com.vergiliy.wedding.category.CategoryDatabase;
 import com.vergiliy.wedding.budget.cost.CostDatabase;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.List;
-
-import static com.vergiliy.wedding.R.string.currency;
 
 public class BalanceActivity extends BaseActivity {
 

@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.vergiliy.wedding.BaseDialogFragment;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.budget.BudgetInterface;
-import com.vergiliy.wedding.budget.category.Category;
+import com.vergiliy.wedding.category.Category;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
 import com.vergiliy.wedding.BaseClass;

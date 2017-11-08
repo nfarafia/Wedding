@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.category;
+package com.vergiliy.wedding.category;
 
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.View;
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.BaseListener;
 
-import static com.vergiliy.wedding.budget.category.CategoryRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.category.CategoryRecyclerAdapter.actionMode;
 
 // Creating Category Dialog
 class CategoryDialogListener extends BaseListener implements View.OnClickListener {

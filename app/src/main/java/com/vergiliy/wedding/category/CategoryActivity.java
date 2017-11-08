@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.category;
+package com.vergiliy.wedding.category;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.vergiliy.wedding.budget.cost.CostDatabase;
 import java.util.Collections;
 import java.util.List;
 
-import static com.vergiliy.wedding.budget.category.CategoryRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.category.CategoryRecyclerAdapter.actionMode;
 
 public class CategoryActivity extends BaseActivity {
 
@@ -81,8 +81,8 @@ public class CategoryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.activity_budget_category_title);
-        setContentView(R.layout.activity_budget_category);
+        setTitle(R.string.activity_category_title);
+        setContentView(R.layout.activity_category);
         // Change activities with animation
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
 
