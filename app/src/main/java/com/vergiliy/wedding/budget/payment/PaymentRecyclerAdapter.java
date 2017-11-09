@@ -19,8 +19,6 @@ import com.vergiliy.wedding.budget.cost.CostActivity;
 
 import java.util.List;
 
-import static com.vergiliy.wedding.R.string.currency;
-
 public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecyclerAdapter.ViewHolder> {
 
     private CostActivity context;

@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.balance;
+package com.vergiliy.wedding.checklist.summary;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,44 +16,44 @@ import com.vergiliy.wedding.BaseClass;
 import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.category.Category;
 import com.vergiliy.wedding.category.CategoryDatabase;
-import com.vergiliy.wedding.budget.cost.CostDatabase;
+import com.vergiliy.wedding.checklist.task.TaskDatabase;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.List;
 
-public class BalanceActivity extends BaseActivity {
+public class SummaryActivity extends BaseActivity {
 
-    private CostDatabase db_cost;
+    private TaskDatabase db_task;
     private CategoryDatabase db_category;
 
     Spinner categoryField;
     TextView totalField, usedField, amountField, pendingField, paidField, balanceField,
-            costsTotalField, paymentsTotalField, paymentsPendingField, paymentsPaidField;
+            tasksTotalField, subtasksTotalField, subtasksPendingField, subtasksPaidField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.activity_budget_balance_title);
-        setContentView(R.layout.activity_budget_balance);
+        setTitle(R.string.activity_checklist_balance_title);
+        setContentView(R.layout.activity_checklist_summary);
         // Change activities with animation
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
 
-        db_cost = new CostDatabase(this);
+        db_task = new TaskDatabase(this);
         db_category = new CategoryDatabase(this);
 
         // Get fields
-        categoryField = (Spinner) findViewById(R.id.budget_balance_category);
-        totalField = (TextView) findViewById(R.id.budget_balance_total);
-        usedField = (TextView) findViewById(R.id.budget_balance_used);
-        amountField = (TextView) findViewById(R.id.budget_balance_amount);
-        pendingField = (TextView) findViewById(R.id.budget_balance_pending);
-        paidField = (TextView) findViewById(R.id.budget_balance_paid);
-        balanceField = (TextView) findViewById(R.id.budget_balance_balance);
-        costsTotalField = (TextView) findViewById(R.id.budget_balance_total_costs);
-        paymentsTotalField = (TextView) findViewById(R.id.budget_balance_total_payments);
-        paymentsPendingField = (TextView) findViewById(R.id.budget_balance_total_payments_pending);
-        paymentsPaidField = (TextView) findViewById(R.id.budget_balance_total_payments_paid);
+        categoryField = (Spinner) findViewById(R.id.checklist_summary_category);
+        totalField = (TextView) findViewById(R.id.checklist_summary_total);
+        usedField = (TextView) findViewById(R.id.checklist_summary_used);
+        amountField = (TextView) findViewById(R.id.checklist_summary_amount);
+        pendingField = (TextView) findViewById(R.id.checklist_summary_pending);
+        paidField = (TextView) findViewById(R.id.checklist_summary_paid);
+        balanceField = (TextView) findViewById(R.id.checklist_summary_balance);
+        tasksTotalField = (TextView) findViewById(R.id.checklist_summary_total_tasks);
+        subtasksTotalField = (TextView) findViewById(R.id.checklist_summary_total_subtasks);
+        subtasksPendingField = (TextView) findViewById(R.id.checklist_summary_total_subtasks_pending);
+        subtasksPaidField = (TextView) findViewById(R.id.checklist_summary_total_subtasks_paid);
 
         // Create default item (all category)
         Category item = new Category(this);
@@ -108,7 +108,7 @@ public class BalanceActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.budget_balance_action_menu, menu);
+        getMenuInflater().inflate(R.menu.checklist_summary_action_menu, menu);
 
         return true;
     }
@@ -121,7 +121,7 @@ public class BalanceActivity extends BaseActivity {
                 onBackPressed();
                 break;
             // Open SettingsWeddingFragment to edit budget
-            case R.id.menu_action_budget:
+            case R.id.menu_action_setting:
                 Intent intent = new Intent(getApplicationContext(), SettingFragmentsActivity.class);
                 intent.putExtra("position", 1); // Transfer id
                 startActivityForResult(intent, 1);
@@ -145,8 +145,8 @@ public class BalanceActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (db_cost != null) {
-            db_cost.close();
+        if (db_task != null) {
+            db_task.close();
         }
         if (db_category != null) {
             db_category.close();
@@ -155,7 +155,7 @@ public class BalanceActivity extends BaseActivity {
 
     private void updateBalance(Integer id_category) {
         Integer color;
-        Balance balance = db_cost.getBalance(id_category);
+        Summary balance = db_task.getBalance(id_category);
         String currency = getLocaleClass().getCurrency();
 
         final double budget = BaseHelper.parseDouble(preferences.getString("budget", "0"), 0);
@@ -177,17 +177,17 @@ public class BalanceActivity extends BaseActivity {
             usedField.setTextColor(color);
             usedField.setText(getString(R.string.percent, BaseClass.getDoubleAsString(used)));
         } else {
-            totalField.setText(getString(R.string.budget_balance_total_none));
-            usedField.setText(getString(R.string.budget_balance_used_none));
+            totalField.setText(getString(R.string.checklist_summary_total_none));
+            usedField.setText(getString(R.string.checklist_summary_used_none));
         }
 
         amountField.setText(getString(R.string.currency, balance.getAmountAsString(), currency));
         pendingField.setText(getString(R.string.currency, balance.getPendingAsString(), currency));
         paidField.setText(getString(R.string.currency, balance.getPaidAsString(), currency));
-        costsTotalField.setText(balance.getCoatsTotalAsString());
-        paymentsTotalField.setText(balance.getPaymentsTotalAsString());
-        paymentsPendingField.setText(balance.getPaymentsPendingAsString());
-        paymentsPaidField.setText(balance.getPaymentsPaidAsString());
+        tasksTotalField.setText(balance.getTasksTotalAsString());
+        subtasksTotalField.setText(balance.getSubtasksTotalAsString());
+        subtasksPendingField.setText(balance.getSubtasksPendingAsString());
+        subtasksPaidField.setText(balance.getSubtasksPaidAsString());
 
         Double balanceValue = balance.getBalance();
         if (balanceValue < 0) {

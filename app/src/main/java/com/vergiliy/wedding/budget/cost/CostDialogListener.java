@@ -8,12 +8,12 @@ import com.vergiliy.wedding.BaseListener;
 
 import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
 
-// Creating Cost Dialog
+// Creating Task Dialog
 public class CostDialogListener extends BaseListener implements View.OnClickListener {
 
     private Cost cost = null;
 
-    // Get cost from main class BudgetRecyclerAdapter
+    // Get cost from main class ChecklistRecyclerAdapter
     public CostDialogListener(Cost cost) {
         this.cost = cost;
     }

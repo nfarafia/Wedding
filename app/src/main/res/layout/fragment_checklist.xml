@@ -6,18 +6,22 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/payments_list"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/checklist_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/payments_list_none"
+        android:id="@+id/checklist_list_none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="60dp"
         android:gravity="center"
-        android:text="@string/payment_list_none"
+        android:text="@string/checklist_list_none"
         android:visibility="gone" />
 
 </LinearLayout>
+
+
+

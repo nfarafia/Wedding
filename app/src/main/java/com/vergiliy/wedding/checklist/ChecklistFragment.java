@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.checklist;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,18 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.cost.Cost;
+import com.vergiliy.wedding.checklist.task.Task;
 
 import java.util.List;
 
-public class BudgetFragment extends Fragment {
+public class ChecklistFragment extends Fragment {
 
     static final String PAGE_NUMBER = "page_number";
 
     private int page;
 
-    public static BudgetFragment newInstance(int page) {
-        BudgetFragment pageFragment = new BudgetFragment();
+    public static ChecklistFragment newInstance(int page) {
+        ChecklistFragment pageFragment = new ChecklistFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);
@@ -37,25 +37,25 @@ public class BudgetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        BudgetActivity activity = (BudgetActivity) this.getActivity();
+        ChecklistActivity activity = (ChecklistActivity) this.getActivity();
 
-        View view = inflater.inflate(R.layout.fragment_budget, container, false);
+        View view = inflater.inflate(R.layout.fragment_checklist, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.budget_list);
+        RecyclerView recyclerView = view.findViewById(R.id.checklist_list);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        // Get costs from db_cost
+        // Get tasks from db_task
         int id_category = activity.getCategoryIdByPosition(page);
-        List<Cost> all = activity.getDbCost().getAllByIdCategory(id_category);
+        List<Task> all = activity.getDbTask().getAllByIdCategory(id_category);
         if (all.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
-            RecyclerView.Adapter adapter = new BudgetRecyclerAdapter(activity, all);
+            RecyclerView.Adapter adapter = new ChecklistRecyclerAdapter(activity, all);
             recyclerView.setAdapter(adapter);
         } else {
-            TextView noneText = view.findViewById(R.id.budget_list_none);
+            TextView noneText = view.findViewById(R.id.checklist_list_none);
             recyclerView.setVisibility(View.GONE);
             noneText.setVisibility(View.VISIBLE);
         }

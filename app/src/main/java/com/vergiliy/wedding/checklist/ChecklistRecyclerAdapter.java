@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.checklist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,23 +16,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.cost.Cost;
-import com.vergiliy.wedding.budget.cost.CostActivity;
-import com.vergiliy.wedding.budget.cost.CostDialogListener;
+import com.vergiliy.wedding.checklist.task.Task;
+import com.vergiliy.wedding.checklist.task.TaskActivity;
+import com.vergiliy.wedding.checklist.task.TaskDialogListener;
 
 import java.util.List;
 
-public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ViewHolder> {
+public class ChecklistRecyclerAdapter extends RecyclerView.Adapter<ChecklistRecyclerAdapter.ViewHolder> {
 
-    private BudgetActivity context;
-    private List<Cost> list;
+    private ChecklistActivity context;
+    private List<Task> list;
 
     public static ActionMode actionMode = null;
 
     // Provide a reference to the views for each data item
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        BudgetActivity context;
+        ChecklistActivity context;
         CardView item;
         TextView name, amount, pending, paid;
         ImageView edit, delete;
@@ -57,12 +57,12 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
                 switch (menuItem.getItemId()) {
                     // Edit item
                     case R.id.action_edit:
-                        item.findViewById(R.id.ic_cost_edit).callOnClick();
+                        item.findViewById(R.id.ic_task_edit).callOnClick();
                         mode.finish();
                         return true;
                     // Delete item
                     case R.id.action_delete:
-                        item.findViewById(R.id.ic_cost_delete).callOnClick();
+                        item.findViewById(R.id.ic_task_delete).callOnClick();
                         mode.finish();
                         return true;
                     default:
@@ -80,15 +80,15 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
         ViewHolder(final View itemView) {
             super(itemView);
 
-            context = (BudgetActivity) itemView.getContext();
+            context = (ChecklistActivity) itemView.getContext();
 
-            item = itemView.findViewById(R.id.cost_card_item);
-            name = itemView.findViewById(R.id.cost_card_name);
-            amount = itemView.findViewById(R.id.cost_card_amount);
-            pending = itemView.findViewById(R.id.cost_card_pending);
-            paid = itemView.findViewById(R.id.cost_card_paid);
-            edit = itemView.findViewById(R.id.ic_cost_edit);
-            delete = itemView.findViewById(R.id.ic_cost_delete);
+            item = itemView.findViewById(R.id.task_card_item);
+            name = itemView.findViewById(R.id.task_card_name);
+            amount = itemView.findViewById(R.id.task_card_amount);
+            pending = itemView.findViewById(R.id.task_card_pending);
+            paid = itemView.findViewById(R.id.task_card_paid);
+            edit = itemView.findViewById(R.id.ic_task_edit);
+            delete = itemView.findViewById(R.id.ic_task_delete);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
 
@@ -115,9 +115,9 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
                     }
 
                     // Start new Activity
-                    Intent intent = new Intent(context, CostActivity.class);
-                    Cost cost = list.get(getAdapterPosition()); // Get clicked cost id
-                    intent.putExtra("id", cost.getId());
+                    Intent intent = new Intent(context, TaskActivity.class);
+                    Task task = list.get(getAdapterPosition()); // Get clicked task id
+                    intent.putExtra("id", task.getId());
                     context.startActivity(intent);
                 }
             });
@@ -127,17 +127,17 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     // Listener clicks on Delete button
     private class DeleteButtonListener implements View.OnClickListener {
 
-        private Cost cost = null;
+        private Task task = null;
 
-        // Get cost from main class ChecklistRecyclerAdapter
-        DeleteButtonListener(Cost cost) {
-            this.cost = cost;
+        // Get task from main class ChecklistRecyclerAdapter
+        DeleteButtonListener(Task task) {
+            this.task = task;
         }
 
         @Override
         public void onClick(View view) {
-            // Delete row from db_cost
-            context.getDbCost().delete(cost);
+            // Delete row from db_task
+            context.getDbTask().delete(task);
 
             // Update current fragment
             context.getViewPager().getAdapter().notifyDataSetChanged();
@@ -145,17 +145,17 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    BudgetRecyclerAdapter(Context context, List<Cost> list) {
-        this.context = (BudgetActivity) context;
+    ChecklistRecyclerAdapter(Context context, List<Task> list) {
+        this.context = (ChecklistActivity) context;
         this.list = list;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public BudgetRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChecklistRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater
-                .from(parent.getContext()).inflate(R.layout.cost_list_item, parent, false);
+                .from(parent.getContext()).inflate(R.layout.task_list_item, parent, false);
 
         return new ViewHolder(view);
     }
@@ -163,14 +163,14 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Cost cost = list.get(position);
-        holder.name.setText(cost.getLocaleName());
-        holder.amount.setText(context.getString(R.string.currency, cost.getAmountAsString(),
+        final Task task = list.get(position);
+        holder.name.setText(task.getLocaleName());
+        holder.amount.setText(context.getString(R.string.currency, task.getAmountAsString(),
                 context.getLocaleClass().getCurrency()));
-        holder.pending.setText(cost.getPendingAsString());
-        holder.paid.setText(cost.getPaidAsString());
-        holder.edit.setOnClickListener(new CostDialogListener(cost));
-        holder.delete.setOnClickListener(new DeleteButtonListener(cost));
+        holder.pending.setText(task.getPendingAsString());
+        holder.paid.setText(task.getPaidAsString());
+        holder.edit.setOnClickListener(new TaskDialogListener(task));
+        holder.delete.setOnClickListener(new DeleteButtonListener(task));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

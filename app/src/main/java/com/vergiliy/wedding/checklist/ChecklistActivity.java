@@ -1,6 +1,5 @@
-package com.vergiliy.wedding.budget;
+package com.vergiliy.wedding.checklist;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -27,23 +25,21 @@ import com.vergiliy.wedding.R;
 import com.vergiliy.wedding.category.Category;
 import com.vergiliy.wedding.category.CategoryActivity;
 import com.vergiliy.wedding.category.CategoryDatabase;
-import com.vergiliy.wedding.budget.cost.CostDatabase;
-import com.vergiliy.wedding.budget.cost.CostDialogListener;
-import com.vergiliy.wedding.budget.balance.BalanceActivity;
-import com.vergiliy.wedding.budget.payment.PaymentDatabase;
+import com.vergiliy.wedding.checklist.summary.SummaryActivity;
+import com.vergiliy.wedding.checklist.task.TaskDatabase;
+import com.vergiliy.wedding.checklist.task.TaskDialogListener;
 import com.vergiliy.wedding.setting.SettingFragmentsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vergiliy.wedding.budget.BudgetRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.checklist.ChecklistRecyclerAdapter.actionMode;
 
-public class BudgetActivity extends NavigationActivity implements BudgetInterface {
+public class ChecklistActivity extends NavigationActivity implements ChecklistInterface {
 
     protected static ViewPager viewPager;
 
-    private CostDatabase db_cost;
-    private PaymentDatabase db_payment;
+    private TaskDatabase db_task;
     protected CategoryDatabase db_category;
 
     private List<Category> categories = new ArrayList<>();
@@ -57,7 +53,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
 
         @Override
         public Fragment getItem(int position) {
-            return BudgetFragment.newInstance(position);
+            return ChecklistFragment.newInstance(position);
         }
 
         @Override
@@ -100,13 +96,12 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.activity_budget_title);
+        setTitle(R.string.activity_checklist_title);
         // Replace FrameLayout on our activity layout
-        getLayoutInflater().inflate(R.layout.contant_budget, frameLayout);
+        getLayoutInflater().inflate(R.layout.contant_checklist, frameLayout);
 
-        // Create new CostDatabase, PaymentDatabase and CategoryDatabase
-        db_cost = new CostDatabase(this);
-        db_payment = new PaymentDatabase(this);
+        // Create new TaskDatabase, SubtaskDatabase and CategoryDatabase
+        db_task = new TaskDatabase(this);
         db_category = new CategoryDatabase(this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -174,14 +169,14 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
 
         // Creating FloatingButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setOnClickListener(new CostDialogListener());
+        fab.setOnClickListener(new TaskDialogListener());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // Check current activity in the NavigationDrawer
-        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_budget)
+        MenuItem menuItem =  navigationView.getMenu().findItem(R.id.menu_general_checklist)
                 .setChecked(true);
 
         // Update current fragment
@@ -207,7 +202,7 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.budget_action_menu, menu);
+        getMenuInflater().inflate(R.menu.checklist_action_menu, menu);
 
         return true;
     }
@@ -220,43 +215,14 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         // Switch activity from NavigationDrawer
         switch(id) {
             // Open new Activity when click Summary icon
-            case R.id.menu_action_balance:
-                startActivity(new Intent(this, BalanceActivity.class));
+            case R.id.menu_action_summary:
+                startActivity(new Intent(this, SummaryActivity.class));
                 break;
-            // Open SettingsWeddingFragment to edit budget
-            case R.id.menu_action_budget:
+            // Open SettingsWeddingFragment to edit wedding date
+            case R.id.menu_action_setting:
                 Intent intent = new Intent(getApplicationContext(), SettingFragmentsActivity.class);
                 intent.putExtra("position", 1); // Transfer id
                 startActivityForResult(intent, 1);
-                break;
-            // Restore data
-            case R.id.menu_action_restore:
-                // Show message
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.dialog_attention)
-                        .setMessage(R.string.menu_action_restore_message)
-                        .setNegativeButton(R.string.dialog_button_cancel, null)
-                        .setPositiveButton(R.string.dialog_button_confirm,
-                                new DialogInterface.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        // Delete all dara in budget tables
-                                        db_cost.deleteAll();
-                                        db_payment.deleteAll();
-                                        db_category.deleteAll();
-
-                                        // Restore budget tables
-                                        db_cost.restore();
-
-                                        // Update categories from database
-                                        updateCategories();
-
-                                        // Update current fragment
-                                        getViewPager().getAdapter().notifyDataSetChanged();
-                                    }
-                                })
-                        .show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -272,11 +238,8 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         if (db_category != null) {
             db_category.close();
         }
-        if (db_cost != null) {
-            db_cost.close();
-        }
-        if (db_payment != null) {
-            db_payment.close();
+        if (db_task != null) {
+            db_task.close();
         }
         viewPager = null;
     }
@@ -311,9 +274,9 @@ public class BudgetActivity extends NavigationActivity implements BudgetInterfac
         }
     }
 
-    // Get db_cost
-    public CostDatabase getDbCost() {
-        return db_cost;
+    // Get db_task
+    public TaskDatabase getDbTask() {
+        return db_task;
     }
 
     // Get viewPager

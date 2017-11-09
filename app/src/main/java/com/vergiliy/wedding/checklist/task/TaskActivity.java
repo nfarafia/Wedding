@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.cost;
+package com.vergiliy.wedding.checklist.task;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,36 +10,35 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vergiliy.wedding.BaseActivity;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.BudgetInterface;
 import com.vergiliy.wedding.category.Category;
 import com.vergiliy.wedding.category.CategoryDatabase;
-import com.vergiliy.wedding.budget.payment.Payment;
-import com.vergiliy.wedding.budget.payment.PaymentDatabase;
-import com.vergiliy.wedding.budget.payment.PaymentDialogListener;
-import com.vergiliy.wedding.budget.payment.PaymentFragment;
+import com.vergiliy.wedding.checklist.ChecklistInterface;
+import com.vergiliy.wedding.checklist.subtask.Subtask;
+import com.vergiliy.wedding.checklist.subtask.SubtaskDatabase;
+import com.vergiliy.wedding.checklist.subtask.SubtaskDialogListener;
+import com.vergiliy.wedding.checklist.subtask.SubtaskFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vergiliy.wedding.budget.payment.PaymentRecyclerAdapter.actionMode;
+import static com.vergiliy.wedding.checklist.ChecklistRecyclerAdapter.actionMode;
 
-public class CostActivity extends BaseActivity implements BudgetInterface {
+public class TaskActivity extends BaseActivity implements ChecklistInterface {
 
     static ViewPager viewPager;
     TabLayout tabLayout;
     FloatingActionButton fabEdit, fabAdd;
 
-    private CostDatabase db_cost;
-    private PaymentDatabase db_payment;
+    private TaskDatabase db_task;
+    private SubtaskDatabase db_subtask;
     private CategoryDatabase db_category;
 
-    private Cost cost = null;
-    private List<Payment> payments =  new ArrayList<>();
+    private Task task = null;
+    private List<Subtask> subtasks =  new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
 
     // Create ViewPagerAdapter
@@ -49,16 +48,16 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
 
         private ViewPagerAdapter(FragmentManager manager) {
             super(manager);
-            list = getResources().getStringArray(R.array.cost_tabs);
+            list = getResources().getStringArray(R.array.task_tabs);
         }
 
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new CostFragment(); // Show TaskFragment
+                    return new TaskFragment(); // Show TaskFragment
                 case 1:
-                    return new PaymentFragment(); // Show SubtaskFragment
+                    return new SubtaskFragment(); // Show SubtaskFragment
                 default:
                     return null;
             }
@@ -82,14 +81,14 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
 
         @Override
         public void notifyDataSetChanged() {
-            cost = db_cost.getOne(cost.getId()); // Update Task
-            payments = db_payment.getAllByIdCost(cost.getId()); // Update all payments for current cost
-            fabEdit.setOnClickListener(new CostDialogListener(cost));
+            task = db_task.getOne(task.getId()); // Update Task
+            subtasks = db_subtask.getAllByIdTask(task.getId()); // Update all subtasks for current task
+            fabEdit.setOnClickListener(new TaskDialogListener(task));
 
             super.notifyDataSetChanged();
 
             // Set custom view for last item
-            setCustomViewForLastItem(payments.size());
+            setCustomViewForLastItem(subtasks.size());
         }
     }
 
@@ -98,7 +97,7 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
 
         @Override
         public void onPageSelected(int position) {
-            // Change active Fab (for edit cost or add new payment)
+            // Change active Fab (for edit task or add new subtask)
             switch (position) {
                 case 0:
                     fabEdit.setVisibility(View.VISIBLE);
@@ -127,30 +126,30 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cost);
+        setContentView(R.layout.activity_task);
         // Change activities with animation
         overridePendingTransition(R.anim.create_slide_in, R.anim.create_slide_out);
 
-        db_cost = new CostDatabase(this);
-        db_payment = new PaymentDatabase(this);
+        db_task = new TaskDatabase(this);
+        db_subtask = new SubtaskDatabase(this);
         db_category = new CategoryDatabase(this);
 
-        // Get cost from extras id
+        // Get task from extras id
         Bundle bundle = getIntent().getExtras();
         Integer id = bundle.getInt("id", -1);
         if (!id.equals(-1)) {
-            cost = db_cost.getOne(id);
+            task = db_task.getOne(id);
         }
-        if (cost == null) {
+        if (task == null) {
             onBackPressed(); // If Id not found, return back
             return;
         }
 
-        // Get all payments for current cost
-        payments = db_payment.getAllByIdCost(cost.getId());
+        // Get all subtasks for current task
+        subtasks = db_subtask.getAllByIdTask(task.getId());
 
         // Put name to Title
-        setTitle(cost.getLocaleName());
+        setTitle(task.getLocaleName());
 
         // Get categories from database
         categories = db_category.getAll();
@@ -169,13 +168,13 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         // Show TabLayout
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        setCustomViewForLastItem(payments.size()); // Set custom view for last item
+        setCustomViewForLastItem(subtasks.size()); // Set custom view for last item
 
         // Creating FloatingButton
         fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
         fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
-        fabEdit.setOnClickListener(new CostDialogListener(cost));
-        fabAdd.setOnClickListener(new PaymentDialogListener());
+        fabEdit.setOnClickListener(new TaskDialogListener(task));
+        fabAdd.setOnClickListener(new SubtaskDialogListener());
 
         // Show back button in ActionBar
         if (getSupportActionBar() != null) {
@@ -224,11 +223,11 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         if (db_category != null) {
             db_category.close();
         }
-        if (db_cost != null) {
-            db_cost.close();
+        if (db_task != null) {
+            db_task.close();
         }
-        if (db_payment != null) {
-            db_payment.close();
+        if (db_subtask != null) {
+            db_subtask.close();
         }
         viewPager = null;
     }
@@ -243,12 +242,12 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
     }
 
     @Override
-    public CostDatabase getDbCost() {
-        return db_cost;
+    public TaskDatabase getDbTask() {
+        return db_task;
     }
 
-    public PaymentDatabase getDbPayment() {
-        return db_payment;
+    public SubtaskDatabase getDbSubtask() {
+        return db_subtask;
     }
 
     @Override
@@ -261,11 +260,11 @@ public class CostActivity extends BaseActivity implements BudgetInterface {
         return categories;
     }
 
-    public Cost getCost() {
-        return cost;
+    public Task getTask() {
+        return task;
     }
 
-    public List<Payment> getPayments() {
-        return payments;
+    public List<Subtask> getSubtasks() {
+        return subtasks;
     }
 }

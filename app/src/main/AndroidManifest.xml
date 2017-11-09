@@ -51,6 +51,9 @@
             android:name=".countdown.CountdownActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".checklist.ChecklistActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".tasks.TasksActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -75,8 +78,12 @@
         <activity
             android:name=".budget.cost.CostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".checklist.task.TaskActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".category.CategoryActivity" />
         <activity android:name=".budget.balance.BalanceActivity" />
+        <activity android:name=".checklist.summary.SummaryActivity" />
     </application>
 
 </manifest>

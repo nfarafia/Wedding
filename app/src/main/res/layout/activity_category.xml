@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:paddingBottom="60dp"
             android:gravity="center"
-            android:text="@string/categories_list_none"
+            android:text="@string/category_list_none"
             android:visibility="gone" />
 
     </LinearLayout>

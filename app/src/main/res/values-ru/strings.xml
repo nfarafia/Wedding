@@ -13,7 +13,7 @@
     <string name="activity_guests_title">Гости</string>
     <string name="activity_vendors_title">Подрядчики</string>
 
-    <string name="budget_balance_category_all">Все категории</string>
+    <string name="category_all">Все категории</string>
 
     <string name="activity_setting_title">Настройки</string>
 

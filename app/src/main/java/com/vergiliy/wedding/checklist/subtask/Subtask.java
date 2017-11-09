@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.payment;
+package com.vergiliy.wedding.checklist.subtask;
 
 import android.content.Context;
 
@@ -8,23 +8,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Payment extends BaseClass {
-    private	int	id_cost;
+public class Subtask extends BaseClass {
+    private	int id_task;
     private Map<String, String> name = new HashMap<>();
     private	double amount;
     private	boolean	complete;
     private Date date;
 
-    Payment(Context context) {
+    Subtask(Context context) {
         super(context);
     }
 
-    int getIdCost() {
-        return id_cost;
+    int getIdTask() {
+        return id_task;
     }
 
-    void setIdCost(int id_cost) {
-        this.id_cost = id_cost;
+    void setIdTask(int id_task) {
+        this.id_task = id_task;
     }
 
     String getName() {

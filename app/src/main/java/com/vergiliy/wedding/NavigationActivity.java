@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.vergiliy.wedding.checklist.ChecklistActivity;
 import com.vergiliy.wedding.main.MainActivity;
 import com.vergiliy.wedding.budget.BudgetActivity;
 import com.vergiliy.wedding.countdown.CountdownActivity;
@@ -70,6 +71,9 @@ public class NavigationActivity extends BaseActivity
         switch(id) {
             case R.id.menu_general_countdown:
                 startActivity(new Intent(this, CountdownActivity.class));
+                break;
+            case R.id.menu_general_checklist:
+                startActivity(new Intent(this, ChecklistActivity.class));
                 break;
             case R.id.menu_general_tasks:
                 startActivity(new Intent(this, TasksActivity.class));

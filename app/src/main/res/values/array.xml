@@ -23,4 +23,9 @@
         <item>Payments</item>
     </string-array>
 
+    <string-array name="task_tabs">
+        <item>Task</item>
+        <item>Subtasks</item>
+    </string-array>
+
 </resources>

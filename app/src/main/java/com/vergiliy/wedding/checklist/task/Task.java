@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.cost;
+package com.vergiliy.wedding.checklist.task;
 
 import android.content.Context;
 
@@ -7,13 +7,13 @@ import com.vergiliy.wedding.BaseClass;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cost extends BaseClass {
+public class Task extends BaseClass {
     private	int	id_category;
     private Map<String, String> name = new HashMap<>();
     private Map<String, String> note = new HashMap<>();
     private	double amount, paid, pending;
 
-    Cost(Context context) {
+    Task(Context context) {
         super(context);
     }
 

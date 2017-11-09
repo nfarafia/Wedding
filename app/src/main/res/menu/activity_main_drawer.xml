@@ -9,8 +9,12 @@
             android:icon="@drawable/ic_menu_general_countdown"
             android:title="@string/activity_countdown_title" />
         <item
+            android:id="@+id/menu_general_checklist"
+            android:icon="@drawable/ic_menu_general_checklist"
+            android:title="@string/activity_checklist_title" />
+        <item
             android:id="@+id/menu_general_tasks"
-            android:icon="@drawable/ic_menu_general_tasks"
+            android:icon="@drawable/ic_menu_general_checklist"
             android:title="@string/activity_tasks_title" />
         <item
             android:id="@+id/menu_general_budget"

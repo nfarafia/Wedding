@@ -1,4 +1,4 @@
-package com.vergiliy.wedding.budget.cost;
+package com.vergiliy.wedding.checklist.task;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -15,22 +15,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vergiliy.wedding.BaseClass;
 import com.vergiliy.wedding.BaseDialogFragment;
 import com.vergiliy.wedding.R;
-import com.vergiliy.wedding.budget.BudgetInterface;
 import com.vergiliy.wedding.category.Category;
 import com.vergiliy.wedding.helpers.BaseHelper;
 import com.vergiliy.wedding.helpers.DecimalDigitsInputFilter;
-import com.vergiliy.wedding.BaseClass;
+import com.vergiliy.wedding.checklist.ChecklistInterface;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 import static com.vergiliy.wedding.helpers.BaseHelper.hideKeyboardWhenLostFocus;
 
-public class CostDialogFragment extends BaseDialogFragment {
+public class TaskDialogFragment extends BaseDialogFragment {
 
-    private Cost cost;
+    private Task task;
 
     private EditText nameField, noteField, amountField;
     private Spinner categoryField;
@@ -46,43 +46,43 @@ public class CostDialogFragment extends BaseDialogFragment {
             final double amount = BaseHelper.parseDouble(amountField.getText().toString(), 0);
 
             if (TextUtils.isEmpty(name)) {
-                Toast.makeText(context, R.string.cost_dialog_error,
+                Toast.makeText(context, R.string.task_dialog_error,
                         Toast.LENGTH_LONG).show();
             } else {
-                Cost item = new Cost(context);
+                Task item = new Task(context);
 
                 item.setIdCategory(id_category);
 
                 // Update name if it modified
-                if (cost == null || TextUtils.isEmpty(cost.getLocaleName()) ||
-                        !cost.getLocaleName().equals(name)) {
+                if (task == null || TextUtils.isEmpty(task.getLocaleName()) ||
+                        !task.getLocaleName().equals(name)) {
                     item.setName(BaseClass.LANGUAGE_DEFAULT, name);
 
                     // Update TaskActivity Title
-                    if (context instanceof CostActivity ) {
+                    if (context instanceof TaskActivity) {
                         context.setTitle(item.getLocaleName());
                     }
                 } else {
-                    item.setName(BaseClass.LANGUAGE_DEFAULT, cost.getName());
+                    item.setName(BaseClass.LANGUAGE_DEFAULT, task.getName());
                 }
 
                 // Update note if it modified
                 if (!TextUtils.isEmpty(note)) {
-                    if (cost == null || TextUtils.isEmpty(cost.getLocaleNote()) ||
-                            !cost.getLocaleNote().equals(note)) {
+                    if (task == null || TextUtils.isEmpty(task.getLocaleNote()) ||
+                            !task.getLocaleNote().equals(note)) {
                         item.setNote(BaseClass.LANGUAGE_DEFAULT, note);
                     } else {
-                        item.setNote(BaseClass.LANGUAGE_DEFAULT, cost.getNote());
+                        item.setNote(BaseClass.LANGUAGE_DEFAULT, task.getNote());
                     }
                 }
 
                 item.setAmount(amount);
 
-                if (cost != null) {
-                    item.setId(cost.getId());
-                    ((BudgetInterface) context).getDbCost().update(item);
+                if (task != null) {
+                    item.setId(task.getId());
+                    ((ChecklistInterface) context).getDbTask().update(item);
                 } else {
-                    ((BudgetInterface) context).getDbCost().add(item);
+                    ((ChecklistInterface) context).getDbTask().add(item);
                 }
 
                 if (dialog != null) {
@@ -90,19 +90,19 @@ public class CostDialogFragment extends BaseDialogFragment {
                 }
 
                 // Update Task
-                if (context instanceof CostActivity ) {
-                    cost = ((BudgetInterface) context).getDbCost().getOne(cost.getId());
+                if (context instanceof TaskActivity) {
+                    task = ((ChecklistInterface) context).getDbTask().getOne(task.getId());
                 }
 
                 // Update current fragment
-                ((BudgetInterface) context).getViewPager().getAdapter().notifyDataSetChanged();
+                ((ChecklistInterface) context).getViewPager().getAdapter().notifyDataSetChanged();
             }
         }
     }
 
-    public static CostDialogFragment newInstance(Cost cost) {
-        CostDialogFragment fragment = new CostDialogFragment();
-        fragment.setCost(cost);
+    public static TaskDialogFragment newInstance(Task task) {
+        TaskDialogFragment fragment = new TaskDialogFragment();
+        fragment.setTask(task);
         return fragment;
     }
 
@@ -112,16 +112,16 @@ public class CostDialogFragment extends BaseDialogFragment {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialog_title = inflater.inflate(R.layout.dialog_title, nullGroup);
-        View dialog_body = inflater.inflate(R.layout.cost_diallog_add, nullGroup);
+        View dialog_body = inflater.inflate(R.layout.task_diallog_add, nullGroup);
 
         // Get Title field
         TextView titleView =  dialog_title.findViewById(R.id.dialog_title);
 
         // Get Body fields
-        nameField = dialog_body.findViewById(R.id.cost_edit_name);
-        categoryField = dialog_body.findViewById(R.id.cost_edit_category);
-        noteField = dialog_body.findViewById(R.id.cost_edit_note);
-        amountField = dialog_body.findViewById(R.id.cost_edit_amount);
+        nameField = dialog_body.findViewById(R.id.task_edit_name);
+        categoryField = dialog_body.findViewById(R.id.task_edit_category);
+        noteField = dialog_body.findViewById(R.id.task_edit_note);
+        amountField = dialog_body.findViewById(R.id.task_edit_amount);
 
         // Get service buttons
         Button cancelButton = dialog_body.findViewById(R.id.dialog_button_cancel);
@@ -133,30 +133,30 @@ public class CostDialogFragment extends BaseDialogFragment {
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<Category> adapter = new ArrayAdapter<>(context,
-                R.layout.spinner_item, ((BudgetInterface) context).getCategories());
+                R.layout.spinner_item, ((ChecklistInterface) context).getCategories());
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryField.setAdapter(adapter);
 
         // Chose the current category
-        categoryField.setSelection(((BudgetInterface) context).getViewPager().getCurrentItem());
+        categoryField.setSelection(((ChecklistInterface) context).getViewPager().getCurrentItem());
 
-        if (cost != null) {
-            nameField.setText(cost.getLocaleName());
-            noteField.setText(cost.getLocaleNote());
-            amountField.setText(cost.getAmountAsString());
+        if (task != null) {
+            nameField.setText(task.getLocaleName());
+            noteField.setText(task.getLocaleNote());
+            amountField.setText(task.getAmountAsString());
 
             Integer index = BaseClass
-                    .findIndexInListById(((BudgetInterface) context).getCategories(), cost.getIdCategory());
+                    .findIndexInListById(((ChecklistInterface) context).getCategories(), task.getIdCategory());
             if (index != null) {
                 categoryField.setSelection(index);
             }
 
-            titleView.setText(R.string.cost_dialog_title_edit);
+            titleView.setText(R.string.task_dialog_title_edit);
             yesButton.setText(R.string.dialog_button_edit);
         } else {
-            titleView.setText(R.string.cost_dialog_title_add);
+            titleView.setText(R.string.task_dialog_title_add);
             yesButton.setText(R.string.dialog_button_add);
         }
 
@@ -179,7 +179,7 @@ public class CostDialogFragment extends BaseDialogFragment {
         return dialog;
     }
 
-    public void setCost(Cost cost) {
-        this.cost = cost;
+    public void setTask(Task task) {
+        this.task = task;
     }
 }

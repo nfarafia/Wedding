@@ -1,14 +1,14 @@
-package com.vergiliy.wedding.budget.balance;
+package com.vergiliy.wedding.checklist.summary;
 
 import android.content.Context;
 
 import com.vergiliy.wedding.BaseClass;
 
-public class Balance extends BaseClass {
+public class Summary extends BaseClass {
     private	double amount, paid, pending;
-    private	int costsTotal, paymentsTotal, paymentsPaid;
+    private	int tasksTotal, subtasksTotal, subtasksPaid;
 
-    public Balance(Context context) {
+    public Summary(Context context) {
         super(context);
     }
 
@@ -57,47 +57,47 @@ public class Balance extends BaseClass {
         return (balance > 0 ? "+"  : "") + BaseClass.getDoubleAsString(balance);
     }
 
-    public void setCoatsTotal(int count) {
-        this.costsTotal = count;
+    public void setTasksTotal(int count) {
+        this.tasksTotal = count;
     }
 
-    private Integer getCoatsTotal() {
-        return costsTotal;
+    private Integer getTasksTotal() {
+        return tasksTotal;
     }
 
-    String getCoatsTotalAsString() {
-        return getCoatsTotal().toString();
+    String getTasksTotalAsString() {
+        return getTasksTotal().toString();
     }
 
-    public void setPaymentsTotal(int count) {
-        this.paymentsTotal = count;
+    public void setSubtasksTotal(int count) {
+        this.subtasksTotal = count;
     }
 
-    private Integer getPaymentsTotal() {
-        return paymentsTotal;
+    private Integer getSubtasksTotal() {
+        return subtasksTotal;
     }
 
-    String getPaymentsTotalAsString() {
-        return getPaymentsTotal().toString();
+    String getSubtasksTotalAsString() {
+        return getSubtasksTotal().toString();
     }
 
-    public void setPaymentsPaid(int count) {
-        this.paymentsPaid = count;
+    public void setSubtasksPaid(int count) {
+        this.subtasksPaid = count;
     }
 
-    private Integer getPaymentsPaid() {
-        return paymentsPaid;
+    private Integer getSubtasksPaid() {
+        return subtasksPaid;
     }
 
-    String getPaymentsPaidAsString() {
-        return getPaymentsPaid().toString();
+    String getSubtasksPaidAsString() {
+        return getSubtasksPaid().toString();
     }
 
-    private Integer getPaymentsPending() {
-        return getPaymentsTotal() - getPaymentsPaid();
+    private Integer getSubtasksPending() {
+        return getSubtasksTotal() - getSubtasksPaid();
     }
 
-    String getPaymentsPendingAsString() {
-        return getPaymentsPending().toString();
+    String getSubtasksPendingAsString() {
+        return getSubtasksPending().toString();
     }
 }

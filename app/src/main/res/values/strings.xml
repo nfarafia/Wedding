@@ -1,15 +1,13 @@
 <resources>
     <string name="app_name">Wedding</string>
     <string name="app_description">Wedding App description</string>
-
     <string name="count" translatable="false">%d</string>
     <string name="percent" translatable="false">%s%%</string>
-    <string name="currency">%1$s %2$s</string>
+    <string name="currency" translatable="false">%1$s %2$s</string>
     <string name="date_time">%1$s in %2$s</string>
-    <string name="text">Text</string>
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="filter_view_http_wedding" translatable="false">@string/app_name</string>
-    <string name="splash_button_start">Start</string>
 
     <string name="dialog_title">Title</string>
     <string name="dialog_alert">Alert</string>
@@ -25,48 +23,116 @@
     <string name="dialog_button_confirm">Confirm</string>
     <string name="dialog_button_clear">Clear</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="activity_main_title">Main</string>
     <string name="activity_countdown_title">Countdown</string>
-    <string name="activity_tasks_title">Tasks</string>
-    <string name="activity_budget_title">Budget</string>
     <string name="activity_category_title">Category</string>
-    <string name="activity_budget_balance_title">Summary</string>
-    <string name="activity_cost_title">Cost</string>
+    <string name="activity_tasks_title">Tasks</string> <!-- DELETE -->
+    <string name="activity_checklist_title">Checklist</string>
+    <string name="activity_checklist_balance_title">Summary</string>
+    <string name="activity_budget_title">Budget</string>
+    <string name="activity_budget_balance_title">Balance</string>
     <string name="activity_guests_title">Guests</string>
     <string name="activity_vendors_title">Vendors</string>
-
     <string name="activity_setting_title">Setting</string>
-
-    <string name="menu_info_title">Information</string>
     <string name="activity_about_title">About</string>
     <string name="activity_feedback_title">Feedback</string>
-    <string name="menu_info_rate">Rate this app</string>
 
+    <string name="menu_action_setting">Setting</string>
     <string name="menu_action_budget">Set budget</string>
     <string name="menu_action_balance">Balance</string>
+    <string name="menu_action_summery">Summery</string>
     <string name="menu_action_restore">Restore</string>
-    <string name="menu_action_restore_message">This will replace all data with default data! Expenses including those you added manually will be permanently removed</string>
+    <string name="menu_action_restore_message">This will replace all data with default! Data including those you added manually will be permanently removed</string>
     <string name="menu_action_edit">Edit</string>
     <string name="menu_action_delete">Delete</string>
-
+    <string name="menu_action_complete_enable">Mark as complete</string>
+    <string name="menu_action_complete_disable">Mark as pending</string>
     <string name="menu_action_payment_complete_enable">Mark as paid</string>
     <string name="menu_action_payment_complete_disable">Mark as pending</string>
+    <string name="menu_info_title">Information</string>
+    <string name="menu_info_rate">Rate this app</string>
 
-    <string name="test_tasks_page">Page %d</string>
-    <string name="test_tasks_item_click">Position %1$d</string>
-    <string name="test_menu_setting_click">Click button Setting</string>
+    <string name="splash_button_start">Start</string>
 
-    <string name="budget_tabs_add_button">Add categories</string>
-    <string name="budget_tabs_edit_button">Edit categories</string>
+    <string name="test_tasks_page">Page %d</string> <!-- DELETE -->
+    <string name="test_tasks_item_click">Position %1$d</string> <!-- DELETE -->
+
+    <string name="category_all">All category</string>
+    <string name="category_none">There is no categories</string>
+    <string name="category_prompt">Select category</string>
+    <string name="category_button_add">Add categories</string>
+    <string name="category_button_edit">Edit categories</string>
+    <string name="category_list_none">There is no categories. Start adding now</string>
+    <string name="category_card_reorder">Reordering</string>
+    <string name="category_view">Category</string>
+    <string name="category_view_null">Category is not defined</string>
+    <string name="category_delete_alert_one">There is a task or task in this category. Before deleting move it or delete</string>
+    <string name="category_delete_alert_several">There are %d costs in this category. Before deleting move them or delete</string>
+    <string name="category_dialog_title_add">Add new category</string>
+    <string name="category_dialog_title_edit">Edit category</string>
+    <string name="category_dialog_error">Enter name</string>
+    <string name="category_dialog_name_hint">Enter name</string>
+
+    <string name="checklist_list_none">There is no tasks. Start adding now</string>
+    <string name="checklist_summary_budget_title">Budget</string>
+    <string name="checklist_summary_total">Total</string>
+    <string name="checklist_summary_total_none">Budget is not defined</string>
+    <string name="checklist_summary_used">Used</string>
+    <string name="checklist_summary_used_none">Undefined</string>
+    <string name="checklist_summary_amount_title">Amount</string>
+    <string name="checklist_summary_amount">Estimate</string>
+    <string name="checklist_summary_pending">Pending</string>
+    <string name="checklist_summary_paid">Paid</string>
+    <string name="checklist_summary_balance">Balance</string>
+    <string name="checklist_summary_summary_title">Summary</string>
+    <string name="checklist_summary_tasks">Tasks</string>
+    <string name="checklist_summary_tasks_total">total</string>
+    <string name="checklist_summary_subtasks">Subtasks</string>
+    <string name="checklist_summary_subtasks_total" translatable="false">@string/checklist_summary_tasks_total</string>
+    <string name="checklist_summary_subtasks_pending">pending</string>
+    <string name="checklist_summary_subtasks_paid">paid</string>
+
+    <string name="task_card_amount_title">Amount:</string>
+    <string name="task_card_paid_title">Paid:</string>
+    <string name="task_card_pending_title">Pending:</string>
+    <string name="task_view_name">Name</string>
+    <string name="task_view_note">Note</string>
+    <string name="task_view_note_null">Note is not defined</string>
+    <string name="task_view_category" translatable="false">@string/category_view</string>
+    <string name="task_view_category_null" translatable="false">@string/category_view_null</string>
+    <string name="task_view_amount_title" translatable="false">@string/checklist_summary_amount_title</string>
+    <string name="task_view_amount" translatable="false">@string/checklist_summary_amount</string>
+    <string name="task_view_pending" translatable="false">@string/checklist_summary_pending</string>
+    <string name="task_view_paid" translatable="false">@string/checklist_summary_paid</string>
+    <string name="task_view_balance" translatable="false">@string/checklist_summary_balance</string>
+    <string name="task_view_addition_title">Addition</string>
+    <string name="task_view_update">Last update</string>
+    <string name="task_view_update_null">Not modified</string>
+    <string name="task_dialog_title_add">Add new task</string>
+    <string name="task_dialog_title_edit">Edit task</string>
+    <string name="task_dialog_error">Enter name</string>
+    <string name="task_dialog_spinner_prompt" translatable="false">@string/category_prompt</string>
+    <string name="task_dialog_name_hint">Enter name</string>
+    <string name="task_dialog_note_hint">Enter note</string>
+    <string name="task_dialog_amount_hint">Enter estimate amount</string>
+
+    <string name="subtask_list_none">There is no subtasks. Start adding now</string>
+    <string name="subtask_card_amount_title">Amount:</string>
+    <string name="subtask_card_date_null">Date is not defined</string>
+    <string name="subtask_notification_title">%1$d subtask%2$s is pending</string>
+    <string name="subtask_notification_text">Pending subtask%s:</string>
+    <string name="subtask_dialog_title_add">Add new subtask</string>
+    <string name="subtask_dialog_title_edit">Edit subtask</string>
+    <string name="subtask_dialog_error">Enter name</string>
+    <string name="subtask_dialog_name_hint">Enter name</string>
+    <string name="subtask_dialog_amount_hint">Enter amount</string>
+    <string name="subtask_dialog_date_paid_hint">Choose paid date</string>
+    <string name="subtask_dialog_date_pending_hint">Choose expiration date</string>
+    <string name="subtask_dialog_complete_title">Type</string>
+    <string name="subtask_dialog_complete_yes_title">Paid</string>
+    <string name="subtask_dialog_complete_no_title">Pending</string>
+
     <string name="budget_list_none">There is no costs. Start adding now</string>
-    <string name="budget_category_none">There is no categories</string>
-
-    <string name="budget_balance_category_prompt">Select category</string>
-    <string name="budget_balance_category_all">All category</string>
-
     <string name="budget_balance_budget_title">Budget</string>
     <string name="budget_balance_total">Total</string>
     <string name="budget_balance_total_none">Budget is not defined</string>
@@ -88,20 +154,11 @@
     <string name="cost_card_amount_title">Amount:</string>
     <string name="cost_card_paid_title">Paid:</string>
     <string name="cost_card_pending_title">Pending:</string>
-
-    <string name="cost_dialog_title_add">Add new cost</string>
-    <string name="cost_dialog_title_edit">Edit cast</string>
-    <string name="cost_dialog_error">Enter name</string>
-    <string name="cost_dialog_spinner_prompt" translatable="false">@string/budget_balance_category_prompt</string>
-    <string name="cost_dialog_name_hint">Enter name</string>
-    <string name="cost_dialog_note_hint">Enter note</string>
-    <string name="cost_dialog_amount_hint">Enter estimate amount</string>
-
     <string name="cost_view_name">Name</string>
     <string name="cost_view_note">Note</string>
     <string name="cost_view_note_null">Note is not defined</string>
-    <string name="cost_view_category">Category</string>
-    <string name="cost_view_category_null">Category is not defined</string>
+    <string name="cost_view_category"> translatable="false"@string/category_view</string>
+    <string name="cost_view_category_null" translatable="false">@string/category_view_null</string>
     <string name="cost_view_amount_title" translatable="false">@string/budget_balance_amount_title</string>
     <string name="cost_view_amount" translatable="false">@string/budget_balance_amount</string>
     <string name="cost_view_pending" translatable="false">@string/budget_balance_pending</string>
@@ -110,17 +167,21 @@
     <string name="cost_view_addition_title">Addition</string>
     <string name="cost_view_update">Last update</string>
     <string name="cost_view_update_null">Not modified</string>
+    <string name="cost_dialog_title_add">Add new task</string>
+    <string name="cost_dialog_title_edit">Edit cast</string>
+    <string name="cost_dialog_error">Enter name</string>
+    <string name="cost_dialog_spinner_prompt" translatable="false">@string/category_prompt</string>
+    <string name="cost_dialog_name_hint">Enter name</string>
+    <string name="cost_dialog_note_hint">Enter note</string>
+    <string name="cost_dialog_amount_hint">Enter estimate amount</string>
 
-    <string name="payments_list_none">There is no payments. Start adding now</string>
-
+    <string name="payment_list_none">There is no payments. Start adding now</string>
     <string name="payment_card_amount_title">Amount:</string>
     <string name="payment_card_date_null">Date is not defined</string>
-
-    <string name="payment_notification_title">%1$d payment%2$s is pending</string>
-    <string name="payment_notification_text">Pending payment%s:</string>
-
-    <string name="payment_dialog_title_add">Add new payment</string>
-    <string name="payment_dialog_title_edit">Edit payment</string>
+    <string name="payment_notification_title">%1$d subtask%2$s is pending</string>
+    <string name="payment_notification_text">Pending subtask%s:</string>
+    <string name="payment_dialog_title_add">Add new subtask</string>
+    <string name="payment_dialog_title_edit">Edit subtask</string>
     <string name="payment_dialog_error">Enter name</string>
     <string name="payment_dialog_name_hint">Enter name</string>
     <string name="payment_dialog_amount_hint">Enter amount</string>
@@ -130,17 +191,6 @@
     <string name="payment_dialog_complete_yes_title">Paid</string>
     <string name="payment_dialog_complete_no_title">Pending</string>
 
-    <string name="categories_list_none">There is no categories. Start adding now</string>
-
-    <string name="category_card_reorder">Reordering</string>
-    <string name="category_delete_alert_one">There is a cost or task in this category. Before deleting move it or delete</string>
-    <string name="category_delete_alert_several">There are %d costs in this category. Before deleting move them or delete</string>
-
-    <string name="category_dialog_title_add">Add new category</string>
-    <string name="category_dialog_title_edit">Edit category</string>
-    <string name="category_dialog_error">Enter name</string>
-    <string name="category_dialog_name_hint">Enter name</string>
-
     <string name="settings_names">Names</string>
     <string name="settings_bride_title">Bride\'s name</string>
     <string name="settings_bride_summary">Enter bride\'s name</string>
@@ -148,7 +198,6 @@
     <string name="settings_groom_summary">Enter groom\'s name</string>
     <string name="settings_couple_title">Couple\'s name</string>
     <string name="settings_couple_summary">Enter couple\'s name</string>
-
     <string name="settings_date">Date and time</string>
     <string name="settings_date_title">Date of the ceremony</string>
     <string name="settings_date_summary">Set date of the ceremony</string>
@@ -156,18 +205,15 @@
     <string name="settings_time_title">Time of the ceremony</string>
     <string name="settings_time_summary">Set time of the ceremony</string>
     <string name="settings_time_default" translatable="false">00:00</string>
-
     <string name="settings_budget">Budget</string>
     <string name="settings_budget_title">Total budget</string>
     <string name="settings_budget_summary">Enter total budget</string>
     <string name="settings_currency_title">Currency</string>
     <string name="settings_currency_dialog_title">Choose currency:</string>
     <string name="settings_currency_summary">Choose currency</string>
-
     <string name="settings_notification">Notification</string>
     <string name="settings_notification_payment_title">Payments</string>
     <string name="settings_notification_payment_summary">Notification about pending payments</string>
-
     <string name="settings_application">Application</string>
     <string name="settings_language_title">Language</string>
     <string name="settings_language_default" translatable="false">default</string>

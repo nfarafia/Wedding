@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/subtask_edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border"
+                android:hint="@string/subtask_dialog_name_hint"
+                android:inputType="text"
+                android:imeOptions="flagNoExtractUi"
+                android:padding="12dp"
+                android:textSize="@dimen/TextEdit_textSize" />
+
+            <EditText
+                android:id="@+id/subtask_edit_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="@string/subtask_dialog_amount_hint"
+                android:inputType="numberDecimal"
+                android:imeOptions="flagNoExtractUi"
+                android:digits="0123456789.,"
+                android:padding="12dp"
+                android:textSize="@dimen/TextEdit_textSize" />
+
+            <EditText
+                android:id="@+id/subtask_edit_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="@string/subtask_dialog_date_paid_hint"
+                android:inputType="date"
+                android:imeOptions="flagNoExtractUi"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="false"
+                android:textSize="@dimen/TextEdit_textSize" />
+
+            <RadioGroup
+                android:id="@+id/subtask_edit_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/subtask_dialog_complete_title"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/TextView_textSize" />
+
+                <RadioButton
+                    android:id="@+id/subtask_edit_complete_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/subtask_dialog_complete_yes_title"
+                    android:checked="true"
+                    android:textSize="@dimen/TextView_textSize" />
+
+                <RadioButton
+                    android:id="@+id/subtask_edit_complete_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/subtask_dialog_complete_no_title"
+                    android:textSize="@dimen/TextView_textSize" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/dialog_button_bar" />
+
+</LinearLayout>
